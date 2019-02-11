@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Styles -->
+    <style>
+        body {
+            /* background-color: wheat; */
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        #chartdiv {
+            width: 700px;
+            height: 500px;
+            position: absolute;
+            top: 100px;
+            left: 600px;
+        }
+
+        .chart {
+            width: 500px;
+            height: 300px;
+            padding: 30px;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+        }
+
+        .lineChart {
+            width: 500px;
+            height: 300px;
+            padding: 30px;
+            position: absolute;
+            top: 415px;
+            left: 100px;
+        }
+
+        .amcharts-export-menu-top-right {
+            top: 10px;
+            right: 0;
+        }
+    </style>
+
+    <script src="/common/chartCore.js"></script>
+    <script src="/common/barChart.js"></script>
+    <link rel="stylesheet" href="/common/barChart.css">
+    <script src="/common/chartAxis.js"></script>
+    <script src="/common/lineChart.js"></script>
+    <script src="/common/tween.js"></script>
+
+
+</head>
+
+<body>
+    <div class="chart"> </div>
+
+    <div class="lineChart"></div>
+    <script>
+        function askForData() {
+            let req = new XMLHttpRequest();
+            req.open('GET', `/getAnalysisData`);
+            req.send();
+            req.onload = function () {
+                let data = JSON.parse(req.response);
+                let barChart = BarChart("chart", [data[0], data[1], "Trend Of Loan Count"]);
+                let lineChart = LineChart("lineChart", [data[0], data[2], "Trend Of Loan Amount"]);
+            }
+        }
+        askForData();
+
+    </script>
+
+</body>
+
+</html>

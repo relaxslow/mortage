@@ -1,0 +1,16 @@
+
+.tooltip{
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 94px;
+    background-color: antiquewhite;
+    pointer-events: none;
+    text-align: center;
+    overflow: hidden;
+}
+.tooltipText{
+    color: #686868;
+    padding:10px;
+    margin: 0;
+}

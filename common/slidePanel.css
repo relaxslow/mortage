@@ -1,0 +1,11 @@
+
+.slidePanel {
+    position: absolute;
+    left: 0;
+    transform: translateX(0px);
+    z-index: 0;
+}
+.active{
+    background-color: wheat;
+    color: black;
+}

@@ -1,0 +1,34 @@
+.Menu {
+    background-color: blueviolet;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    z-index: 100;
+    position: fixed;
+}
+
+.Menu .MenuItem {
+  text-decoration: none;
+  color: #ffffff;
+  line-height: 50px;
+  float:left;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: courier new;
+  transition: 0.3s linear;
+  background-color: blueviolet;
+  border: none;
+  cursor: pointer;
+}
+.Menu .MenuItem:focus{
+    outline: 0;
+}
+.Menu .MenuItem:hover{
+    background-color: #ff7171;
+    /* color: black; */
+}
+
+.Menu .select {
+    background-color: #ffcd71;
+    color: black;
+}

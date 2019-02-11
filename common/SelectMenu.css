@@ -1,0 +1,15 @@
+select{
+
+    border-radius: 5px;
+    height: 25px;
+    width: 150px;
+}
+select#xyz{
+    border: none;
+}
+select .highlight{
+    background-color: rgb(0, 180, 126);
+}
+select:focus{
+    outline: none;
+}

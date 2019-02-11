@@ -1,0 +1,105 @@
+.pullDown .border {
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #9b9b9b;
+  
+}
+
+.pullDown .arrows {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: calc(100% - 15px);
+    top: 11px;
+}
+
+.pullDown .arrows .down {
+    width: 7px;
+    height: 7px;
+}
+.pullDown .list{
+    position: absolute;
+    border-style: solid;
+    border-width: 1px;
+    border-top: none;
+    border-color: #a5a5a5;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    z-index: 800;
+}
+.pullDown .list .options {
+    display: flex;
+    flex-direction: column;
+    /* height: 300px; */
+    /* overflow-y: scroll; */
+    position: relative;
+}
+
+.pullDown .optionItem {
+    line-height: 20px;
+    background-color: white;
+    border: none;
+    font-size: 1.1em;
+    color: #7b7b7b;
+    text-align: left;
+    padding-left: 10px;
+    cursor: pointer;
+    height: 35px;
+    /* padding: 10px; */
+    flex-shrink: 0;
+}
+
+
+.pullDown .select {
+    background-color: #12a884;
+    color: white;
+}
+
+.pullDown button:focus {
+    outline: none;
+}
+
+
+
+.pullDown {
+    width: 200px;
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+}
+
+.pullDown>button {
+    text-align: left;
+    padding-left: 10px;
+    height: 31px;
+    background-color: white;
+    transition: border-color 0.5s;
+    width: 100%;
+    font-size: 1.2em;
+    color: #919191;
+    cursor: pointer;
+    z-index: 700;
+}
+
+.pullDown button:focus {
+    border-color: #12a884;
+}
+.result{
+    width:300px;
+    /* height:50px; */
+    /* display: flex; */
+    /* margin: 0; */
+    word-wrap: normal;
+}
+.pullDown .reset{
+border: none;
+background-color: #919191;
+color: black;
+cursor: pointer;
+}
+.pullDown .reset:focus{
+    outline: none;
+}

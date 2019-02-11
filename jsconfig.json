@@ -1,0 +1,12 @@
+{
+    "exclude": [
+        "node_modules",
+        "temp",
+        "app.js",
+        "lib",
+        "design"
+    ],
+    "include":[
+        "common"
+    ]
+}
