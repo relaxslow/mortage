@@ -1,9 +1,104 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>nodejs test</title>
+    <title>mortgage</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffcd71;
+            overflow-x: hidden;
+        }
+
+        .content {
+            width: 100%;
+            height: calc(100vh - 50px);
+            overflow-y: hidden;
+            position: absolute;
+            top: 50px;
+        }
+
+        .analysis {
+            text-decoration: none;
+            color: #ffffff;
+            line-height: 50px;
+            display: block;
+            float: left;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-family: courier new;
+            transition: 0.3s linear;
+            background-color: blueviolet;
+            border: none;
+            top: 0px;
+            left: 239px;
+            height: 50px;
+            position: fixed;
+            z-index: 200;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .analysis:focus {
+            outline: none;
+        }
+    </style>
+    <link rel="stylesheet" href="/common/Menu.css">
+    <script src="/common/Menu.js"></script>
+    <!-- <script src="/common/slidePanel.js"></script>
+    <link rel="stylesheet" href="/common/slidePanel.css"> -->
+
+    <!-- <script src="/lib/tween.js"></script> -->
+
 </head>
+
 <body>
-    <p>hello!!</p>
+    <div class="headBar Menu">
+        <button class="MenuItem select">introduction</button>
+        <button class="MenuItem">dataDownload</button>
+        <button class="MenuItem">analysis</button>
+    </div>
+    
+    <iframe class="content" src="/pages/introduction.html" frameborder="0"></iframe>
+    <script>
+        let mainMenu = getMenu(".headBar", clickMainMenu);
+        let folder = "/pages/"
+        let contentName = [
+            "introduction",
+            "dataDownload",
+            "analysis"
+        ]
+        function clickMainMenu(index) {
+            contentFrame.src = folder + contentName[index] + ".html"
+            contentFrame.onload = function () {
+                resizeIframe(contentFrame)
+            }
+        }
+
+        let contentFrame = document.querySelector(".content");
+        let headHeight = mainMenu.getHei();
+        function resizeIframe(iframe) {
+            let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
+            if (iframeContentHei < window.innerHeight - headHeight) {
+                iframe.style.height = window.innerHeight - headHeight + "px";
+            } else {
+                iframe.style.height = (iframe.contentWindow.document.body.scrollHeight) + "px";
+
+            }
+        }
+
+
+        window.resizeContent = function () {
+            resizeIframe(contentFrame);
+        }
+//---------------------------------------------------
+     
+    </script>
+
+
 </body>
+
 </html>
