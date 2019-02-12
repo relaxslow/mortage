@@ -1,6 +1,6 @@
 
 /**
- * 
+ * This class allow user draw svg base on an origin point Ox,Oy
  * @param {number} ox 
  * @param {number} oy
  * 
@@ -14,12 +14,20 @@ function Chart(ox, oy) {
         return svg;
     }
     // return this;
+
     function createSVG() {
         let svg = document.createElementNS(ns, 'svg');
         svg.setAttribute('xmlns', ns);
         svg.setAttribute('width', "100%");
         svg.setAttribute('height', "100%");
         return svg
+    }
+    function setWH(w, h) {
+        svg.setAttribute('width', w);
+        svg.setAttribute('height', h);
+    }
+    function setViewBox(x, y, w, h) {
+        svg.setAttribute('viewBox', `${x},${y},${w},${h}`)
     }
     function drawRect(x, y, wid, hei) {
         let rect = document.createElementNS(ns, 'rect');
@@ -104,7 +112,16 @@ function Chart(ox, oy) {
         svg.append(path);
         return path;
     }
-    function setPathPoint(path, points) {
+    function drawClosePath(data) {
+        let [points, color] = data
+        let path = document.createElementNS(ns, 'path');
+        path.setAttribute('stroke', "none");
+        path.setAttribute('fill', color);
+        setPathPoint(path, points, close);
+        svg.append(path);
+        return path;
+    }
+    function setPathPoint(path, points, close) {
         let d = '';
         for (let i = 0; i < points.length; i++) {
             let point = points[i];
@@ -114,8 +131,10 @@ function Chart(ox, oy) {
                 d += 'L';
             d += `${oX + point[0]},${oY - point[1]}`;
         }
+        if (close == true) d += 'z';
         path.setAttribute('d', d);
     }
+
 
     this.drawCircle = drawCircle;
     this.setCirclePos = setCirclePos;
@@ -131,9 +150,13 @@ function Chart(ox, oy) {
     this.setTextSize = setTextSize;
 
     this.drawPath = drawPath;
+    this.drawClosePath = drawClosePath;
     this.setPathPoint = setPathPoint;
 
     this.getNode = getNode;
+    this.setWH = setWH;
+    this.setViewBox = setViewBox;
+
 
 }
 Chart.initParam = initChartDimension;
@@ -199,14 +222,46 @@ function ToolTip(div, elems, data, type) {
     text.classList.add("tooltipText");
     tooltip.appendChild(text);
     let divRect = div.getBoundingClientRect();
+    let popDialog;
+    let downArrow;
+    let arrowWid = 10;
+    let arrowHei = 10;
+    createToolTipShape();
+    function createToolTipShape() {
+        let rect = tooltip.getBoundingClientRect();
+        popDialog = new Chart(0, 0);
+        popDialog.setWH(arrowWid, arrowHei);
+        popDialog.setViewBox(0, 0, 100, 100)
+        downArrow = popDialog.getNode();
+        downArrow.style["position"] = "absolute";
+        downArrow.style["top"] = "0px";
+        downArrow.style["left"] = "0px";
 
+        tooltip.appendChild(downArrow);
+
+        let arrowpoints = [
+            [0, 0],
+            [100, 0],
+            [50, -100]
+        ]
+        let arrowcolor = '#faebd7'
+        popDialog.drawClosePath([arrowpoints, arrowcolor]);
+
+
+
+
+
+    }
 
     let tooltipType = {
         "undefined": normal,
-        "popup": popup,
+        "popupOnGraph": popup,
+        "popupOnView": popupOnView
     }
     tooltipType[type]();
+    function popupOnView() {
 
+    }
     function popup() {
         for (let i = 0; i < elems.length; i++) {
             let elem = elems[i];
@@ -218,10 +273,10 @@ function ToolTip(div, elems, data, type) {
         function mouseenter(evt) {
             let elem = evt.currentTarget
             text.textContent = data[elem.index];
-
+            let textRect = text.getBoundingClientRect();
             if (tooltip._hei == null) {//animation param must save for interrupt
-                let tooltipRect = tooltip.getBoundingClientRect();
-                tooltip._hei = tooltipRect.height;
+                tooltip._hei = textRect.height;
+                tooltip._wid = textRect.width;
             }
 
             let elemrect = elem.getBoundingClientRect();
@@ -229,11 +284,9 @@ function ToolTip(div, elems, data, type) {
             let top = div.param.pad.top + elemrect.top - parentRect.top;
             let left = div.param.pad.left + elemrect.left - parentRect.left;
 
-            if (elemrect.width < tooltip.scrollWidth) {
-                tooltip._wid = tooltip.scrollWidth
-            } else {
+            if (elemrect.width > tooltip._wid)
                 tooltip._wid = elemrect.width;
-            }
+
             tooltip._top = top;
             tooltip._left = left + elemrect.width / 2 - tooltip._wid / 2;
 
@@ -247,7 +300,7 @@ function ToolTip(div, elems, data, type) {
             tooltip.style.left = tooltip._left + "px";
             tooltip.style.top = (tooltip._top - tooltip._hei) + "px";
             tooltip.style.width = tooltip._wid + "px";
-
+            downArrow.style.left = (tooltip._wid / 2 - arrowWid / 2) + "px";
 
             if (!canPop) return;
             tooltip.style.height = 0 + "px";
@@ -256,6 +309,8 @@ function ToolTip(div, elems, data, type) {
             function changeTooltipHei(v) {
                 tooltip.style.height = v + "px";
                 tooltip.style.top = (tooltip._top - v) + "px";
+                downArrow.style.top = v + "px";
+
             }
         }
         let canPop = true;
@@ -289,7 +344,13 @@ function ToolTip(div, elems, data, type) {
 
         function mouseenter(evt) {
             text.textContent = data[evt.currentTarget.index];
+            let textRect = text.getBoundingClientRect()
             tooltip.style.opacity = 1;
+
+            tooltip.style.height = textRect.height + "px";
+            tooltip.style.width = textRect.width + "px";
+            tooltip._wid = textRect.width;
+            tooltip._hei = textRect.height;
         }
         function mouseout(evt) {
             tooltip.style.opacity = 0;
@@ -297,7 +358,8 @@ function ToolTip(div, elems, data, type) {
         function mouseover(evt) {
             let mousex = evt.pageX - divRect.left;
             let mousey = evt.pageY - divRect.top;
-            tooltip.style.transform = `translate(${mousex}px,${mousey}px)`;
+            tooltip.style.transform = `translate(${mousex}px,${mousey-tooltip._hei-arrowHei}px)`;
+            downArrow.style.top=tooltip._hei+"px";
 
             // tooltip.style.top = `${mousey}px`;
             // tooltip.style.left = `${mousex}px`;

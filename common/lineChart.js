@@ -88,7 +88,7 @@ function LineChart(name, data) {
     function drawPointCircles(points) {
         for (let i = 0; i < points.length; i++) {
             let point = points[i];
-            let circle = chart.drawCircle(point[0], 0, 10, color, 2, '#ffffff');
+            let circle = chart.drawCircle(point[0], 0, 5, color, 2, '#ffffff');
             circles.push(circle);
             // circle.style.transition = transition;
             // requestAnimationFrame(function () {

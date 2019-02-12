@@ -7,10 +7,15 @@
     background-color: antiquewhite;
     pointer-events: none;
     text-align: center;
-    overflow: hidden;
+    display: flex;
+    /* overflow: hidden; */
 }
 .tooltipText{
     color: #686868;
-    padding:10px;
+    padding: 10px 40px;
     margin: 0;
+    position: absolute;
+    /* width: 100%; */
+    text-align: center;
+    bottom: 0;
 }

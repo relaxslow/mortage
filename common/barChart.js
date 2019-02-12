@@ -91,6 +91,6 @@ function BarChart(name, data) {
     axis.drawHorizonLines(4);
     axis.drawYAxisTexts(ceiling,4);
     drawBars();
-    new ToolTip(div, bars, XValues, "popup");
+    new ToolTip(div, bars, XValues, "popupOnGraph");
 
 }

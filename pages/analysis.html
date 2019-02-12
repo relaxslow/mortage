@@ -8,6 +8,7 @@
             /* background-color: wheat; */
             margin: 0;
             box-sizing: border-box;
+            overflow-x: hidden;
         }
 
         #chartdiv {
@@ -53,6 +54,13 @@
 </head>
 
 <body>
+        <!-- viewBox="0 0 100 100" -->
+    <div style="width:100px;height: 100px">
+        <svg width="10" height="10" viewBox="0,0,100,100" style="position: absolute;top:0;left:0">
+            <path stroke="none" fill="#000000" d="M0,0L100,0L50,100z"></path>
+        </svg>
+    </div>
+
     <div class="chart"> </div>
 
     <div class="lineChart"></div>
@@ -65,6 +73,7 @@
                 let data = JSON.parse(req.response);
                 let barChart = BarChart("chart", [data[0], data[1], "Trend Of Loan Count"]);
                 let lineChart = LineChart("lineChart", [data[0], data[2], "Trend Of Loan Amount"]);
+                parent.window.resizeContent();
             }
         }
         askForData();
