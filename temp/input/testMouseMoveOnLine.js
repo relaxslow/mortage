@@ -7,7 +7,7 @@ function mousemovePath(evt) {
     console.log(nearestPointIndex);
 
 }
-function nearWhichPoint(x, y) {
+function nearWhichPoint(x, y,points) {
     let divRect = div.getBoundingClientRect();
     let divx = divRect.left + padding.left;
     let divy = divRect.top + padding.top;
