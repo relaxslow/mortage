@@ -1,5 +1,8 @@
-
-
+//gre/easing.js
+/*
+ * Easing Functions - inspired from http://gizma.com/easing/
+ * only considering the t value for the range [0, 1] => [0, 1]
+ */
 EasingFunctions = {
     // no easing, no acceleration
     linear: function (t) { return t },
@@ -37,8 +40,15 @@ ElasticEasings = {
     easeInOutElastic: function (t) { return (t -= .5) < 0 ? (.02 + .01 / t) * Math.sin(50 * t) : (.02 - .01 / t) * Math.sin(50 * t) + 1 }
 }
 
+
+//useage-------------------
+// let box = document.querySelector(".box");
+// Tween(0, 300, 1000, moveBox, ElasticEasings.easeInElastic);
+// function moveBox(v) {
+//     box.style.left = v + "px";
+// }
 function Tween(from, to, duration, updatefun, easefun, completefun) {
-    let percent;
+    let value;
     let dist = to - from;
     if (!easefun) easefun = EasingFunctions.linear;
     let start = null;
@@ -46,19 +56,22 @@ function Tween(from, to, duration, updatefun, easefun, completefun) {
     function animate(t) {
         if (!start) {
             start = t;
-            if (updatefun) updatefun(from);
+            value = from;
+            if (updatefun) updatefun(value);
             id = requestAnimationFrame(animate);
         } else {
             let elapse = t - start;
-            percent = elapse / duration;
+            let percent = elapse / duration;
             let ease = easefun(percent);
             //             console.log(elapse, from + dist * ease)
-            if (updatefun) updatefun(from + dist * ease);
+            value = from + dist * ease;
+            if (updatefun) updatefun(value);
             if (elapse <= duration) {
                 id = requestAnimationFrame(animate);
             }
             else {
-                if (updatefun) updatefun(to);
+                value = to;
+                if (updatefun) updatefun(value);
                 if (completefun) completefun();
             }
         }
@@ -66,35 +79,37 @@ function Tween(from, to, duration, updatefun, easefun, completefun) {
     id = requestAnimationFrame(animate);
     let m = {};
     m.stop = function () {
-        cancelAnimationFrame(id)
+        m.
+            cancelAnimationFrame(id)
     }
     m.stopAtEnd = function () {
         cancelAnimationFrame(id)
-        updatefun(to)
+        value = to;
+        updatefun(value);
     }
     return m;
 }
 
-function tweenMulti(from, to, duration, updatefun, easefun, completefun) {
+function TweenX(from, to, duration, updatefun, easefun, completefun) {
     let dist, value;
     dist = JSON.parse(JSON.stringify(to));
-    value = JSON.parse(JSON.stringify(to));
+    value = JSON.parse(JSON.stringify(from));
     //iterateWithCheck for debug
-    iterate([from, to], dist, function ([f, t]) {
+    dist=iterate([from, to], dist, function ([f, t]) {
         return t - f;
     })
 
-    let percent;
     if (!easefun) easefun = EasingFunctions.linear;
     let start = null;
+    let id;
     function animate(t) {
         if (!start) {
             start = t
             if (updatefun) updatefun(from);
-            requestAnimationFrame(animate);
+            id = requestAnimationFrame(animate);
         } else {
             let elapse = t - start;
-            percent = elapse / duration;
+            let percent = elapse / duration;
             let ease = easefun(percent);
             value = iterate([from, dist], value, function ([f, d]) {
                 return f + d * ease;
@@ -104,58 +119,27 @@ function tweenMulti(from, to, duration, updatefun, easefun, completefun) {
                 id = requestAnimationFrame(animate);
             }
             else {
+                value = to;
                 if (updatefun) updatefun(to);
                 if (completefun) completefun();
             }
         }
 
     }
-    requestAnimationFrame(animate);
-}
-
-
-
-function iterateWithCheck(input, output, fun) {
-    let type = checkType(input[0])
-    let length = 0;
-    if (type === "array") length = input[0].length;
-    if (type === "string") throw new Error('input can not be string');
-    for (let i = 1; i < input.length; i++) {
-        let one = input[i]
-        let t = checkType(one);
-        if (t !== type) differentStructure(one, type);
-        if (type === "array" && one.length !== length) differentLength(input[0], one)
-        if (type === "object") {
-            for (let key in input[0]) {
-                if (input[i][key] == null) noFound(key, input[i])
-            }
-        }
+    id = requestAnimationFrame(animate);
+    let m = {};
+    m.stop = function () {
+        cancelAnimationFrame(id)
     }
-    if (type === 'number') {
-        output = fun(input);
+    m.stopAtEnd = function () {
+        cancelAnimationFrame(id)
+        value = to;
+        updatefun(to);
     }
-    else if (type === 'array') {
-        let aaa = input[0];
-        for (let i = 0; i < input[0].length; i++) {
-            let newInput = [];
-            for (let j = 0; j < input.length; j++) {
-                newInput.push(input[j][i])
-            }
-            output[i] = iterateWithCheck(newInput, output[i], fun);
-        }
+    m.getCurrentValue = function () {
+        return value;
     }
-    else if (type === 'object') {
-        for (let key in input[0]) {
-            let newInput = [];
-            for (let i = 0; i < input.length; i++) {
-                let one = input[i][key];
-                if (one == null) noFound(key, input[i])
-                newInput.push(one);
-            }
-            output[key] = iterateWithCheck(newInput, output[key], fun);
-        }
-    }
-    return output;
+    return m;
 }
 
 function iterate(input, output, fun) {
@@ -205,9 +189,3 @@ function differentStructure(from, to) {
 }
 
 
-//use-------------------
-// let box = document.querySelector(".box");
-// Tween(0, 300, 1000, moveBox, ElasticEasings.easeInElastic);
-// function moveBox(v) {
-//     box.style.left = v + "px";
-// }

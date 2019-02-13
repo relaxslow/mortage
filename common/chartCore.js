@@ -159,6 +159,7 @@ function Chart(ox, oy) {
 
 
 }
+//-------
 Chart.initParam = initChartDimension;
 Chart.findMax = findMax;
 Chart.findCeiling = findCeiling;
@@ -212,7 +213,7 @@ function findMax(data) {
     }
     return max;
 }
-
+//------
 function ToolTip(div, elems, data, type) {
     let tooltip = document.createElement('DIV');
     tooltip.classList.add("tooltip");
@@ -342,8 +343,9 @@ function ToolTip(div, elems, data, type) {
             elem.addEventListener("mouseenter", mouseenter);
         }
 
-        function mouseenter(evt) {
-            text.textContent = data[evt.currentTarget.index];
+        function mouseenter(e) {
+            let elem = e.currentTarget;
+            text.textContent = data[elem.index];
             let textRect = text.getBoundingClientRect()
             tooltip.style.opacity = 1;
 
@@ -351,6 +353,7 @@ function ToolTip(div, elems, data, type) {
             tooltip.style.width = textRect.width + "px";
             tooltip._wid = textRect.width;
             tooltip._hei = textRect.height;
+
         }
         function mouseout(evt) {
             tooltip.style.opacity = 0;
@@ -358,11 +361,8 @@ function ToolTip(div, elems, data, type) {
         function mouseover(evt) {
             let mousex = evt.pageX - divRect.left;
             let mousey = evt.pageY - divRect.top;
-            tooltip.style.transform = `translate(${mousex}px,${mousey-tooltip._hei-arrowHei}px)`;
-            downArrow.style.top=tooltip._hei+"px";
-
-            // tooltip.style.top = `${mousey}px`;
-            // tooltip.style.left = `${mousex}px`;
+            tooltip.style.transform = `translate(${mousex}px,${mousey - tooltip._hei - arrowHei}px)`;
+            downArrow.style.top = tooltip._hei + "px";
 
         }
     }

@@ -1,6 +1,7 @@
 function LineChart(name, data) {
     let div;
     let padding;
+    /** @type Chart */
     let chart;
 
 
@@ -20,7 +21,7 @@ function LineChart(name, data) {
 
     let XNames, XValues;
     let ceiling;
-    let color = '#f06';
+
     function init() {
         div = document.querySelector(`.${name}`);
         [width, height, graphWid, graphHei, oX, oY, padding] = Chart.initParam([
@@ -56,6 +57,7 @@ function LineChart(name, data) {
         });
 
     }
+    let lineColor = '#f06';
 
     function drawLineAligned(XCord) {
         let points = [];
@@ -67,13 +69,13 @@ function LineChart(name, data) {
             let y = graphHei * XValues[i] / maxValue;
             let x = XCord[i];
             points.push([x, y]);
-            let random = Math.random() *graphHei;
+            let random = Math.random() * graphHei;
 
             initPoints.push([x, random]);
         }
-        let path = chart.drawPath([initPoints, 2, color]);
+        let path = chart.drawPath([initPoints, 2, lineColor]);
         drawPointCircles(points, initPoints);
-        tweenMulti(initPoints, points, 1000, changePathPointPos, ElasticEasings.easeInElastic);
+        TweenX(initPoints, points, 1000, changePathPointPos, ElasticEasings.easeInElastic);
         function changePathPointPos(values) {
             chart.setPathPoint(path, values);
             for (let i = 0; i < circles.length; i++) {
@@ -81,23 +83,44 @@ function LineChart(name, data) {
                 chart.setCirclePos(circle, values[i][0], values[i][1]);
             }
         }
-
+        return points;
 
     }
     let circles = [];
     function drawPointCircles(points) {
+
+        let r = 3
+        let color = '#ffffff';
+        let lineColor = '#f06';
+        let lineW = 2;
         for (let i = 0; i < points.length; i++) {
             let point = points[i];
-            let circle = chart.drawCircle(point[0], 0, 5, color, 2, '#ffffff');
+            let circle = chart.drawCircle(point[0], 0, r, lineColor, lineW, color);
             circles.push(circle);
-            // circle.style.transition = transition;
-            // requestAnimationFrame(function () {
-            //     chart.setCirclePos(circle, point[0], point[1]);
-            // });
         }
+
+        //focus
+        // for (let i = 0; i < circles.length; i++) {
+        //     let circle = circles[i];
+        //     circle.highlightParam = {
+        //         r: 8
+        //     }
+        //     circle.animation = 0;
+        //     circle.addEventListener('mouseenter', mouseenterCircle)
+        //     circle.addEventListener('mouseout', mouseoutCircle)
+        // }
         return circles;
     }
+    // function mouseoutCircle(e) {
+    //     let circle = e.currentTarget;
 
+
+    // }
+    // function mouseenterCircle(e) {
+    //     let circle = e.currentTarget;
+
+
+    // }
     function drawLine() {
         let points = [];
         let num = XValues.length;
@@ -113,8 +136,103 @@ function LineChart(name, data) {
         }
         chart.drawPath([points, 2, '#000000']);
     }
+    //focus
+
+    let originR = 3;
+    let highlightR = 8;
+    let focusedCircle = null;
+    function focusCircle(circle) {
+        let currentR;
+        if (circle.tween) {
+            circle.tween.stop();
+            currentR = circle.tween.getCurrentValue();
+        } else currentR = originR;
+        circle.tween = TweenX(currentR, highlightR, 50, changeRadius);
+        function changeRadius(v) {
+            circle.setAttribute('r', v);
+        }
+        focusedCircle = circle;
+    }
+    function unfocusCircle(circle) {
+        circle.tween.stop();
+        let currentR = circle.tween.getCurrentValue();
+        circle.tween = TweenX(currentR, originR, 700, changeRadius);
+        function changeRadius(v) {
+            // console.log(v);
+            if (v < 0) v = 0;
+            circle.setAttribute('r', v);
+        }
+        focusedCircle = null;
+    }
+    function setFocusAction() {
+        div.addEventListener('mousemove', mouseoverDiv)
+    }
+    let oldNearst = -1;
+
+    function mouseoverDiv(e) {
+
+        let divRect = div.getBoundingClientRect();
+        let divx = divRect.left + padding.left;
+        let divy = divRect.top + padding.top;
+        let x = e.clientX - divx - oX;
+        let y = oY - (e.clientY - divy);
+        //         console.log(x,y)
+        if (x < 0 || x > graphWid || y < 0 || y > graphHei) {
+            oldNearst = -1;
+            if (focusedCircle) {
+                unfocusCircle(focusedCircle)
+            }
+            return;
+        }
+
+        let nearestIndex = nearWhichX(x, linepoints);
+        if (nearestIndex == oldNearst) return;
+        else {
+            if (focusedCircle != null)//enter{
+                unfocusCircle(focusedCircle);
+            focusCircle(circles[nearestIndex]);
+            oldNearst = nearestIndex
+        }
 
 
+        //         console.log(x, y, nearestIndex);
+    }
+    function nearWhichX(x, points) {
+        let mindist = -1;
+        let index = -1;
+        for (let i = 0; i < points.length; i++) {
+            let point = points[i];
+            let pointx = point[0];
+            let dist = Math.abs(x - pointx);
+            if (mindist == -1 || dist < mindist) {
+                mindist = dist;
+                index = i;
+            }
+        }
+        return index;
+    }
+    function nearWhichPoint(x, y, points) {
+        let divRect = div.getBoundingClientRect();
+        let divx = divRect.left + padding.left;
+        let divy = divRect.top + padding.top;
+
+        let mindist = -1;
+        let index = -1;
+        for (let i = 0; i < points.length; i++) {
+            let point = points[i];
+            let pointx = divx + oX + point[0];
+            let pointy = divy + oY - point[1];
+            let a = pointx - x;
+            let b = pointy - y;
+            //             console.log(x, y, pointx, pointy);
+            let dist = Math.sqrt(a * a + b * b);
+            if (mindist == -1 || dist < mindist) {
+                mindist = dist;
+                index = i;
+            }
+        }
+        return index;
+    }
     init();
     axis.drawTitle(data[2]);
     // axis.drawOutline();
@@ -125,9 +243,9 @@ function LineChart(name, data) {
     axis.drawXTextRotatedAligned(XNames, 10, 60);
     axis.drawHorizonLines(5);
     axis.drawYAxisTexts(ceiling, 5);
-    drawLineAligned(axis.getXCords());
+    let linepoints = drawLineAligned(axis.getXCords());
     new ToolTip(div, circles, XValues);
-
+    setFocusAction();
 
 
 
