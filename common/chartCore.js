@@ -284,6 +284,8 @@ function ToolTip(div, elems, data, type) {
             let parentRect = elem.parentNode.getBoundingClientRect();
             let top = div.param.pad.top + elemrect.top - parentRect.top;
             let left = div.param.pad.left + elemrect.left - parentRect.left;
+            //   let top = 0;
+            // let left=0;
 
             if (elemrect.width > tooltip._wid)
                 tooltip._wid = elemrect.width;

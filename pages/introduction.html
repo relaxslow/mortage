@@ -6,6 +6,8 @@
         body {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         .main {
@@ -15,6 +17,35 @@
         .page {
             padding: 20px;
             background-color: #ffdc9c;
+            /* position: relative; */
+            width: 600px;
+        }
+
+        h2 {
+            border-bottom: solid 2px #ffffff;
+            border-top: solid 2px white;
+            background-color: #5d6474;
+            color: white;
+            position: relative;
+            line-height: 50px;
+            padding-left: 20px;
+            height: 50px;
+            margin-top: 0;
+        }
+
+    
+
+        h3 {
+            color: white;
+            font-family: sans-serif;
+            border-top: solid 1px;
+            border-bottom: solid 1px;
+            background-color: #5d6474;
+            padding-left: 10px;
+        }
+
+        p {
+            font-family: monospace;
         }
     </style>
 </head>
@@ -22,7 +53,7 @@
 <body>
     <div class='main'>
         <div class='page'>
-            <h2>Introduction</h2>
+            <h2><span>Introduction</span> </h2>
             <p>
                 This project is one of the project of UONA curriculum named DATA523(Big Data Fundamental).This course revealing the essence of big data technology , how it put to use in practice and what we should keep in mind when use it. Big data went to our lives and benefit almost everywhere as a program developper. I want to combine my programming skill with big data. It happened that this is the good place where Javascript could play well at.
             </p>
@@ -32,19 +63,22 @@
 
 
             </p>
-            <h3>topdown approach</h3>
+            <h3>Topdown approach</h3>
             <p>
-                topdown approach refer to a methodology of programming. It divide the whole task into small part and implement them seperately. Its goal is avoid code refactoring as much as possible. But each theory has its premise. Topdown approach assume the developer has clear understanding of the functions and its implementations. In practice, especially for the novice like me who have not enough knowledge of the overall structure. In this situation, bottom up seems a good approach. Code refactoring is inevitable because a simple function can't adapt to various situations. So we tidy up the code,abstract common method and package them into high level functions. finally we make it concise and optimized. This process is helpful to learning and let us see the evolution of the code. That approach also called iterative development.
+                topdown approach refer to a methodology of programming. It divide the whole task into small part and implement them seperately. Its goal is avoid code refactoring as much as possible. But each theory has its premise. Topdown approach assume the developer has clear understanding of the functions and its implementations. In practice, especially for the novice like me who have not enough knowledge of the overall structure. In this situation, bottom up seems a good approach. No matter topdown or bottomup, the key is to control the complexity of the code, not only for maintenance but also for reuse of the code. 
             </p>
-            <h3>iterative development</h3>
+            <h3>Iterative development</h3>
             <p>
-                iterative development 
+                Iterative development construct the code like Lego. The whole program is made of many building blocks. Each block has some abstract of function. We package those blocks to form some bigger structures and then use that to form larger functions and eventually reach our goals. Each block should be carefully tested but that would not need to be done at once. They can be completed gradually along with the growth of our program. The blocks maybe not be recognized at first, because we usually write functions from topdown approach based on a real problem until we found some function repeated for many time , then we seperate those code as functions. So refactoring happened throughout the entire process. We tidy up the code,abstract common method and package them into high level functions. finally we make it concise and optimized. This process is helpful to learning and let us see the evolution of the code. That's one feature of iterative development.     
             </p>
-            <h3>server</h3>
-            <ul>
-                <li></li>
-            </ul>
-            <h3>client</h3>
+            <h3>Javascript</h3>
+            <p>
+                Javascript has varies patterns that can be used in combination. The language has good  mechanism  which can help developer  change the patterns  as they need. The cost of changes are minimized when code are evolved from a simple function to a complete reuseable class. We must thank to Javascript's flexibility that it won't restrict us like Java. Although Java claimed its security and easy debug features I still thought Javascript is the best language I met in the world.
+            </p>
+
+            <h3>overall structure</h3>
+            <p> So let get back to this project.</p>
+            <h3>animation</h3>
         </div>
 
     </div>

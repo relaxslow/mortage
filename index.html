@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             background-color: #ffcd71;
-            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         .content {
@@ -17,6 +17,7 @@
             height: calc(100vh - 50px);
             position: absolute;
             top: 50px;
+            overflow: hidden;
         }
 
         .analysis {
@@ -60,7 +61,7 @@
         <button class="MenuItem">dataDownload</button>
         <button class="MenuItem">analysis</button>
     </div>
-    
+
     <iframe class="content" src="/pages/introduction.html" frameborder="0"></iframe>
     <script>
         let mainMenu = getMenu(".headBar", clickMainMenu);
@@ -80,7 +81,8 @@
         let contentFrame = document.querySelector(".content");
         let headHeight = mainMenu.getHei();
         function resizeIframe(iframe) {
-            let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
+            // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
+            let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
             if (iframeContentHei < window.innerHeight - headHeight) {
                 iframe.style.height = window.innerHeight - headHeight + "px";
             } else {
@@ -94,7 +96,7 @@
             resizeIframe(contentFrame);
         }
 //---------------------------------------------------
-     
+
     </script>
 
 
