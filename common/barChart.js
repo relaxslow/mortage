@@ -59,11 +59,42 @@ function BarChart(name, data) {
 
 
     let bars = [];
+
+    //animation param
+    let normal = {
+        color: {
+            r: 0xff,
+            g: 0x00,
+            b: 0x66,
+        },
+        text: {//#765373
+            r: 0x76,
+            g: 0x53,
+            b: 0x73
+        },
+    }
+    let highlight = {
+        color: {
+            r: 0xff,
+            g: 0xff,
+            b: 0xff,
+        },
+        text: {
+            r: 0xff,
+            g: 0xff,
+            b: 0xff
+        }
+    }
+    let texttween = {
+
+
+    }
+
     function drawBars() {
         let num = XValues.length;
         let step = graphWid / num;
         let current = 0;
-        let widPercent = 0.8;
+        let widPercent = 0.9;
         let wid = step * widPercent;
         let offset = (1 - widPercent) * step / 2;
         let maxValue = axis.getYMax();
@@ -76,67 +107,60 @@ function BarChart(name, data) {
             bars.push(bar);
             current += step;
 
-            new Tween(0, hei, 1000, changeBarHeight, ElasticEasings.easeInElastic);
+            TweenX(0, hei, 1000, changeBarHeight, ElasticEasings.easeInElastic);
             function changeBarHeight(v) {
                 chart.setRectHeight(bar, v);
             }
 
         }
-
+        //focus animation
         for (let i = 0; i < bars.length; i++) {
             let bar = bars[i];
-            bar.bkcolor = bar.getAttribute('fill');
-            bar.bkHighLight = brighter(bar.bkcolor);
+            bar.index = i;
             bar.addEventListener('mouseover', mouseoverBar);
             bar.addEventListener('mouseout', mouseoutBar);
+        }
 
 
-        }
-        function brighter(color) {
-            let [r, g, b] = cssColorToInt(color);
-            let offset = 80;
-            r += offset;
-            g += offset;
-            b += offset;
-            if (r > 255) r = 255;
-            if (g > 255) g = 255;
-            if (b > 255) b = 255;
-            return '#' + intToHex(r) + intToHex(g) + intToHex(b);
-        }
-        function cssColorToInt(color) {
-            let hexStr = color.slice(color.indexOf('#') + 1)
-            let r, g, b
-            if (hexStr.length == 3) {
-                r = '0x' + hexStr[0] + hexStr[0];
-                g = '0x' + hexStr[1] + hexStr[1];
-                b = '0x' + hexStr[2] + hexStr[2];
-            }
-            else {
-                r = '0x' + hexStr.slice(0, 1);
-                g = '0x' + hexStr.slice(2, 3);
-                b = '0x' + hexStr.slice(4, 5);
-            }
-            return [parseInt(r, 16), parseInt(g, 16), parseInt(b, 16)];
-        }
-        function intToHex(color) {
-            let str = color.toString(16);
-            if (str.length == 1) str = '0' + str;
-            return str;
-        }
         function mouseoutBar(e) {
             let bar = e.currentTarget;
-            bar.setAttribute('fill', bar.bkcolor);
+            let currentValue;
+            if (bar.tween) {
+                bar.tween.stop();
+                currentValue = bar.tween.getCurrentValue();
+            }
+            else
+                currentValue = highlight;
+            bar.tween = TweenX(currentValue, normal, 1000, unfocusBar)
+            function unfocusBar(v) {
+                changeFocus(bar, v);
+            }
         }
         function mouseoverBar(e) {
             let bar = e.currentTarget;
-            bar.setAttribute('fill', bar.bkHighLight);
+            if (bar.tween) {
+                bar.tween.stop();
+                currentValue = bar.tween.getCurrentValue();
+            }
+            else
+                currentValue = normal;
+            bar.tween = TweenX(currentValue, highlight, 500, focusBar, ElasticEasings.easeInElastic)
+            function focusBar(v) {
+                changeFocus(bar, v);
+            }
+        }
+        function changeFocus(bar, v) {
+            let color = rgbToCss(v.color.r, v.color.g, v.color.b);
+            let textColor = rgbToCss(v.text.r, v.text.g, v.text.b);
+            bar.setAttribute('fill', color);
+            texts[bar.index].setAttribute('fill', textColor)
         }
     }
 
     init();
     axis.drawTitle(data[2]);
     axis.drawOutline();
-    axis.drawXTextRotated(XNames, 10, 60);//name,size,angle
+    let texts = axis.drawXTextRotated(XNames, 10, 60);//name,size,angle
     axis.drawHorizonLines(4);
     axis.drawYAxisTexts(ceiling, 4);
     drawBars();

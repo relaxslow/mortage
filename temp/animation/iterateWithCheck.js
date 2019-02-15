@@ -42,3 +42,15 @@ function iterateWithCheck(input, output, fun) {
 }
 
 
+function noFound(key, a) {
+    console.log(a)
+    throw new Error(`not found ${key}`);
+}
+function differentLength(from, to) {
+    console.log(from, to)
+    throw new Error('diffrent length');
+}
+function differentStructure(from, to) {
+    console.log(from, to);
+    throw new Error('different structure');
+}

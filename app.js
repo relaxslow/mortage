@@ -19,7 +19,6 @@ let server = http.createServer(function (req, res) {
     const parsedUrl = URLlib.parse(url, true);
     req.parsedPath = decodeURI(parsedUrl.pathname);
     req.parsedUrl = parsedUrl;
-
     handle(req, res);
 
 

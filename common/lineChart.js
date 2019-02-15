@@ -70,7 +70,6 @@ function LineChart(name, data) {
             let x = XCord[i];
             points.push([x, y]);
             let random = Math.random() * graphHei;
-
             initPoints.push([x, random]);
         }
         let path = chart.drawPath([initPoints, 2, lineColor]);
@@ -96,31 +95,14 @@ function LineChart(name, data) {
         for (let i = 0; i < points.length; i++) {
             let point = points[i];
             let circle = chart.drawCircle(point[0], 0, r, lineColor, lineW, color);
+            circle.index = i;
             circles.push(circle);
         }
 
-        //focus
-        // for (let i = 0; i < circles.length; i++) {
-        //     let circle = circles[i];
-        //     circle.highlightParam = {
-        //         r: 8
-        //     }
-        //     circle.animation = 0;
-        //     circle.addEventListener('mouseenter', mouseenterCircle)
-        //     circle.addEventListener('mouseout', mouseoutCircle)
-        // }
+
         return circles;
     }
-    // function mouseoutCircle(e) {
-    //     let circle = e.currentTarget;
 
-
-    // }
-    // function mouseenterCircle(e) {
-    //     let circle = e.currentTarget;
-
-
-    // }
     function drawLine() {
         let points = [];
         let num = XValues.length;
@@ -138,29 +120,45 @@ function LineChart(name, data) {
     }
     //focus
 
-    let originR = 3;
-    let highlightR = 8;
+    let normal = {
+        r: 3,
+        text: {//#765373
+            r: 0x76,
+            g: 0x53,
+            b: 0x73
+        },
+    }
+    let highlight = {
+        r: 8,
+        text: {
+            r: 0xff,
+            g: 0xff,
+            b: 0xff
+        }
+    }
+
     let focusedCircle = null;
     function focusCircle(circle) {
         let currentR;
         if (circle.tween) {
             circle.tween.stop();
             currentR = circle.tween.getCurrentValue();
-        } else currentR = originR;
-        circle.tween = TweenX(currentR, highlightR, 50, changeRadius);
+        } else currentR = normal;
+        circle.tween = TweenX(currentR, highlight, 500, changeRadius, ElasticEasings.easeInElastic);
         function changeRadius(v) {
-            circle.setAttribute('r', v);
+            circle.setAttribute('r', v.r);
+            texts[circle.index].setAttribute('fill', rgbToCss(v.text.r, v.text.g, v.text.b))
         }
         focusedCircle = circle;
     }
     function unfocusCircle(circle) {
         circle.tween.stop();
         let currentR = circle.tween.getCurrentValue();
-        circle.tween = TweenX(currentR, originR, 700, changeRadius);
+        circle.tween = TweenX(currentR, normal, 700, changeRadius);
         function changeRadius(v) {
-            // console.log(v);
-            if (v < 0) v = 0;
-            circle.setAttribute('r', v);
+            circle.setAttribute('r', v.r);
+            texts[circle.index].setAttribute('fill', rgbToCss(v.text.r, v.text.g, v.text.b))
+
         }
         focusedCircle = null;
     }
@@ -188,7 +186,7 @@ function LineChart(name, data) {
         let nearestIndex = nearWhichX(x, linepoints);
         if (nearestIndex == oldNearst) return;
         else {
-            if (focusedCircle != null)//enter{
+            if (focusedCircle != null)
                 unfocusCircle(focusedCircle);
             focusCircle(circles[nearestIndex]);
             oldNearst = nearestIndex
@@ -240,7 +238,7 @@ function LineChart(name, data) {
     // axis.drawVerticalLines();
     axis.drawVerticalLinesAligned(XNames, 20);
     // axis.drawXTextAligned();
-    axis.drawXTextRotatedAligned(XNames, 10, 60);
+    let texts = axis.drawXTextRotatedAligned(XNames, 10, 60);
     axis.drawHorizonLines(5);
     axis.drawYAxisTexts(ceiling, 5);
     let linepoints = drawLineAligned(axis.getXCords());

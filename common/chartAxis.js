@@ -52,6 +52,7 @@ function Axis(data) {
         }
     }
     function drawXTextRotated(names, size, angle) {
+        let all = [];
         let num = names.length;
         let step = wid / num;
         let current = 0;
@@ -64,10 +65,13 @@ function Axis(data) {
             chart.rotateText(text, angle, x, y);
             chart.moveText(text, x, y);
             current += step;
+            all.push(text);
         }
+        return all;
     }
     function drawXTextRotatedAligned(names, size, angle) {
         let num = names.length;
+        let all = [];
         for (let i = 0; i < num; i++) {
             let text = chart.createText(names[i]);
             chart.setTextSize(text, size);
@@ -76,7 +80,9 @@ function Axis(data) {
             let y = -rect.height + 8
             chart.moveText(text, x, y);
             chart.rotateText(text, angle, x, y);
+            all.push(text);
         }
+        return all;
     }
     function drawXTextAligned(names) {
         let num = names.length;

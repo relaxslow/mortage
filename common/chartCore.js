@@ -295,24 +295,26 @@ function ToolTip(div, elems, data, type) {
                 tween.stopAtEnd();
                 tween = null;
             }
-
+            let offset=10;
             tooltip.style.opacity = 1;
             tooltip.style.top = tooltip._top + "px";
             tooltip.style.left = tooltip._left + "px";
-            tooltip.style.top = (tooltip._top - tooltip._hei) + "px";
+            tooltip.style.top = (tooltip._top - tooltip._hei-offset) + "px";
             tooltip.style.width = tooltip._wid + "px";
             downArrow.style.left = (tooltip._wid / 2 - arrowWid / 2) + "px";
 
             if (!canPop) return;
             tooltip.style.height = 0 + "px";
 
-            tween = Tween(0, tooltip._hei, 500, changeTooltipHei, ElasticEasings.easeInElastic);
+            tween = TweenX(0, tooltip._hei, 500, changeTooltipHei, ElasticEasings.easeInElastic);
+           
             function changeTooltipHei(v) {
                 tooltip.style.height = v + "px";
-                tooltip.style.top = (tooltip._top - v) + "px";
+                tooltip.style.top = (tooltip._top -v-offset) + "px";
                 downArrow.style.top = v + "px";
 
             }
+           
         }
         let canPop = true;
         let tween;
@@ -324,7 +326,7 @@ function ToolTip(div, elems, data, type) {
                 tween.stopAtEnd();
                 tween = null;
             }
-            tween = Tween(1, 0, 500, fadeOut, EasingFunctions.linear, permitPop);
+            tween = TweenX(1, 0, 500, fadeOut, EasingFunctions.linear, permitPop);
             function fadeOut(v) {
                 tooltip.style.opacity = v;
             }
@@ -370,3 +372,17 @@ function ToolTip(div, elems, data, type) {
 
 }
 
+//util
+
+function rgbToCss(r, g, b) {
+    if (r > 255) r = 255;
+    if (g > 255) g = 255;
+    if (b > 255) b = 255;
+    let rStr = Math.round(r).toString(16);
+    let gStr = Math.round(g).toString(16);
+    let bStr = Math.round(b).toString(16);
+    if (rStr.length == 1) rStr = '0' + rStr;
+    if (gStr.length == 1) gStr = '0' + gStr;
+    if (bStr.length == 1) bStr = '0' + bStr;
+    return '#' + rStr + gStr + bStr;
+}
