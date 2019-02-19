@@ -3,6 +3,16 @@
 
 <head>
     <style>
+        @font-face {
+            font-family: "YanoneKaffeesatz-Bold";
+            src: url("/fonts/YanoneKaffeesatz-Bold.ttf");
+        }
+
+        @font-face {
+            font-family: "Roboto-Regular";
+            src: url("/fonts/Roboto-Regular.ttf");
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -12,77 +22,597 @@
 
         .main {
             padding: 30px 200px;
+            position: relative;
         }
 
         .page {
-            padding: 20px;
-            background-color: #ffdc9c;
+            padding: 77px;
+            background-color: #ffebc6;
             /* position: relative; */
             width: 600px;
         }
 
         h2 {
-            border-bottom: solid 2px #ffffff;
-            border-top: solid 2px white;
-            background-color: #5d6474;
-            color: white;
+            font-family: "YanoneKaffeesatz-Bold";
+            font-size: 2em;
+            border-bottom: solid 1px #8c8c8c;
+            /* border-top: solid 2px white; */
+            /* background-color: #5d6474; */
+            color: #bd0000;
             position: relative;
-            line-height: 50px;
-            padding-left: 20px;
+            /* padding-left: 20px; */
             height: 50px;
             margin-top: 0;
+            position: relative;
         }
 
-    
+        h2 span {
+            position: absolute;
+            bottom: 0;
+            line-height: 25px;
+        }
 
         h3 {
-            color: white;
-            font-family: sans-serif;
-            border-top: solid 1px;
-            border-bottom: solid 1px;
-            background-color: #5d6474;
-            padding-left: 10px;
+            color: #006a9e;
+            font-family: "YanoneKaffeesatz-Bold";
+            /* border-top: solid 1px; */
+            /* border-bottom: solid 1px; */
+            /* background-color: #5d6474; */
+            /* padding-left: 10px; */
         }
 
         p {
-            font-family: monospace;
+            font-family: "Roboto-Regular";
+            font-size: 0.8em;
+            line-height: 20px;
+            color: #3f0000;
         }
+
+        p span {
+            color: #9a3e92;
+            font-family: "Roboto-Regular";
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        li {
+            font-family: 'Roboto-Regular';
+            font-weight: 600;
+            font-size: 13px;
+            width: 450px;
+            line-height: 20px;
+            color: #3c0000;
+            margin-left: 50px;
+
+
+        }
+
+        ul {
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        ul p {
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+      
     </style>
+    <script src="/common/code.js"></script>
+    <link rel="stylesheet" href="/common/code.css">
 </head>
 
 <body>
+
     <div class='main'>
+
         <div class='page'>
-            <h2><span>Introduction</span> </h2>
+            <h2><span>INTRODUCTION</span> </h2>
             <p>
-                This project is one of the project of UONA curriculum named DATA523(Big Data Fundamental).This course revealing the essence of big data technology , how it put to use in practice and what we should keep in mind when use it. Big data went to our lives and benefit almost everywhere as a program developper. I want to combine my programming skill with big data. It happened that this is the good place where Javascript could play well at.
+                This project is one of the project of UONA curriculum. The course is named <span>DATA523</span> (Big Data Fundamental).The course revealing the essence of big data technology , how it put to use in practice and what we should keep in mind when use it. Big data went to our lives and benefit almost everywhere. As a program developper, I want to combine my programming skill with big data. 
             </p>
             <p>
                 One major application of bigData is to provide a service which let people download and watch it. No matter what website like amazon or facebook, they are simplar in service. The difference is that they provide different content. Amazon provide commodities while facebook provide pictures and videos. All the services has some custom functions like searching and filtering which let the user view the content they are interested.
+            </p>
+            <p>
                 In this project, we are going to build a small test webpage and implement the above functions. The content we provide is related to mortgage industry. We'd like to build a real website to download public mortgage data and conduct analysis in respect to the data. We will view the data from two different angles: chronological and geological. We are trying to perform a downloading tool along with the analytical charts and tables to show how the market performed in the past.
-
-
             </p>
-            <h3>Topdown approach</h3>
+            <h3>Topdown Approach</h3>
             <p>
-                topdown approach refer to a methodology of programming. It divide the whole task into small part and implement them seperately. Its goal is avoid code refactoring as much as possible. But each theory has its premise. Topdown approach assume the developer has clear understanding of the functions and its implementations. In practice, especially for the novice like me who have not enough knowledge of the overall structure. In this situation, bottom up seems a good approach. No matter topdown or bottomup, the key is to control the complexity of the code, not only for maintenance but also for reuse of the code. 
+                topdown approach refer to a methodology of programming. It divide the whole task into small part and implement them seperately. Its goal is to avoid code refactoring as much as possible. But each theory has its premise. Topdown approach assume the developer has clear understanding of the functions and its implementations. In practice, especially for the novice like me who have not enough knowledge of the overall structure. In this situation, bottom up seems a good approach. No matter topdown or bottomup, the key is to <span>control the complexity of the code</span> , not only for maintenance but also for reuse of the code. 
             </p>
-            <h3>Iterative development</h3>
+            <h3>Iterative Development</h3>
             <p>
-                Iterative development construct the code like Lego. The whole program is made of many building blocks. Each block has some abstract of function. We package those blocks to form some bigger structures and then use that to form larger functions and eventually reach our goals. Each block should be carefully tested but that would not need to be done at once. They can be completed gradually along with the growth of our program. The blocks maybe not be recognized at first, because we usually write functions from topdown approach based on a real problem until we found some function repeated for many time , then we seperate those code as functions. So refactoring happened throughout the entire process. We tidy up the code,abstract common method and package them into high level functions. finally we make it concise and optimized. This process is helpful to learning and let us see the evolution of the code. That's one feature of iterative development.     
+                Iterative development construct the code like Lego. The whole program is made of many building blocks. Each block has some abstract of function. We package those blocks to form some bigger structures and then use that to form larger functions and eventually reach our goals. Each block should be carefully tested but that would not need to be done at once. They can be completed gradually along with the growth of our program. The blocks may not be recognized at first, because we usually write functions from topdown approach based on a real problem until we found some function repeated for many times , then we seperate those code as functions. So refactoring happened throughout the entire process. We tidy up the code,abstract common method and package them into high level functions. finally we make it concise and optimized. This process is helpful to learning and let us see the evolution of the code. That's one feature of iterative development.     
             </p>
             <h3>Javascript</h3>
             <p>
-                Javascript has varies patterns that can be used in combination. The language has good  mechanism  which can help developer  change the patterns  as they need. The cost of changes are minimized when code are evolved from a simple function to a complete reuseable class. We must thank to Javascript's flexibility that it won't restrict us like Java. Although Java claimed its security and easy debug features I still thought Javascript is the best language I met in the world.
+                It happened that this is the good place where Javascript could play well with. Javascript has varies patterns that can be used in combination. The language has good  mechanism  which can help developer  change the patterns  as they need. The cost of changes are minimized when code are evolved from a simple function to a complete reuseable class. We must thank to Javascript's flexibility that it won't restrict us like other languages. Although they claimed  security and easy debug features I still thought Javascript is the best language I met in the world and I believe those problems are not longer problem as time goes by.
             </p>
+            <h2><span>Overview</span> </h2>
+            <p>
+                So let get back to this project. In this project we need implement the following functions.
+            </p>
+            <ul>
+                <li> A Download button let user download data as .csv file</li>
+                <li> Three dropdown list with multi-select functions, allow user query  State, Quarter, Dimension or any of their combination </li>
+                <li> Two charts domestrate the Loan Count and Loan Amount seperately</li>
+            </ul>
+            <h3>Server programming</h3>
+            <p>
+                We use node.js as the backbone of our back-end because it use Javascript as its language. This simplify the whole development a lot more because we don't need to learn 2 seperate language for server and client. In this project, we need to implement the following functions.
+                
+            </p>
+            <ul>
+                <li>File server </li>
+                <p>
+                    A basic file server that simplely return the files that client requested. This is the basic service that every server should provide. All the resource on the pages get from server via this service.
+                </p>
+                <li>Searching</li>
+                <p>
+                    All the data are located on the server file named samplefile.csv. This is a typical spreadsheet. We parse that file and get names for the menu and list records  when user push preview button. In this project, due to the reason of research and test, we don't use any of the database system. For example, mongoDB or SQL. Instead, we want fake a database system just using a simple package: csvtojson.
+                </p>
+                <li>Query</li>
+                <p>
+                    we want implement the basic query operation from client based on the selection of pull down menu. For example, compute total loan amount and count of the selection 
+                </p>
 
-            <h3>overall structure</h3>
-            <p> So let get back to this project.</p>
-            <h3>animation</h3>
+            </ul>
+            <h3>Client programming</h3>
+            <p>
+                On the client side, there are lot of technical issues need to be solved. Because we want to consolidate our basic knowledge of web , we don't use any of the package, just pure Javascript/Html/Css. All the codes are writen  by our own hands. We want to carry out our faith that <span>less is more</span> which means minimizing the building block we learned , keeping our core light weighted and putting emphasis on the practical issues.    
+            </p>
+            <ul>
+                <li>Component </li>
+                <p>
+                     the Html do has lot of handy Tags that could maximal minimize our work . In our project all we want are some pulldown menus and buttons. Our pull down menu should support operations such as  multi-select and reset. Those are not provided by the default Tag. So we must rewrite it from bottom. 
+                </p>
+                <li>Navigation</li>
+                <p>
+                    Our project has 3 pages: Introduce, Download and Analysis. They could be loaded by clicking the corresponding buttons on the headbar and should be eliminated in the memory when user switch to another page. One page one module is good idea. Years before, we should write our own functions handle this include removing all the css and functions loaded by a page and running new functions and css of the new page. Now we have iframe, a versatile tag could solve the above issues. We would discuss later in Detail section. 
+                </p>
+                <li>Visualization</li>
+                <p>
+                    There are lots of packages can do this job. For example,amchart.js,chart.js...etc. In this project, we want implement it via pure Javascript. On one hand, I want to research how much effort it needed.On the other hand, Most of all, it is my personal preference: Minimal use of packages.
+                </p>
+                <li>Animation</li>
+                <p>
+                    The program looks lifeless.That's the place where interactive feedback and animations comes to play. In this project, we want to dig deeper to reveal machanism of Javascript animations and build a small animation engine upon them. 
+                </p>
+            </ul>
+
+            <h2><span>Detail</span> </h2>
+            <p>
+                In this section, we elaborate all the technical point in this project one by one. Let's begin from server side
+            </p>
+            <h3>File server</h3>
+            <div class='codeHead'>
+                <b class='title'>app.js</b>
+            </div>
+            <div class="code">
+                <code>
+                    const http = require('http');
+                    const URLlib = require('url');
+                    const path = require('path');
+                    const fs = require('fs');
+                    let server = http.createServer(handle);
+                    const port = process.env.PORT || 1337;
+                    server.listen(port);
+                    console.log(`Server running at  ${port}`);
+
+                    function handle(req, res) {
+                        const { headers, method, url } = req;
+                        console.log(` ${method} ${url}`);
+                    
+                        const parsedUrl = URLlib.parse(url, true);
+                        req.parsedPath = decodeURI(parsedUrl.pathname);
+                        req.parsedUrl = parsedUrl;
+                    
+                        if (isFile(req.parsedPath)) {
+                            handleFile(req, res);
+                            return;
+                        }
+                    
+                        //req.routeArr = splitRoute(req.parsedPath);
+                        //routine[req.routeArr[1]](req, res);
+                    }
+                    function isFile(filePathStr) {
+                        if (filePathStr.indexOf('.') == -1)
+                            return false;
+                        return true;
+                    }
+                    function handleFile(req, res) {
+                        let fileFullPath = `.${req.parsedPath}`;
+                        let fileName = req.parsedPath.slice(req.parsedPath.lastIndexOf("/") + 1);
+                        getFileData(fileFullPath, res, function (data) {
+                            if (data == null)
+                                return;
+                            const mimeType = {
+                                '.ico': 'image/x-icon',
+                                '.html': 'text/html',
+                                '.js': 'text/javascript',
+                                '.json': 'application/json',
+                                '.css': 'text/css',
+                                '.png': 'image/png',
+                                '.jpg': 'image/jpeg',
+                                '.wav': 'audio/wav',
+                                '.mp3': 'audio/mpeg',
+                                '.chart': 'image/chart+xml',
+                                '.pdf': 'application/pdf',
+                                '.doc': 'application/msword',
+                                '.eot': 'appliaction/vnd.ms-fontobject',
+                                '.ttf': 'aplication/font-sfnt',
+                                '.csv': 'text/csv'
+                            };
+                            const ext = path.parse(fileFullPath).ext;
+                            res.setHeader('Content-type', mimeType[ext] || 'text/plain');
+                            res.setHeader('fileName', fileName);
+                            res.end(data);
+                        });
+                    }
+                </code>
+            </div>
+            <p>
+                This is a simplest file server. It inspect the string that send from client and check if it is a file. The principle is simple : if the message end with a suffix(.csv ) then we can assume it is a file. There is an object named mimeType which hold the commonly used file format and add as headers when the file is send back. 
+            </p>
+            <h3>Searching</h3>
+            <p>
+                There are 2 functions to implement. One is retrieve menu items for our dropdown list.
+            </p>
+            <div class='codeHead'>
+                <b class='title'>getPullDownMenu.js</b>
+            </div>
+            <div class='code'>
+                <code>
+                    function initOptions() {
+                        let req = new XMLHttpRequest();
+                        req.open('GET', `/getPullDownMenu/${elemtClass}`);
+                        req.onload = function () {
+                            let data = JSON.parse(req.response);
+                            for (let i = 0; i < data.length; i++) {
+                                let d = data[i];
+                                if (d === "") continue;
+                                let item = document.createElement('BUTTON');
+                                item.classList.add('optionItem');
+                                item.textContent = d;
+                                options.appendChild(item);
+                
+                            }
+                            initItems();
+                            initResetBut();
+                            requestAnimationFrame(function () {
+                                initSelector();
+                            })
+                        }
+                        req.send();
+                    }
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                    send request to backend and create dropdown menus based on recieved data    
+                </p>
+            </div>
+
+            <div class='codeHead'>
+                <b class='title'>app.js</b>
+            </div>
+            <div class='code'>
+                <code>
+                    "getPullDownMenu": function (req, res) {
+                        let name = req.routeArr[2];
+                        QueryItem.get()
+                            .then(function sendBack(items) {
+                                res.setHeader('Content-type', 'application/json');
+                                res.end(JSON.stringify(items[name]));
+                            })
+                
+                    },
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                    In the app.js(server), we defined a function to deal with the request. The job is done by our <span>QueryItem</span> module. The module load up at server start and read the "samplefile.csv" immediately. Then, it parse the file using our external package "csvtojson". When the client request the menu items data , it send the searched data back to client.
+                </p>
+            </div>
+
+            <div class='codeHead'>
+                <b class='title'>QueryItem.js</b>
+            </div>
+            <div class='code'>
+                <code>
+                    function initData() {
+                        let states = [];
+                        let filings = [];
+                        let dimensions = [];
+                        function isInArray(value) {
+                            for (let i = 0; i < this.length; i++) {
+                                let v = this[i];
+                                if (v === value) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    
+                        CSVToJSON()
+                            .fromFile("./data/samplefile.csv")
+                            .then(function (source) {
+                                for (let i = 0; i < source.length; i++) {
+                                    let record = source[i];
+                                    let state = record["State"];
+                                    if (!isInArray.call(states, state)) {
+                                        states.push(state);
+                                    }
+                                    let filing = record["Filing Quarter"];
+                                    if (!isInArray.call(filings, filing)) {
+                                        filings.push(filing);
+                                    }
+                                    let dimension = record["Dimensional Column"];
+                                    if (!isInArray.call(dimensions, dimension)) {
+                                        dimensions.push(dimension);
+                                    }
+                    
+                    
+                                }
+                    
+                                items.states = states;
+                                items.filings = QueryData.sortQuarter(filings);
+                                items.dimensions = dimensions;
+                                runAllWaitTasks();
+                            });
+                    }
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                    CSVToJSON is an asynchronized function. So we must do extra work. We put all the request fun to an array . When the task is done. We call <span>runAllWaitTasks</span>() to actually send the data back; 
+                </p>
+            </div>
+            <h3>Query</h3>
+            <div class='codeHead'>
+                <b class='title'>QueryData.js</b>
+            </div>
+            <div class='code'>
+                <code>
+                    function search(source, querydata) {
+                        let result = [];
+                        let totalLoanCount = 0;
+                        let totalLoanAmount = 0;
+                        for (let i = 0; i < source.length; i++) {
+                            let record = source[i];
+                    
+                            let stateMatch = testMatch(querydata.state, record["State"]);
+                            let filingMatch = testMatch(querydata.filing, record["Filing Quarter"]);
+                            let dimensionMatch = testMatch(querydata.dimension, record["Dimensional Column"]);
+                            if (!stateMatch || !filingMatch || !dimensionMatch) {
+                                continue;
+                            } else {
+                                result.push(record);
+                                totalLoanAmount += parseInt(record["LoanAmount"]);
+                                totalLoanCount += parseInt(record["LoanCount"]);
+                            }
+                        }
+                        result.push({
+                            "FilingID": "total",
+                            "State": "",
+                            "Filing Quarter": "",
+                            "Dimensional Column": "",
+                            "LoanCount": totalLoanCount,
+                            "LoanAmount": totalLoanAmount
+                        });
+                        return result;
+                    }
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                  Searching function search the database(samplefile.csv) and return the result. It also add up the record to get total loan count and amount
+                </p>
+            </div>
+            <h3>Component</h3>
+            <p>
+                Since we haven't use any framework or packages in our front-end. So we should package some function ourself to reduce the complexity of the code. We call them component because it could be reused anywhere. In this project we write the following components
+            </p>
+            <ul>
+                <li>pullDownMenu.js</li>
+                <p>
+                    Use to select query options,support multi-selection and reset
+                </p>
+                <li>chartCore.js</li>
+                <p>
+                    Use to draw chart in our analysis page. It essentially provide methods to draw charts base on the origin of the chart itself(html usually draw things from the top-left point of the element).There are two other high level component are developped to actually implement the chart drawing operation. They are <span>barChart.js</span>  and <span>lineChart.js</span>  
+                </p>
+                <li>tweenX.js</li>
+                <p>
+                    Support the animations throughout the project. There are many tween engines in the marcket such as tween.js or tweenMax.js(GSAP). They are very big and they force to input an object with fixed pattern({x:10,y:20..e.g.}). This lead to a little verbose to call the functions. In our tweenX.js, we support any structure of input object. You can construct the input as you wish, like this : {elment1:[{a:10,b:20},{a:30,b:40}],element2:[{a:50,b:60},{a:70,b:80}]}. Further more we support a stopAtEnd function. So there are no need to set the structure manually.   
+                </p>
+                <li>code.js</li>
+                <p>
+                    This functions turns each of the code in this page into a formatted, syntaxhighlight form. We choose a theme named Monokai ST3 which comes from the sublime textEditor. It's the most beautiful and scientific theme I've ever met. The <b>syntaxHighlight</b> function  use REGEX heavily to search and replace the desired word and wrap them with a proper sytle class.  
+                </p>
+
+            </ul>
+            <h3>Navigation</h3>
+            <p>
+                Navigation seems simple at first. But if you want your page could be loaded dynamically then lot of work should be done. First, there should be functions control the life cycle of the elements of the page. That is when user click the button, old page should be deleted include all the Dom elements and its Css styles. Then, new page loaded ,and the nonrefresh area remain. Second, we should handle asynchronize  process of deleting and loading, keep the functions run in desired order.  There are many ways to achieve these purpose. One is hard coded everything. It need a comprehensive understanding of the underlying mechanism. Besides, we should develop a modular system . we should define how to read and write html, css, and javascript files. We should be careful not to cause memory leak in our code. That huge amount of work only result successfully change pages as usual. So we recommend another way: iframe. Iframe is a Tag in html. After test, it has memory management functions as well. When you change the source of the iframe, it purge old pages and load new one. The drawback is it may repeat containing same library. Compare to the benefit it provide, this could be trivial and ignored. And, in this project we don't use any of the external library. The function writen by me is smaller with little memory occupation.  
+            </p>
+            <div class='codeHead'>
+                <b class='title'>index.html</b>
+            </div>
+            <div class='code'>
+                <code>
+                    function clickMainMenu(index) {
+                        contentFrame.src = folder + contentName[index] + ".html"
+                        contentFrame.onload = function () {
+                            resizeIframe(contentFrame)
+                        }
+                    }
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                    This is our page-switch function. Simple as it is!
+                </p>
+            </div>
+            <div class='codeHead'>
+                <b class='title'>index.html</b>
+            </div>
+            <div class='code'>
+                <code>
+                    function resizeIframe(iframe) {
+                        // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
+                        let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
+                        if (iframeContentHei < window.innerHeight - headHeight) {
+                            iframe.style.height = window.innerHeight - headHeight + "px";
+                        } else {
+                            iframe.style.height = (iframe.contentWindow.document.body.scrollHeight) + "px";
+            
+                        }
+                    }
+                    window.resizeContent = function () {
+                        resizeIframe(contentFrame);
+                    }
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                    One of the side effects of using iframe as modular system is It can't change the its size based on its content(that's the basic function of a Div). So we write our own resize function to deal with. We also define it as <span> window </span> property, so that we could find it inside the iframe page
+                </p>
+            </div>
+            <h3>Visualization</h3>
+            <p>
+                To finish our visualization task, I write a series function. I put them in chartChore.js. The main purpose of those functions is to draw things from the visual origin of the chart. As you probably known, Html draw things from the top-left corner of the window. Charts like bar chart or line chart has axis with its   X point to right and y point to  the up. It's difficult to calculate the coordinate from that point. If we use the origin point of the chart, things became easy. So a transform of point is necessary.       
+            </p>
+            <div class='codeHead'>
+                <b class='title'>chartCore.js</b>
+            </div>
+            <div class='code'>
+                <code>
+                    function drawRect(x, y, wid, hei) {
+                        let rect = document.createElementNS(ns, 'rect');
+                        rect.setAttribute('x', oX + x);
+                        rect.setAttribute('y', oY - y - hei);
+                        rect.setAttribute('width', wid);
+                        rect.setAttribute('height', hei);
+                        rect.setAttribute('fill', "#f06");
+                        rect.beginY = y;
+                        svg.append(rect);
+                        return rect;
+                    }
+                    function drawLine(x1, y1, x2, y2, lineWid) {
+                        let line = document.createElementNS(ns, 'line')
+                        line.setAttribute('x1', oX + x1);
+                        line.setAttribute('y1', oY - y1);
+                        line.setAttribute('x2', oX + x2);
+                        line.setAttribute('y2', oY - y2);
+                        line.setAttribute('stroke', '#999999');
+                        line.setAttribute('stroke-width', `${lineWid}`);
+                        line.style["pointer-events"] = "none";
+                        svg.append(line);
+                        return line;
+                    }
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                    These are 2 function picked from the chartCore.js. As you can see on the first several line, the transformation is simple.
+                </p>
+            </div>
+            <div class='codeHead'>
+                <b class='title'>barChart.js</b>
+            </div>
+            <div class='code'>
+                <code>
+                    function drawBars() {
+                        let num = XValues.length;
+                        let step = graphWid / num;
+                        let current = 0;
+                        let widPercent = 0.9;
+                        let wid = step * widPercent;
+                        let offset = (1 - widPercent) * step / 2;
+                        let maxValue = axis.getYMax();
+                
+                        for (let i = 0; i < num; i++) {
+                            let hei = graphHei * XValues[i] / maxValue;
+                            let x = current + offset;
+                            let bar = chart.drawRect(x, 0, wid, 0);
+                
+                            bars.push(bar);
+                            current += step;
+                            
+                            TweenX(0, hei, 1000, changeBarHeight, ElasticEasings.easeInElastic);
+                            function changeBarHeight(v) {
+                                chart.setRectHeight(bar, v);
+                            }
+                
+                        }
+                        //focus animation
+                        for (let i = 0; i < bars.length; i++) {
+                            let bar = bars[i];
+                            bar.index = i;
+                            bar.addEventListener('mouseover', mouseoverBar);
+                            bar.addEventListener('mouseout', mouseoutBar);
+                        }
+                
+                
+                        function mouseoutBar(e) {
+                            let bar = e.currentTarget;
+                            let currentValue;
+                            if (bar.tween) {
+                                bar.tween.stop();
+                                currentValue = bar.tween.getCurrentValue();
+                            }
+                            else
+                                currentValue = highlight;
+                            bar.tween = TweenX(currentValue, normal, 1000, unfocusBar)
+                            function unfocusBar(v) {
+                                changeFocus(bar, v);
+                            }
+                        }
+                        function mouseoverBar(e) {
+                            let bar = e.currentTarget;
+                            if (bar.tween) {
+                                bar.tween.stop();
+                                currentValue = bar.tween.getCurrentValue();
+                            }
+                            else
+                                currentValue = normal;
+                            bar.tween = TweenX(currentValue, highlight, 0, focusBar)
+                            function focusBar(v) {
+                                changeFocus(bar, v);
+                            }
+                        }
+                        function changeFocus(bar, v) {
+                            let color = rgbToCss(v.color.r, v.color.g, v.color.b);
+                            let textColor = rgbToCss(v.text.r, v.text.g, v.text.b);
+                            bar.setAttribute('fill', color);
+                            texts[bar.index].setAttribute('fill', textColor)
+                        }
+                    }
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                    The barChart.js carry out the actual drawing actions. The 'drawBars' function response to all the possible input from user such as mouse over and out. 
+                </p>
+            </div>
+            <h3>Animation</h3>
+            <p>
+
+            </p>
+            <h2><span>Conclusion</span> </h2>
         </div>
 
     </div>
-
+    <script>
+        let codes = document.querySelectorAll('.code');
+        for (let i = 0; i < codes.length; i++) {
+            let code = codes[i];
+            syntaxHighlight(code);
+        }
+    </script>
 </body>
 
 </html>

@@ -45,17 +45,16 @@
         .analysis:focus {
             outline: none;
         }
+     
     </style>
     <link rel="stylesheet" href="/common/Menu.css">
     <script src="/common/Menu.js"></script>
-    <!-- <script src="/common/slidePanel.js"></script>
-    <link rel="stylesheet" href="/common/slidePanel.css"> -->
 
-    <!-- <script src="/lib/tween.js"></script> -->
 
 </head>
 
 <body>
+
     <div class="headBar Menu">
         <button class="MenuItem select">introduction</button>
         <button class="MenuItem">dataDownload</button>
@@ -79,6 +78,9 @@
         }
 
         let contentFrame = document.querySelector(".content");
+        contentFrame.onload = function () {
+            resizeIframe(contentFrame);
+        }
         let headHeight = mainMenu.getHei();
         function resizeIframe(iframe) {
             // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
@@ -95,6 +97,7 @@
         window.resizeContent = function () {
             resizeIframe(contentFrame);
         }
+
 //---------------------------------------------------
 
     </script>

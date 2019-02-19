@@ -144,7 +144,7 @@ function BarChart(name, data) {
             }
             else
                 currentValue = normal;
-            bar.tween = TweenX(currentValue, highlight, 500, focusBar, ElasticEasings.easeInElastic)
+            bar.tween = TweenX(currentValue, highlight, 0, focusBar)
             function focusBar(v) {
                 changeFocus(bar, v);
             }

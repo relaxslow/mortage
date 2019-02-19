@@ -11,18 +11,7 @@ const JSONToCSV = require("json2csv").parse;
 const QueryItem = require('./server/QueryItem.js');
 const QueryData = require('./server/QueryData.js')
 
-let server = http.createServer(function (req, res) {
-
-    const { headers, method, url } = req;
-    console.log(` ${method} ${url}`);
-
-    const parsedUrl = URLlib.parse(url, true);
-    req.parsedPath = decodeURI(parsedUrl.pathname);
-    req.parsedUrl = parsedUrl;
-    handle(req, res);
-
-
-});
+let server = http.createServer(handle);
 const port = process.env.PORT || 1337;
 server.listen(port);
 console.log(`Server running at  ${port}`);
@@ -30,6 +19,13 @@ console.log(`Server running at  ${port}`);
 //file handle-----------------------------------
 
 function handle(req, res) {
+    const { headers, method, url } = req;
+    console.log(` ${method} ${url}`);
+
+    const parsedUrl = URLlib.parse(url, true);
+    req.parsedPath = decodeURI(parsedUrl.pathname);
+    req.parsedUrl = parsedUrl;
+
     if (isFile(req.parsedPath)) {
         handleFile(req, res);
         return;
@@ -164,7 +160,7 @@ function isFile(filePathStr) {
 function handleFile(req, res) {
     let fileFullPath = `.${req.parsedPath}`;
     let fileName = req.parsedPath.slice(req.parsedPath.lastIndexOf("/") + 1);//req.parsedPath.lastIndexOf(".")
-    getFileData(fileFullPath, req, res, function (data) {
+    getFileData(fileFullPath, res, function (data) {
         if (data == null)
             return;
         const mimeType = {
@@ -192,7 +188,7 @@ function handleFile(req, res) {
 }
 
 
-function getFileData(file, req, res, fun) {
+function getFileData(file, res, fun) {
     if (!fs.existsSync(file)) {
         res.statusCode = 404;
         res.end(`Error: File ${file} not found!`);

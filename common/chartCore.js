@@ -245,7 +245,7 @@ function ToolTip(div, elems, data, type) {
             [100, 0],
             [50, -100]
         ]
-        let arrowcolor = '#faebd7'
+        let arrowcolor = '#ffffff'
         popDialog.drawClosePath([arrowpoints, arrowcolor]);
 
 

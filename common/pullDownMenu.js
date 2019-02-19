@@ -79,8 +79,6 @@ function getPullDown(elemtClass) {
                 options.appendChild(item);
 
             }
-
-
             initItems();
             initResetBut();
             requestAnimationFrame(function () {

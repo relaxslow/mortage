@@ -1,0 +1,98 @@
+.codeBox {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 20px;
+}
+
+.codeHead {
+    background-color: #FF9800;
+    line-height: 21px;
+    vertical-align: baseline;
+}
+
+.codeHeadText {
+    color: #fcfcfc;
+    margin: 10px 20px;
+    /* width: 100%; */
+    /* height: 100%; */
+    /* text-align: center; */
+    font-size: 11px;
+    /* align-content: center; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* right: 20px; */
+    /* position: relative; */
+    /* text-align: center; */
+    /* align-content: center; */
+}
+.codeHead .title{
+    color: #4a4040;
+    font-family: monospace;
+    margin-left: 20px;
+    font-size: 0.8em;
+}
+.codeDescribe{
+    background-color: white;
+    margin-bottom: 30px;
+    min-height: 20px;
+    padding: 20px 30px;
+    font-family: Roboto-Regular;
+    font-size: 1em;
+}
+.codeDescribe span{
+    font-family: "Roboto-Regular";
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #0736a5;
+}
+.code {
+    /* margin: 10px 100px; */
+    padding: 10px 30px;
+    background-color: #4a4040;
+    color: #f0f0f0;
+    overflow: hidden;
+    font-family: monospace;
+    white-space: nowrap;
+    cursor: grab;
+}
+.code code{
+    cursor: text;
+}
+.code.active{
+    cursor: grabbing;
+   
+}
+.code .normal{
+    color: #f0f0f0;
+}
+
+.code .keyword {
+    color: #5dd0ec;
+    font-style: italic;
+}
+.code .funcall {
+    font-weight: 600;
+    color: #5dd0ec;
+}
+.code .fundef{
+    color: rgb(170, 255, 44);
+}
+.code .funDefParam{
+    color: rgb(255, 181, 70);
+}
+.code .comment {
+    color: rgb(155, 148, 147);
+}
+.code .operator {
+    color:rgb(255, 95, 122);
+}
+
+.code .string{
+    color: #e2cf1e;
+}
+.code .unStr{
+    color: #b881f6;
+}
+.code .condition{
+    color:rgb(255, 95, 122);
+}
