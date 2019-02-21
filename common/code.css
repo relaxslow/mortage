@@ -97,3 +97,6 @@
 .code .condition{
     color:rgb(255, 95, 122);
 }
+.code .regexYellow{
+    color: #e2cf1e;
+}

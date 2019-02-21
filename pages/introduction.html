@@ -189,6 +189,7 @@
                 <b class='title'>app.js</b>
             </div>
             <div class="code">
+               
                 <code>
                     const http = require('http');
                     const URLlib = require('url');
@@ -428,8 +429,31 @@
                 </p>
                 <li>code.js</li>
                 <p>
-                    This functions turns each of the code in this page into a formatted, syntaxhighlight form. We choose a theme named Monokai ST3 which comes from the sublime textEditor. It's the most beautiful and scientific theme I've ever met. The <b>syntaxHighlight</b> function  use REGEX heavily to search and replace the desired word and wrap them with a proper sytle class.  
+                    This functions turns each of the code in this page into a formatted, syntaxhighlight form. We choose a theme named Monokai ST3 which comes from the sublime textEditor. It's the most beautiful and scientific theme I've ever met. The <b>syntaxHighlight</b> function  use Regular Expression heavily to search and replace the desired word and wrap them with a proper sytle class.  
                 </p>
+                <div class='codeHead'>
+                    <b class='title'>code.js</b>
+                </div>
+                <div class='code'>
+                    <code>
+                        let regex_newLine = /\r?\n/;
+                        let regex_empty = /^$|^\s*$/gm;
+                        let regex_spaceAtBegin = /^\s+/;
+                        let regex_keywords = /\bconst\b|\blet\b|\bconsole\b|\bfunction\b/g;
+                        let regex_operator = /[\+\-\*\/=\!]|\|\||&&/g
+                        let regex_strs = /'[^']*'|`[^`]*`|"[^"]*"/g
+                        let regex_nonStr = /(?<=\=\s+)\btrue\b|\bfalse\b|\bnull\b|\bundefined\b|\b\d+\b/g
+                        let regex_yellow=/\/.*\/g?m?/g
+                        let regex_funDef = /(?<=function\s+)\w+(?=\s*\()/g
+                        let regex_funDefParam = /(?<=function(\s+)*\w*(\s+)*\()[^(),]*(?=\))|(?<=function(\s+)*\w*(\s+)*\(\[)[^()]*(?=\]\))/g
+                        let regex_condition = /\bif\b|\belse\b|\bfor\b|\breturn\b|\bcontinue\b|\bbreak\b/g
+                    </code>
+                </div>
+                <div class='codeDescribe'>
+                    <p>
+                    Here is some of the Regular Expression used in the code.js
+                    </p>
+                </div>
 
             </ul>
             <h3>Navigation</h3>
@@ -740,7 +764,7 @@
             <p>
                 One of the big puzzles that faced by today's web developer is too many choices. Thousands of package and framework came and gone. We are afraid falling behind the new technology, but also suffering by the overwhelming of the frameworks. In this project, we attempt to do all the things nature. Although lots of efforts, although only very few functions achieved, we are happy to its finally finished. 
             </p>
-          
+
         </div>
 
     </div>

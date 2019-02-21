@@ -4,19 +4,21 @@ function syntaxHighlight(code) {
     let regex_newLine = /\r?\n/;
     let regex_empty = /^$|^\s*$/gm;
     let regex_spaceAtBegin = /^\s+/;
-    let regex_keywords = /const|let|console|function/g;
+    let regex_keywords = /\bconst\b|\blet\b|\bconsole\b|\bfunction\b/g;
     let regex_operator = /[\+\-\*\/=\!]|\|\||&&/g
     let regex_strs = /'[^']*'|`[^`]*`|"[^"]*"/g
     let regex_nonStr = /(?<=\=\s+)\btrue\b|\bfalse\b|\bnull\b|\bundefined\b|\b\d+\b/g
-    let regex_varInStr3 = /(?<=`.*)\${[^{|}]*}(?=.*`)/g;
+    let regex_varInStr3 = /(?<=`.*)\${[^{}]*}(?=.*`)/g;
     let regex_varL = /\${/g;
     let regex_varR = /}/g;
-    let varX = /(?<=\${).*(?=})/
     let regex_funcall = /(?<!function.*)(?!function|for|if)\b\w+(?=\s*\()/g
     let regex_funDef = /(?<=function\s+)\w+(?=\s*\()/g
-    let regex_funDefParam = /(?<=function.*\()[^(|)]*(?=\))/g
+    let regex_funDefParam = /(?<=function(\s+)*\w*(\s+)*\()[^(),]*(?=\))|(?<=function(\s+)*\w*(\s+)*\(\[)[^()]*(?=\]\))/g
     let regex_condition = /\bif\b|\belse\b|\bfor\b|\breturn\b|\bcontinue\b|\bbreak\b/g
 
+    let regex_yellow=/\/.*\/g?m?/g
+    let regex_blue=/(?<=\/.*)(?!\\b)\\.|(\[[^\[]*\])|(\[[^\]]*\])|(\[\^.*\])(?=.*\/g?m?)/g
+    let regex_red=/\^|\||\*|\\b|\+|\?(?!<|=|!)|(?<=\/)g/g
     let codeStr = code.querySelector('code').textContent;
 
     let instructions = codeStr.split(regex_newLine);
@@ -85,7 +87,8 @@ function syntaxHighlight(code) {
         if (comment !== '')
             comment = markComment(comment);
 
-        let allStr, allfuncall, allfundef, allfundefParam, allkey, allOperator, allNonStr, allcondition;
+        let allStr,allRegex, allfuncall, allfundef, allfundefParam, allkey, allOperator, allNonStr, allcondition;
+        [allRegex,normal]=markRegex(normal);
         [allStr, normal] = markString(normal);
         [allfundefParam, normal] = markfunDefParam(normal);
         [allfuncall, normal] = markfuncall(normal);
@@ -105,6 +108,7 @@ function syntaxHighlight(code) {
         normal = restore(allOperator, normal, /_oooooo_/g, "operator")
         normal = restore(allNonStr, normal, /_uunstr_/g, "unStr")
         normal = restore(allcondition, normal, /_cccccc_/g, "condition")
+        normal=restore(allRegex,normal,/_rrrrrr_/g,"regexYellow")
         return normal + comment + '<br>';
     }
 
@@ -113,6 +117,12 @@ function syntaxHighlight(code) {
         if (indent == 0) return ''
         let space = "&nbsp;".repeat(indent)
         return `<span>${space}</span>`;
+    }
+    function markRegex(str){
+        let all = str.match(regex_yellow);
+        if (all == null) return [null, str];
+        str = str.replace(regex_yellow, '_rrrrrr_');
+        return [all, str]
     }
     function markCondition(str) {
         let all = str.match(regex_condition);
