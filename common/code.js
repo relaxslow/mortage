@@ -20,25 +20,49 @@ function syntaxHighlight(code) {
     let codeStr = code.querySelector('code').textContent;
 
     let instructions = codeStr.split(regex_newLine);
-
-    if (regex_empty.test(instructions[0]) == true) {
-        instructions.shift();
-    }
-    if (regex_empty.test(instructions[instructions.length - 1]) == true) {
-        instructions.pop();
-    }
+    let indents = organize(instructions);
     let newCode = '';
-    let firstLine = instructions[0]; if (firstLine === '') return;
-    let unindent = firstLine.match(regex_spaceAtBegin)[0].length;
+
     for (let i = 0; i < instructions.length; i++) {
         let instruction = instructions[i];
-        let newInstruction = parse(instruction)
-        newCode += '<code>'+newInstruction+'</code>';
+        let newInstruction = parse(instruction);
+        let indent = createIndent(indents[i]);
+        newCode += '<code>' + indent + newInstruction + '</code>';
         // console.log(newInstruction);
 
     }
 
     code.innerHTML = newCode;
+    function organize(instructions) {
+        if (regex_empty.test(instructions[0]) == true) {
+            instructions.shift();
+        }
+        if (regex_empty.test(instructions[instructions.length - 1]) == true) {
+            instructions.pop();
+        }
+        let firstLine = instructions[0]; if (firstLine === '') return null;
+        let indents = [];
+        let minLength;
+        for (let i = 0; i < instructions.length; i++) {
+            let instruction = instructions[i]
+            let space = instruction.match(regex_spaceAtBegin);
+            let spaceLength = -1;
+            if (space != null) {
+                spaceLength = space[0].length;
+                if (minLength == null || minLength > spaceLength) minLength = spaceLength;
+                instructions[i] = instruction.replace(regex_spaceAtBegin, '');
+            }
+            indents.push(spaceLength);
+
+        }
+        for (let i = 0; i < indents.length; i++) {
+            if (indents[i] != -1)//''
+                indents[i] = indents[i] - minLength;
+            else indents[i] = 0;
+        }
+
+        return indents;
+    }
     function isEmpty(line) {
         let result = line.match(regex_empty);
         if (result && result[0].length == line.length)
@@ -47,18 +71,20 @@ function syntaxHighlight(code) {
     }
     function parse(line) {
         if (isEmpty(line)) return '<br>'
-        let s = line.split("//");
-        let normal = s[0];
-        let comment = s[1];
-        comment = markComment(comment);
-        let beginspace = normal.match(regex_spaceAtBegin);
-        let indent = 0;
-        if (beginspace) {
-            indent = beginspace[0].length - unindent;
+        // let s = line.split("//");
+        let commentBegin = line.indexOf('//')
+        let normal, comment;
+        if (commentBegin != -1) {
+            normal = line.slice(0, commentBegin);
+            comment = line.slice(commentBegin);
         }
-        indent = createIndent(indent);
+        else {
+            normal = line;
+            comment = '';
+        }
+        if (comment !== '')
+            comment = markComment(comment);
 
-        normal = normal.replace(regex_spaceAtBegin, '');
         let allStr, allfuncall, allfundef, allfundefParam, allkey, allOperator, allNonStr, allcondition;
         [allStr, normal] = markString(normal);
         [allfundefParam, normal] = markfunDefParam(normal);
@@ -79,7 +105,7 @@ function syntaxHighlight(code) {
         normal = restore(allOperator, normal, /_oooooo_/g, "operator")
         normal = restore(allNonStr, normal, /_uunstr_/g, "unStr")
         normal = restore(allcondition, normal, /_cccccc_/g, "condition")
-        return indent + normal + comment + '<br>';
+        return normal + comment + '<br>';
     }
 
 
@@ -156,7 +182,7 @@ function syntaxHighlight(code) {
         if (str == undefined)
             return "";
         else {
-            return `<span class='comment'> //${str}</span>`;
+            return `<span class='comment'>${str}</span>`;
         }
     }
     function markString(str) {

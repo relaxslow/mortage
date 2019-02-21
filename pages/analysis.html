@@ -10,16 +10,19 @@
             box-sizing: border-box;
             overflow-x: hidden;
         }
-        .main{
+
+        .main {
             padding: 30px 200px;
         }
-        .page{
+
+        .page {
             padding: 80px;
             position: relative;
             background-color: #ffebc6;
             width: 600px;
             height: 743px;
         }
+
         #chartdiv {
             width: 700px;
             height: 500px;
@@ -42,13 +45,38 @@
             height: 300px;
             padding: 30px;
             position: absolute;
-            top: 415px;
+            top: 472px;
             /* left: 0; */
         }
 
         .amcharts-export-menu-top-right {
             top: 10px;
             right: 0;
+        }
+
+        @font-face {
+            font-family: "YanoneKaffeesatz-Bold";
+            src: url("/fonts/YanoneKaffeesatz-Bold.ttf");
+        }
+
+        h2 {
+            font-family: "YanoneKaffeesatz-Bold";
+            font-size: 2em;
+            border-bottom: solid 1px #8c8c8c;
+            /* border-top: solid 2px white; */
+            /* background-color: #5d6474; */
+            color: #bd0000;
+            position: relative;
+            /* padding-left: 20px; */
+            height: 50px;
+            margin-top: 0;
+            position: relative;
+        }
+
+        h2 span {
+            position: absolute;
+            bottom: 0;
+            line-height: 25px;
         }
     </style>
 
@@ -65,12 +93,13 @@
 <body>
     <div class="main">
         <div class="page">
+            <h2><span>Analysis</span> </h2>
             <div class="chart"> </div>
             <div class="lineChart"></div>
         </div>
-    
+
     </div>
-  
+
     <script>
         function askForData() {
             let req = new XMLHttpRequest();

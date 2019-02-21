@@ -96,8 +96,6 @@
             margin-left: 50px;
             margin-right: 50px;
         }
-
-      
     </style>
     <script src="/common/code.js"></script>
     <link rel="stylesheet" href="/common/code.css">
@@ -108,7 +106,7 @@
     <div class='main'>
 
         <div class='page'>
-            <h2><span>INTRODUCTION</span> </h2>
+            <h2><span>Introduction</span> </h2>
             <p>
                 This project is one of the project of UONA curriculum. The course is named <span>DATA523</span> (Big Data Fundamental).The course revealing the essence of big data technology , how it put to use in practice and what we should keep in mind when use it. Big data went to our lives and benefit almost everywhere. As a program developper, I want to combine my programming skill with big data. 
             </p>
@@ -483,7 +481,7 @@
             </div>
             <h3>Visualization</h3>
             <p>
-                To finish our visualization task, I write a series function. I put them in chartChore.js. The main purpose of those functions is to draw things from the visual origin of the chart. As you probably known, Html draw things from the top-left corner of the window. Charts like bar chart or line chart has axis with its   X point to right and y point to  the up. It's difficult to calculate the coordinate from that point. If we use the origin point of the chart, things became easy. So a transform of point is necessary.       
+                To finish our visualization task, I write a series function. I put them in chartChore.js. The main purpose of those functions is to draw things from the visual origin of the chart. As you probably known, Html draw things from the top-left corner of the window. It's difficult to calculate the coordinate from that point. Charts like bar chart or line chart has axis with its positive X point to right and positive y point to the up.  If we use the axis origin to draw, things became easy. So  transforming between coordinate system  is necessary.       
             </p>
             <div class='codeHead'>
                 <b class='title'>chartCore.js</b>
@@ -595,14 +593,154 @@
             </div>
             <div class='codeDescribe'>
                 <p>
-                    The barChart.js carry out the actual drawing actions. The 'drawBars' function response to all the possible input from user such as mouse over and out. 
+                    The barChart.js use the functions in chartCore.js which is carry out the actual drawing actions. The 'drawBars' function response to all the possible input from user such as mouse over and out. 
                 </p>
             </div>
             <h3>Animation</h3>
             <p>
-
+                This is the interesting part of whole project. We hope our chart could show up with animations. Further more it should bounce like you see in the cartoon film. All those effect actually controlled by mathematics. After quick search I found the following code. 
             </p>
+            <div class='codeHead'>
+                <b class='title'>tweenX.js</b>
+            </div>
+            <div class='code'>
+                <code>
+                    //Easing Functions - inspired from http://gizma.com/easing/
+                    // only considering the t value for the range [0, 1] => [0, 1]
+                    
+                   EasingFunctions = {
+                       // no easing, no acceleration
+                       linear: function(t) { return t },
+                       // accelerating from zero velocity
+                       easeInQuad: function(t) { return t * t },
+                       // decelerating to zero velocity
+                       easeOutQuad: function(t) { return t * (2 - t) },
+                       // acceleration until halfway, then deceleration
+                       easeInOutQuad: function(t) { return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t },
+                       // accelerating from zero velocity 
+                       easeInCubic: function(t) { return t * t * t },
+                       // decelerating to zero velocity 
+                       easeOutCubic: function(t) { return (--t) * t * t + 1 },
+                       // acceleration until halfway, then deceleration 
+                       easeInOutCubic: function(t) { return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1 },
+                       // accelerating from zero velocity 
+                       easeInQuart: function(t) { return t * t * t * t },
+                       // decelerating to zero velocity 
+                       easeOutQuart: function(t) { return 1 - (--t) * t * t * t },
+                       // acceleration until halfway, then deceleration
+                       easeInOutQuart: function(t) { return t < .5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t },
+                       // accelerating from zero velocity
+                       easeInQuint: function(t) { return t * t * t * t * t },
+                       // decelerating to zero velocity
+                       easeOutQuint: function(t) { return 1 + (--t) * t * t * t * t },
+                       // acceleration until halfway, then deceleration 
+                       easeInOutQuint: function(t) { return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t }
+                   }
+                   ElasticEasings = {
+                       // elastic bounce effect at the beginning
+                       easeInElastic: function(t) { return (.04 - .04 / t) * Math.sin(25 * t) + 1 },
+                       // elastic bounce effect at the end
+                       easeOutElastic: function(t) { return .04 * t / (--t) * Math.sin(25 * t) },
+                       // elastic bounce effect at the beginning and end
+                       easeInOutElastic: function(t) { return (t -= .5) < 0 ? (.02 + .01 / t) * Math.sin(50 * t) : (.02 - .01 / t) * Math.sin(50 * t) + 1 }
+                   }
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                    These fomulas output a series number base on the elapsed time. 
+                </p>
+            </div>
+            <div class='codeHead'>
+                <b class='title'>tweenX.js</b>
+            </div>
+            <div class='code'>
+                <code>
+                    function TweenX(from, to, duration, updatefun, easefun, completefun) {
+                        let dist, value;
+                        dist = JSON.parse(JSON.stringify(to));
+                        value = JSON.parse(JSON.stringify(from));
+                        dist = iterate([from, to], dist, function([f, t]) {
+                            return t - f;
+                        })
+                    
+                        if (!easefun) easefun = EasingFunctions.linear;
+                        let start = null;
+                        let id;
+                    
+                        function animate(t) {
+                            if (!start) {
+                                start = t
+                                if (updatefun) updatefun(from);
+                                id = requestAnimationFrame(animate);
+                            } else {
+                                let elapse = t - start;
+                                let percent = elapse / duration;
+                                if (percent > 1) percent = 1;
+                                let ease = easefun(percent);
+                                value = iterate([from, dist], value, function([f, d]) {
+                                    return f + d * ease;
+                                })
+                                if (updatefun) updatefun(value);
+                                if (percent < 1) {
+                                    id = requestAnimationFrame(animate);
+                                } else {
+                                    value = to;
+                                    if (completefun) completefun();
+                                }
+                            }
+                    
+                        }
+                        id = requestAnimationFrame(animate);
+                        let m = new Tween();
+                        m.stop = function() {
+                            cancelAnimationFrame(id)
+                        }
+                        m.stopAtEnd = function() {
+                            cancelAnimationFrame(id)
+                            value = to;
+                            updatefun(to);
+                        }
+                        m.getCurrentValue = function() {
+                            return value;
+                        }
+                        return m;
+                    }
+                    class Tween {
+                        construction() {
+                            this.stop = null;
+                            this.stopAtEnd = null;
+                            this.getCurrentValue = null;
+                        }
+                    
+                    
+                    }
+                </code>
+            </div>
+            <div class='codeDescribe'>
+                <p>
+                    The tweenX function convert those values to a number between from and to.
+                </p>
+            </div>
+            <p>
+                With this convinient function, we can easily do the trick like the following
+            </p>
+            <div class='codeHead'>
+                <b class='title'>barChart.js</b>
+            </div>
+            <div class='code'>
+                <code>
+                    TweenX(0, hei, 1000, changeBarHeight, ElasticEasings.easeInElastic);
+                    function changeBarHeight(v) {
+                        chart.setRectHeight(bar, v);
+                    }
+                </code>
+            </div>
             <h2><span>Conclusion</span> </h2>
+            <p>
+                One of the big puzzles that faced by today's web developer is too many choices. Thousands of package and framework came and gone. We are afraid falling behind the new technology, but also suffering by the overwhelming of the frameworks. In this project, we attempt to do all the things nature. Although lots of efforts, although only very few functions achieved, we are happy to its finally finished. 
+            </p>
+          
         </div>
 
     </div>

@@ -75,6 +75,29 @@
             width: 100px;
             height: 100px;
         }
+        @font-face {
+            font-family: "YanoneKaffeesatz-Bold";
+            src: url("/fonts/YanoneKaffeesatz-Bold.ttf");
+        }
+        h2 {
+            font-family: "YanoneKaffeesatz-Bold";
+            font-size: 2em;
+            border-bottom: solid 1px #8c8c8c;
+            /* border-top: solid 2px white; */
+            /* background-color: #5d6474; */
+            color: #bd0000;
+            position: relative;
+            /* padding-left: 20px; */
+            height: 50px;
+            margin-top: 0;
+            position: relative;
+        }
+
+        h2 span {
+            position: absolute;
+            bottom: 0;
+            line-height: 25px;
+        }
     </style>
     <script src="/common/pullDownMenu.js"></script>
     <link rel="stylesheet" href="/common/pullDownMenu.css">
@@ -85,6 +108,7 @@
 <body>
     <div class='main'>
         <div class='page'>
+            <h2><span>Date Download</span> </h2>
             <div class="outframe">
                 <p class="pulldownName">State</p>
                 <div class="states" style="display: flex;flex-direction: column;">

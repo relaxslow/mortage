@@ -121,118 +121,52 @@ function getPullDown(elemtClass) {
         for (let i = 0; i < items.length; i++) {
             let item = items[i]
             item.addEventListener("mousemove", mouseoverItem);
-            item.addEventListener("mousedown", onmouseDown);
+            item.addEventListener("mousedown", mousedownItem);
             item.addEventListener("click", clickItem);
             item.select = false;
             item.index = i;
         }
         document.addEventListener("mouseup", onmouseUp);
-
-
-    }
-    let reset;
-    function initResetBut() {
-        reset = list.querySelector(".reset")
-        reset.style["zIndex"] = "600";
-        reset.addEventListener("click", clickReset);
-        reset.addEventListener('mouseover', mouseOverResetButton)
-
-        result.textContent = "any";
-    }
-    function clickReset(evt) {
-        evt.stopPropagation();
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i];
-            item.select = false;
-            item.classList.remove("select");
-        }
-        result.textContent = "any"
-        selected.length = 0;
-        buttonText.textContent="select..."
-    }
-    function mouseOverResetButton() {
-        selector.style["visibility"] = "hidden";
     }
 
     let mousey;
     let mouseDownY;
-    let mouseDownItem = false;
-    function onmouseDown(evt) {
-        mouseDownItem = true;
+    let mousedown = false;
+    function mousedownItem(evt) {
+        mousedown = true;
         mouseDownY = evt.pageY;
         let item = evt.currentTarget
         switchSelect(item);
         collection.length = 0;
-
     }
-    function onmouseUp(evt) {
-        mouseDownItem = false;
-
-
-
-    }
-    function removeItemFromArr(item) {
-        let index = this.indexOf(item);
-        if (index != -1)
-            this.splice(index, 1);
-    }
-    let collection = [];
-    function removeItemNotInCollectRect() {
-        for (let i = 0; i < collection.length; i++) {
-            let item = collection[i];
-            if (!isInSelectRect(item)) {
-                removeItemFromArr.call(collection, item);
-                switchback(item);
-            }
-        }
-
-    }
-    function addItemInCollectRect() {
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i];
-            if (isInSelectRect(item)) {
-                let index = collection.indexOf(item)
-                if (index == -1) {
-                    collection.push(item);
-                    switchSelect(item);
-
-                }
-            }
-        }
-    }
-    function isInSelectRect(item) {
-        let rect = item.getBoundingClientRect();
-        if (mousey > mouseDownY)//down
-        {
-            if (rect.top >= mouseDownY && rect.top <= mousey) {
-                return true;
-            }
-        }
-        else if (mousey < mouseDownY)//up
-        {
-            if (rect.bottom >= mousey && rect.bottom <= mouseDownY) {
-                return true;
-            }
-        }
-        return false;
-    }
-
- 
     function mouseoverItem(evt) {
         evt.stopPropagation();
         selector.place(evt.currentTarget);
 
-        if (mouseDownItem) {
+        if (mousedown) {
             mousey = evt.pageY;
             addItemInCollectRect();
             removeItemNotInCollectRect();
-
         }
 
     }
     function clickItem(evt) {
         evt.stopPropagation();
-        
+    }
+    function onmouseUp(evt) {
+        mousedown = false;
+        confirmSelect();
+    }
+    function confirmSelect(){
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            if (item.classList.contains("select")) {
+               item.select=true;
+            }
+            else{
+                item.select=false;
+            }
+        }
     }
     function switchback(item) {
         if (item.select == true) {
@@ -267,9 +201,83 @@ function getPullDown(elemtClass) {
             }
         }
         result.textContent = text;
-        buttonText.textContent=`select ${selected.length} items`;
+        buttonText.textContent = `select ${selected.length} items`;
     }
- 
+    function removeItemFromArr(item) {
+        let index = this.indexOf(item);
+        if (index != -1)
+            this.splice(index, 1);
+    }
+    let collection = [];
+    function removeItemNotInCollectRect() {
+        for (let i = 0; i < collection.length; i++) {
+            let item = collection[i];
+            if (!isInSelectRect(item)) {
+                removeItemFromArr.call(collection, item);
+                switchback(item);
+            }
+        }
+
+    }
+    function addItemInCollectRect() {
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            if (isInSelectRect(item)) {
+                let index = collection.indexOf(item)
+                if (index == -1) {
+                    collection.push(item);
+                    switchSelect(item);
+                }
+            }
+        }
+    }
+    function isInSelectRect(item) {
+        let rect = item.getBoundingClientRect();
+        if (mousey > mouseDownY)//down
+        {
+            if (rect.top >= mouseDownY && rect.top <= mousey) {
+                return true;
+            }
+        }
+        else if (mousey < mouseDownY)//up
+        {
+            if (rect.bottom >= mousey && rect.bottom <= mouseDownY) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+   
+    let reset;
+    function initResetBut() {
+        reset = list.querySelector(".reset")
+        reset.style["zIndex"] = "600";
+        reset.addEventListener("click", clickReset);
+        // reset.addEventListener('mouseover', mouseOverResetButton)
+
+        result.textContent = "any";
+    }
+    function clickReset(evt) {
+        evt.stopPropagation();
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            item.select = false;
+            item.classList.remove("select");
+        }
+        result.textContent = "any"
+        selected.length = 0;
+        buttonText.textContent = "select..."
+    }
+    // function mouseOverResetButton() {
+    //     selector.style["visibility"] = "hidden";
+    // }
+
+
+
+   
+
 
     function getCurrentSelect() {
         return selected;
