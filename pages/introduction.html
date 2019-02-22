@@ -189,8 +189,7 @@
                 <b class='title'>app.js</b>
             </div>
             <div class="code">
-               
-                <code>
+                <textarea>
                     const http = require('http');
                     const URLlib = require('url');
                     const path = require('path');
@@ -250,7 +249,7 @@
                             res.end(data);
                         });
                     }
-                </code>
+                </textarea>
             </div>
             <p>
                 This is a simplest file server. It inspect the string that send from client and check if it is a file. The principle is simple : if the message end with a suffix(.csv ) then we can assume it is a file. There is an object named mimeType which hold the commonly used file format and add as headers when the file is send back. 
@@ -263,7 +262,7 @@
                 <b class='title'>getPullDownMenu.js</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     function initOptions() {
                         let req = new XMLHttpRequest();
                         req.open('GET', `/getPullDownMenu/${elemtClass}`);
@@ -286,7 +285,7 @@
                         }
                         req.send();
                     }
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -298,7 +297,7 @@
                 <b class='title'>app.js</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     "getPullDownMenu": function (req, res) {
                         let name = req.routeArr[2];
                         QueryItem.get()
@@ -308,7 +307,7 @@
                             })
                 
                     },
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -320,7 +319,7 @@
                 <b class='title'>QueryItem.js</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     function initData() {
                         let states = [];
                         let filings = [];
@@ -362,7 +361,7 @@
                                 runAllWaitTasks();
                             });
                     }
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -374,7 +373,7 @@
                 <b class='title'>QueryData.js</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     function search(source, querydata) {
                         let result = [];
                         let totalLoanCount = 0;
@@ -403,7 +402,7 @@
                         });
                         return result;
                     }
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -435,19 +434,20 @@
                     <b class='title'>code.js</b>
                 </div>
                 <div class='code'>
-                    <code>
-                        let regex_newLine = /\r?\n/;
-                        let regex_empty = /^$|^\s*$/gm;
-                        let regex_spaceAtBegin = /^\s+/;
-                        let regex_keywords = /\bconst\b|\blet\b|\bconsole\b|\bfunction\b/g;
+                    <textarea>
                         let regex_operator = /[\+\-\*\/=\!]|\|\||&&/g
+                        let regex_keywords = /\bconst\b|\blet\b|\bconsole\b|\bfunction\b/g;
                         let regex_strs = /'[^']*'|`[^`]*`|"[^"]*"/g
                         let regex_nonStr = /(?<=\=\s+)\btrue\b|\bfalse\b|\bnull\b|\bundefined\b|\b\d+\b/g
                         let regex_yellow=/\/.*\/g?m?/g
+                        let regex_funcall = /(?<!function.*)(?!function|for|if)\b\w+(?=\s*\()/g
                         let regex_funDef = /(?<=function\s+)\w+(?=\s*\()/g
                         let regex_funDefParam = /(?<=function(\s+)*\w*(\s+)*\()[^(),]*(?=\))|(?<=function(\s+)*\w*(\s+)*\(\[)[^()]*(?=\]\))/g
                         let regex_condition = /\bif\b|\belse\b|\bfor\b|\breturn\b|\bcontinue\b|\bbreak\b/g
-                    </code>
+                        let regex_yellow = /\/.*\/gm?/g
+                        let regex_blue = /(?!\\b)\\.|\[\^\(\)\]|\[\^\\\[\\\]\]|\[[^\[\]]*\]|\[\^.*\](?=.*\/g?m?)/g
+                        let regex_red = /(?<!\\)\^|\||\*|\\b|\+|\?(?!<|=|!)|(?<=\/)g/g
+                    </textarea>
                 </div>
                 <div class='codeDescribe'>
                     <p>
@@ -464,14 +464,14 @@
                 <b class='title'>index.html</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     function clickMainMenu(index) {
                         contentFrame.src = folder + contentName[index] + ".html"
                         contentFrame.onload = function () {
                             resizeIframe(contentFrame)
                         }
                     }
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -482,7 +482,7 @@
                 <b class='title'>index.html</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     function resizeIframe(iframe) {
                         // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
                         let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
@@ -496,7 +496,7 @@
                     window.resizeContent = function () {
                         resizeIframe(contentFrame);
                     }
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -511,7 +511,7 @@
                 <b class='title'>chartCore.js</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     function drawRect(x, y, wid, hei) {
                         let rect = document.createElementNS(ns, 'rect');
                         rect.setAttribute('x', oX + x);
@@ -535,7 +535,7 @@
                         svg.append(line);
                         return line;
                     }
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -546,7 +546,7 @@
                 <b class='title'>barChart.js</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     function drawBars() {
                         let num = XValues.length;
                         let step = graphWid / num;
@@ -613,7 +613,7 @@
                             texts[bar.index].setAttribute('fill', textColor)
                         }
                     }
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -628,7 +628,7 @@
                 <b class='title'>tweenX.js</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     //Easing Functions - inspired from http://gizma.com/easing/
                     // only considering the t value for the range [0, 1] => [0, 1]
                     
@@ -668,7 +668,7 @@
                        // elastic bounce effect at the beginning and end
                        easeInOutElastic: function(t) { return (t -= .5) < 0 ? (.02 + .01 / t) * Math.sin(50 * t) : (.02 - .01 / t) * Math.sin(50 * t) + 1 }
                    }
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -679,7 +679,7 @@
                 <b class='title'>tweenX.js</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     function TweenX(from, to, duration, updatefun, easefun, completefun) {
                         let dist, value;
                         dist = JSON.parse(JSON.stringify(to));
@@ -739,7 +739,7 @@
                     
                     
                     }
-                </code>
+                </textarea>
             </div>
             <div class='codeDescribe'>
                 <p>
@@ -753,12 +753,12 @@
                 <b class='title'>barChart.js</b>
             </div>
             <div class='code'>
-                <code>
+                <textarea>
                     TweenX(0, hei, 1000, changeBarHeight, ElasticEasings.easeInElastic);
                     function changeBarHeight(v) {
                         chart.setRectHeight(bar, v);
                     }
-                </code>
+                </textarea>
             </div>
             <h2><span>Conclusion</span> </h2>
             <p>

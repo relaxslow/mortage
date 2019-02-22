@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <div class='code'>
+        <textarea>
+        let regex_funcall = /(?<!function.*)(?!function|for|if)\b\w+(?=\s*\()/g
+        </textarea>
+    </div>
+
+    <script>
+        let code=document.querySelector('.code')
+        let text=code.querySelector('textarea');
+        console.log(text.textContent);
+        code.removeChild(text);
+    </script>
+</body>
+
+</html>

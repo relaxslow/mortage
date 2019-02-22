@@ -100,3 +100,9 @@
 .code .regexYellow{
     color: #e2cf1e;
 }
+.code .regexBlue{
+    color: #b881f6;
+}
+.code .regexRed{
+    color:rgb(255, 95, 122);
+}

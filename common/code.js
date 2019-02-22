@@ -16,10 +16,10 @@ function syntaxHighlight(code) {
     let regex_funDefParam = /(?<=function(\s+)*\w*(\s+)*\()[^(),]*(?=\))|(?<=function(\s+)*\w*(\s+)*\(\[)[^()]*(?=\]\))/g
     let regex_condition = /\bif\b|\belse\b|\bfor\b|\breturn\b|\bcontinue\b|\bbreak\b/g
 
-    let regex_yellow=/\/.*\/g?m?/g
-    let regex_blue=/(?<=\/.*)(?!\\b)\\.|(\[[^\[]*\])|(\[[^\]]*\])|(\[\^.*\])(?=.*\/g?m?)/g
-    let regex_red=/\^|\||\*|\\b|\+|\?(?!<|=|!)|(?<=\/)g/g
-    let codeStr = code.querySelector('code').textContent;
+    let regex_yellow = /\/.*\/gm?/g
+    let regex_blue = /(?!\\b)\\.|\[\^\(\)\]|\[\^\\\[\\\]\]|\[[^\[\]]*\]|\[\^.*\](?=.*\/g?m?)/g
+    let regex_red = /(?<!\\)\^|\||\*|\\b|\+|\?(?!<|=|!)|(?<=\/)g/g
+    let codeStr = code.querySelector('textarea').textContent;
 
     let instructions = codeStr.split(regex_newLine);
     let indents = organize(instructions);
@@ -87,8 +87,8 @@ function syntaxHighlight(code) {
         if (comment !== '')
             comment = markComment(comment);
 
-        let allStr,allRegex, allfuncall, allfundef, allfundefParam, allkey, allOperator, allNonStr, allcondition;
-        [allRegex,normal]=markRegex(normal);
+        let allStr, allRegex, allfuncall, allfundef, allfundefParam, allkey, allOperator, allNonStr, allcondition;
+        [allRegex, normal] = markRegex(normal);
         [allStr, normal] = markString(normal);
         [allfundefParam, normal] = markfunDefParam(normal);
         [allfuncall, normal] = markfuncall(normal);
@@ -108,8 +108,9 @@ function syntaxHighlight(code) {
         normal = restore(allOperator, normal, /_oooooo_/g, "operator")
         normal = restore(allNonStr, normal, /_uunstr_/g, "unStr")
         normal = restore(allcondition, normal, /_cccccc_/g, "condition")
-        normal=restore(allRegex,normal,/_rrrrrr_/g,"regexYellow")
-        return normal + comment + '<br>';
+        normal = restore(allRegex, normal, /_rrrrrr_/g, "regexYellow")
+        let final = markHtmlEscape(normal + comment + '<br>');
+        return final;
     }
 
 
@@ -118,11 +119,26 @@ function syntaxHighlight(code) {
         let space = "&nbsp;".repeat(indent)
         return `<span>${space}</span>`;
     }
-    function markRegex(str){
+    function markHtmlEscape(str) {
+        str = str.replace(/<!/g, '&lt;!')
+        return str;
+    }
+    function markRegex(str) {
         let all = str.match(regex_yellow);
         if (all == null) return [null, str];
         str = str.replace(regex_yellow, '_rrrrrr_');
-        return [all, str]
+        for (let i = 0; i < all.length; i++) {
+            let allblue = all[i].match(regex_blue);
+            all[i] = all[i].replace(regex_blue, '_rrrblu_')
+
+            all[i] = restore(allblue, all[i], /_rrrblu_/g, "regexBlue");
+
+            let allred = all[i].match(regex_red);
+            all[i] = all[i].replace(regex_red, '_rrrred_');
+            all[i] = restore(allred, all[i], /_rrrred_/g, "regexRed");
+
+        }
+        return [all, str];
     }
     function markCondition(str) {
         let all = str.match(regex_condition);
@@ -197,19 +213,19 @@ function syntaxHighlight(code) {
     }
     function markString(str) {
         if (str == null || str === '') return [null, ''];
-        let allstr = str.match(regex_strs);
-        if (allstr == null) return [null, str];
+        let all = str.match(regex_strs);
+        if (all == null) return [null, str];
         str = str.replace(regex_strs, '_ssssss_');
 
 
-        for (let i = 0; i < allstr.length; i++) {
-            let onei = allstr[i];
+        for (let i = 0; i < all.length; i++) {
+            let onei = all[i];
             let vars = onei.match(regex_varInStr3)
             if (vars == null) continue;
             for (let j = 0; j < vars.length; j++) {
                 let onej = vars[j];
-                onej = onej.replace(regex_varL, "<span class='regex_operator'>${</span>");
-                onej = onej.replace(regex_varR, "<span class='regex_operator'>}</span>");
+                onej = onej.replace(regex_varL, "<span class='operator'>${</span>");
+                onej = onej.replace(regex_varR, "<span class='operator'>}</span>");
                 vars[j] = onej;
 
             }
@@ -220,10 +236,10 @@ function syntaxHighlight(code) {
                 return result;
             });
 
-            allstr[i] = onei;
+            all[i] = onei;
         }
 
-        return [allstr, str];
+        return [all, str];
     }
 
     function restore(all, normal, alter, className) {
