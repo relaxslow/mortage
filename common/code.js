@@ -7,7 +7,7 @@ function syntaxHighlight(code) {
     let regex_keywords = /\bconst\b|\blet\b|\bconsole\b|\bfunction\b/g;
     let regex_operator = /[\+\-\*\/=\!]|\|\||&&/g
     let regex_strs = /'[^']*'|`[^`]*`|"[^"]*"/g
-    let regex_nonStr = /(?<=\=\s+)\btrue\b|\bfalse\b|\bnull\b|\bundefined\b|\b\d+\b/g
+    let regex_nonStr = /\btrue\b|\bfalse\b|\bnull\b|\bundefined\b|\b\d+\b/g
     let regex_varInStr3 = /(?<=`.*)\${[^{}]*}(?=.*`)/g;
     let regex_varL = /\${/g;
     let regex_varR = /}/g;
@@ -19,6 +19,7 @@ function syntaxHighlight(code) {
     let regex_yellow = /\/.*\/gm?/g
     let regex_blue = /(?!\\b)\\.|\[\^\(\)\]|\[\^\\\[\\\]\]|\[[^\[\]]*\]|\[\^.*\](?=.*\/g?m?)/g
     let regex_red = /(?<!\\)\^|\||\*|\\b|\+|\?(?!<|=|!)|(?<=\/)g/g
+    let regex_property = /(?<!\?.*)\w+(?=\s*:)/g
     let codeStr = code.querySelector('textarea').textContent;
 
     let instructions = codeStr.split(regex_newLine);
@@ -87,7 +88,7 @@ function syntaxHighlight(code) {
         if (comment !== '')
             comment = markComment(comment);
 
-        let allStr, allRegex, allfuncall, allfundef, allfundefParam, allkey, allOperator, allNonStr, allcondition;
+        let allProperty,allStr, allRegex, allfuncall, allfundef, allfundefParam, allkey, allOperator, allNonStr, allcondition;
         [allRegex, normal] = markRegex(normal);
         [allStr, normal] = markString(normal);
         [allfundefParam, normal] = markfunDefParam(normal);
@@ -97,18 +98,21 @@ function syntaxHighlight(code) {
         [allOperator, normal] = markOperator(normal);
         [allNonStr, normal] = markNonString(normal);
         [allcondition, normal] = markCondition(normal);
+        [allProperty, normal] = markProperty(normal);
 
 
 
-        normal = restore(allStr, normal, /_ssssss_/g, "string");
-        normal = restore(allfuncall, normal, /_fffccc_/g, "funcall");
-        normal = restore(allfundef, normal, /_fffddd_/g, "fundef");
-        normal = restore(allfundefParam, normal, /_fffdpp_/g, "funDefParam")
-        normal = restore(allkey, normal, /_kkkkkk_/g, "keyword")
-        normal = restore(allOperator, normal, /_oooooo_/g, "operator")
-        normal = restore(allNonStr, normal, /_uunstr_/g, "unStr")
-        normal = restore(allcondition, normal, /_cccccc_/g, "condition")
-        normal = restore(allRegex, normal, /_rrrrrr_/g, "regexYellow")
+
+        normal = restore(allStr, normal, /#ssssss#/g, "string");
+        normal = restore(allfuncall, normal, /#fffccc#/g, "funcall");
+        normal = restore(allfundef, normal, /#fffddd#/g, "fundef");
+        normal = restore(allfundefParam, normal, /#fffdpp#/g, "funDefParam")
+        normal = restore(allkey, normal, /#kkkkkk#/g, "keyword")
+        normal = restore(allOperator, normal, /#oooooo#/g, "operator")
+        normal = restore(allNonStr, normal, /#uunstr#/g, "unStr")
+        normal = restore(allcondition, normal, /#cccccc#/g, "condition")
+        normal = restore(allRegex, normal, /#rrrrrr#/g, "regexYellow")
+        normal = restore(allProperty, normal, /#pppppp#/g, "property")
         let final = markHtmlEscape(normal + comment + '<br>');
         return final;
     }
@@ -123,19 +127,25 @@ function syntaxHighlight(code) {
         str = str.replace(/<!/g, '&lt;!')
         return str;
     }
+    function markProperty(str) {
+        let all = str.match(regex_property);
+        if (all == null) return [null, str];
+        str = str.replace(regex_property, '#pppppp#');
+        return [all, str]
+    }
     function markRegex(str) {
         let all = str.match(regex_yellow);
         if (all == null) return [null, str];
-        str = str.replace(regex_yellow, '_rrrrrr_');
+        str = str.replace(regex_yellow, '#rrrrrr#');
         for (let i = 0; i < all.length; i++) {
             let allblue = all[i].match(regex_blue);
-            all[i] = all[i].replace(regex_blue, '_rrrblu_')
+            all[i] = all[i].replace(regex_blue, '#rrrblu#')
 
-            all[i] = restore(allblue, all[i], /_rrrblu_/g, "regexBlue");
+            all[i] = restore(allblue, all[i], /#rrrblu#/g, "regexBlue");
 
             let allred = all[i].match(regex_red);
-            all[i] = all[i].replace(regex_red, '_rrrred_');
-            all[i] = restore(allred, all[i], /_rrrred_/g, "regexRed");
+            all[i] = all[i].replace(regex_red, '#rrrred#');
+            all[i] = restore(allred, all[i], /#rrrred#/g, "regexRed");
 
         }
         return [all, str];
@@ -143,19 +153,19 @@ function syntaxHighlight(code) {
     function markCondition(str) {
         let all = str.match(regex_condition);
         if (all == null) return [null, str];
-        str = str.replace(regex_condition, '_cccccc_');
+        str = str.replace(regex_condition, '#cccccc#');
         return [all, str]
     }
     function markNonString(str) {
         let all = str.match(regex_nonStr);
         if (all == null) return [null, str];
-        str = str.replace(regex_nonStr, '_uunstr_');
+        str = str.replace(regex_nonStr, '#uunstr#');
         return [all, str]
     }
     function markOperator(str) {
         let all = str.match(regex_operator);
         if (all == null) return [null, str];
-        str = str.replace(regex_operator, '_oooooo_');
+        str = str.replace(regex_operator, '#oooooo#');
         return [all, str]
     }
     function markfunDefParam(str) {
@@ -168,7 +178,7 @@ function syntaxHighlight(code) {
             for (let j = 0; j < splitcomma.length; j++) {
                 let onej = splitcomma[j];
                 allParam.push(onej);
-                onei = onei.replace(onej, '_fffdpp_');
+                onei = onei.replace(onej, '#fffdpp#');
             }
             all[i] = onei;
 
@@ -185,7 +195,7 @@ function syntaxHighlight(code) {
     function markfundef(str) {
         let all = str.match(regex_funDef);
         if (all == null) return [null, str];
-        str = str.replace(regex_funDef, '_fffddd_');
+        str = str.replace(regex_funDef, '#fffddd#');
         return [all, str]
     }
 
@@ -193,14 +203,14 @@ function syntaxHighlight(code) {
     function markfuncall(str) {
         let all = str.match(regex_funcall);
         if (all == null) return [null, str];
-        str = str.replace(regex_funcall, '_fffccc_');
+        str = str.replace(regex_funcall, '#fffccc#');
         return [all, str]
     }
 
     function markkey(str) {
         let allkey = str.match(regex_keywords);
         if (allkey == null) return [null, str];
-        str = str.replace(regex_keywords, '_kkkkkk_');
+        str = str.replace(regex_keywords, '#kkkkkk#');
         return [allkey, str]
     }
 
@@ -215,7 +225,7 @@ function syntaxHighlight(code) {
         if (str == null || str === '') return [null, ''];
         let all = str.match(regex_strs);
         if (all == null) return [null, str];
-        str = str.replace(regex_strs, '_ssssss_');
+        str = str.replace(regex_strs, '#ssssss#');
 
 
         for (let i = 0; i < all.length; i++) {

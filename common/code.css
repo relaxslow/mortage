@@ -106,3 +106,6 @@
 .code .regexRed{
     color:rgb(255, 95, 122);
 }
+.code .property{
+    color: rgb(170, 255, 44);
+}
