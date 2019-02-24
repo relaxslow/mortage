@@ -8,6 +8,7 @@ function format(code) {
     req.send();
     function codeRecieved() {
         code.innerHTML = req.response;
+        parent.window.resizeContent();
     }
 
     drag(code);

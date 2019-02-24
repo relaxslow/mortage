@@ -83,8 +83,8 @@
         }
         let headHeight = mainMenu.getHei();
         function resizeIframe(iframe) {
-            // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
-            let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
+            let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
+            // let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
             if (iframeContentHei < window.innerHeight - headHeight) {
                 iframe.style.height = window.innerHeight - headHeight + "px";
             } else {
