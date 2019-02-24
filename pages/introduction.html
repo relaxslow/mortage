@@ -208,69 +208,7 @@
             <div class='codeHead'>
                 <b class='title'>app.js</b>
             </div>
-            <div class="code">
-                <textarea>
-                    const http = require('http');
-                    const URLlib = require('url');
-                    const path = require('path');
-                    const fs = require('fs');
-                    let server = http.createServer(handle);
-                    const port = process.env.PORT || 1337;
-                    server.listen(port);
-                    console.log(`Server running at  ${port}`);
-
-                    function handle(req, res) {
-                        const { headers, method, url } = req;
-                        console.log(` ${method} ${url}`);
-                    
-                        const parsedUrl = URLlib.parse(url, true);
-                        req.parsedPath = decodeURI(parsedUrl.pathname);
-                        req.parsedUrl = parsedUrl;
-                    
-                        if (isFile(req.parsedPath)) {
-                            handleFile(req, res);
-                            return;
-                        }
-                    
-                        //req.routeArr = splitRoute(req.parsedPath);
-                        //routine[req.routeArr[1]](req, res);
-                    }
-                    function isFile(filePathStr) {
-                        if (filePathStr.indexOf('.') == -1)
-                            return false;
-                        return true;
-                    }
-                    function handleFile(req, res) {
-                        let fileFullPath = `.${req.parsedPath}`;
-                        let fileName = req.parsedPath.slice(req.parsedPath.lastIndexOf("/") + 1);
-                        getFileData(fileFullPath, res, function (data) {
-                            if (data == null)
-                                return;
-                            const mimeType = {
-                                '.ico': 'image/x-icon',
-                                '.html': 'text/html',
-                                '.js': 'text/javascript',
-                                '.json': 'application/json',
-                                '.css': 'text/css',
-                                '.png': 'image/png',
-                                '.jpg': 'image/jpeg',
-                                '.wav': 'audio/wav',
-                                '.mp3': 'audio/mpeg',
-                                '.chart': 'image/chart+xml',
-                                '.pdf': 'application/pdf',
-                                '.doc': 'application/msword',
-                                '.eot': 'appliaction/vnd.ms-fontobject',
-                                '.ttf': 'aplication/font-sfnt',
-                                '.csv': 'text/csv'
-                            };
-                            const ext = path.parse(fileFullPath).ext;
-                            res.setHeader('Content-type', mimeType[ext] || 'text/plain');
-                            res.setHeader('fileName', fileName);
-                            res.end(data);
-                        });
-                    }
-                </textarea>
-            </div>
+            <div class="code" data-file="server_app_basichandleFile"> </div>
             <p>
                 This is a simplest file server. It inspect the string that send from client and check if it is a file. The principle is simple : if the message end with a suffix(.csv ) then we can assume it is a file. There is an object named mimeType which hold the commonly used file format and add as headers when the file is send back. 
             </p>
@@ -281,32 +219,7 @@
             <div class='codeHead'>
                 <b class='title'>getPullDownMenu.js</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    function initOptions() {
-                        let req = new XMLHttpRequest();
-                        req.open('GET', `/getPullDownMenu/${elemtClass}`);
-                        req.onload = function () {
-                            let data = JSON.parse(req.response);
-                            for (let i = 0; i < data.length; i++) {
-                                let d = data[i];
-                                if (d === "") continue;
-                                let item = document.createElement('BUTTON');
-                                item.classList.add('optionItem');
-                                item.textContent = d;
-                                options.appendChild(item);
-                
-                            }
-                            initItems();
-                            initResetBut();
-                            requestAnimationFrame(function () {
-                                initSelector();
-                            })
-                        }
-                        req.send();
-                    }
-                </textarea>
-            </div>
+            <div class='code' data-file="getPullDown_initOption"></div>
             <div class='codeDescribe'>
                 <p>
                     send request to backend and create dropdown menus based on recieved data    
@@ -316,19 +229,7 @@
             <div class='codeHead'>
                 <b class='title'>app.js</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    "getPullDownMenu": function (req, res) {
-                        let name = req.routeArr[2];
-                        QueryItem.get()
-                            .then(function sendBack(items) {
-                                res.setHeader('Content-type', 'application/json');
-                                res.end(JSON.stringify(items[name]));
-                            })
-                
-                    },
-                </textarea>
-            </div>
+            <div class='code' data-file="server_app_queryItemModule_useage"></div>
             <div class='codeDescribe'>
                 <p>
                     In the app.js(server), we defined a function to deal with the request. The job is done by our <span>QueryItem</span> module. The module load up at server start and read the "samplefile.csv" immediately. Then, it parse the file using our external package "csvtojson". When the client request the menu items data , it send the searched data back to client.
@@ -338,51 +239,7 @@
             <div class='codeHead'>
                 <b class='title'>QueryItem.js</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    function initData() {
-                        let states = [];
-                        let filings = [];
-                        let dimensions = [];
-                        function isInArray(value) {
-                            for (let i = 0; i < this.length; i++) {
-                                let v = this[i];
-                                if (v === value) {
-                                    return true;
-                                }
-                            }
-                            return false;
-                        }
-                    
-                        CSVToJSON()
-                            .fromFile("./data/samplefile.csv")
-                            .then(function (source) {
-                                for (let i = 0; i < source.length; i++) {
-                                    let record = source[i];
-                                    let state = record["State"];
-                                    if (!isInArray.call(states, state)) {
-                                        states.push(state);
-                                    }
-                                    let filing = record["Filing Quarter"];
-                                    if (!isInArray.call(filings, filing)) {
-                                        filings.push(filing);
-                                    }
-                                    let dimension = record["Dimensional Column"];
-                                    if (!isInArray.call(dimensions, dimension)) {
-                                        dimensions.push(dimension);
-                                    }
-                    
-                    
-                                }
-                    
-                                items.states = states;
-                                items.filings = QueryData.sortQuarter(filings);
-                                items.dimensions = dimensions;
-                                runAllWaitTasks();
-                            });
-                    }
-                </textarea>
-            </div>
+            <div class='code' data-file="server_queryItemModule_initData"></div>
             <div class='codeDescribe'>
                 <p>
                     CSVToJSON is an asynchronized function. So we must do extra work. We put all the request fun to an array . When the task is done. We call <span>runAllWaitTasks</span>() to actually send the data back; 
@@ -392,38 +249,7 @@
             <div class='codeHead'>
                 <b class='title'>QueryData.js</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    function search(source, querydata) {
-                        let result = [];
-                        let totalLoanCount = 0;
-                        let totalLoanAmount = 0;
-                        for (let i = 0; i < source.length; i++) {
-                            let record = source[i];
-                    
-                            let stateMatch = testMatch(querydata.state, record["State"]);
-                            let filingMatch = testMatch(querydata.filing, record["Filing Quarter"]);
-                            let dimensionMatch = testMatch(querydata.dimension, record["Dimensional Column"]);
-                            if (!stateMatch || !filingMatch || !dimensionMatch) {
-                                continue;
-                            } else {
-                                result.push(record);
-                                totalLoanAmount += parseInt(record["LoanAmount"]);
-                                totalLoanCount += parseInt(record["LoanCount"]);
-                            }
-                        }
-                        result.push({
-                            "FilingID": "total",
-                            "State": "",
-                            "Filing Quarter": "",
-                            "Dimensional Column": "",
-                            "LoanCount": totalLoanCount,
-                            "LoanAmount": totalLoanAmount
-                        });
-                        return result;
-                    }
-                </textarea>
-            </div>
+            <div class='code' data-file="server_queryDataModule_search"></div>
             <div class='codeDescribe'>
                 <p>
                   Searching function search the database(samplefile.csv) and return the result. It also add up the record to get total loan count and amount
@@ -456,22 +282,7 @@
                 <div class='codeHead'>
                     <b class='title'>code.js</b>
                 </div>
-                <div class='code'>
-                    <textarea>
-                        let regex_operator = /[\+\-\*\/=\!]|\|\||&&/g
-                        let regex_keywords = /\bconst\b|\blet\b|\bconsole\b|\bfunction\b/g;
-                        let regex_strs = /'[^']*'|`[^`]*`|"[^"]*"/g
-                        let regex_nonStr = /(?<=\=\s+)\btrue\b|\bfalse\b|\bnull\b|\bundefined\b|\b\d+\b/g
-                        let regex_yellow=/\/.*\/g?m?/g
-                        let regex_funcall = /(?<!function.*)(?!function|for|if)\b\w+(?=\s*\()/g
-                        let regex_funDef = /(?<=function\s+)\w+(?=\s*\()/g
-                        let regex_funDefParam = /(?<=function(\s+)?(\w+(\s+)?)?\(.*,?)(?<!{.*|\/.*)\w+(?=,?.*\))/g
-                        let regex_condition = /\bif\b|\belse\b|\bfor\b|\breturn\b|\bcontinue\b|\bbreak\b/g
-                        let regex_yellow = /\/.*\/gm?/g
-                        let regex_blue = /(?!\\b)\\.|\[\^\(\)\]|\[\^\\\[\\\]\]|\[[^\[\]]*\]|\[\^.*\](?=.*\/g?m?)/g
-                        let regex_red = /(?<!\\)\^|\||\*|\\b|\+|\?(?!<|=|!)|(?<=\/)g/g
-                    </textarea>
-                </div>
+                <div class='code' data-file="client_formatcode_partOfRegex"></div>
                 <div class='codeDescribe'>
                     <p>
                     Here is some of the Regular Expression used in the code.js
@@ -486,16 +297,7 @@
             <div class='codeHead'>
                 <b class='title'>index.html</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    function clickMainMenu(index) {
-                        contentFrame.src = folder + contentName[index] + ".html"
-                        contentFrame.onload = function () {
-                            resizeIframe(contentFrame)
-                        }
-                    }
-                </textarea>
-            </div>
+            <div class='code' data-file="client_index_switchSubpage"></div>
             <div class='codeDescribe'>
                 <p>
                     This is our page-switch function. Simple as it is!
@@ -504,23 +306,7 @@
             <div class='codeHead'>
                 <b class='title'>index.html</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    function resizeIframe(iframe) {
-                        // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
-                        let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
-                        if (iframeContentHei < window.innerHeight - headHeight) {
-                            iframe.style.height = window.innerHeight - headHeight + "px";
-                        } else {
-                            iframe.style.height = (iframe.contentWindow.document.body.scrollHeight) + "px";
-            
-                        }
-                    }
-                    window.resizeContent = function () {
-                        resizeIframe(contentFrame);
-                    }
-                </textarea>
-            </div>
+            <div class='code' data-file="client_index_resizeIframe"></div>
             <div class='codeDescribe'>
                 <p>
                     One of the side effects of using iframe as modular system is It can't change the its size based on its content(that's the basic function of a Div). So we write our own resize function to deal with. We also define it as <span> window </span> property, so that we could find it inside the iframe page
@@ -533,33 +319,7 @@
             <div class='codeHead'>
                 <b class='title'>chartCore.js</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    function drawRect(x, y, wid, hei) {
-                        let rect = document.createElementNS(ns, 'rect');
-                        rect.setAttribute('x', oX + x);
-                        rect.setAttribute('y', oY - y - hei);
-                        rect.setAttribute('width', wid);
-                        rect.setAttribute('height', hei);
-                        rect.setAttribute('fill', "#f06");
-                        rect.beginY = y;
-                        svg.append(rect);
-                        return rect;
-                    }
-                    function drawLine(x1, y1, x2, y2, lineWid) {
-                        let line = document.createElementNS(ns, 'line')
-                        line.setAttribute('x1', oX + x1);
-                        line.setAttribute('y1', oY - y1);
-                        line.setAttribute('x2', oX + x2);
-                        line.setAttribute('y2', oY - y2);
-                        line.setAttribute('stroke', '#999999');
-                        line.setAttribute('stroke-width', `${lineWid}`);
-                        line.style["pointer-events"] = "none";
-                        svg.append(line);
-                        return line;
-                    }
-                </textarea>
-            </div>
+            <div class='code' data-file="client_chartCore_partOfDrawFun"></div>
             <div class='codeDescribe'>
                 <p>
                     These are 2 function picked from the chartCore.js. As you can see on the first several line, the transformation is simple.
@@ -568,76 +328,7 @@
             <div class='codeHead'>
                 <b class='title'>barChart.js</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    function drawBars() {
-                        let num = XValues.length;
-                        let step = graphWid / num;
-                        let current = 0;
-                        let widPercent = 0.9;
-                        let wid = step * widPercent;
-                        let offset = (1 - widPercent) * step / 2;
-                        let maxValue = axis.getYMax();
-                
-                        for (let i = 0; i < num; i++) {
-                            let hei = graphHei * XValues[i] / maxValue;
-                            let x = current + offset;
-                            let bar = chart.drawRect(x, 0, wid, 0);
-                
-                            bars.push(bar);
-                            current += step;
-                            
-                            TweenX(0, hei, 1000, changeBarHeight, ElasticEasings.easeInElastic);
-                            function changeBarHeight(v) {
-                                chart.setRectHeight(bar, v);
-                            }
-                
-                        }
-                        //focus animation
-                        for (let i = 0; i < bars.length; i++) {
-                            let bar = bars[i];
-                            bar.index = i;
-                            bar.addEventListener('mouseover', mouseoverBar);
-                            bar.addEventListener('mouseout', mouseoutBar);
-                        }
-                
-                
-                        function mouseoutBar(e) {
-                            let bar = e.currentTarget;
-                            let currentValue;
-                            if (bar.tween) {
-                                bar.tween.stop();
-                                currentValue = bar.tween.getCurrentValue();
-                            }
-                            else
-                                currentValue = highlight;
-                            bar.tween = TweenX(currentValue, normal, 1000, unfocusBar)
-                            function unfocusBar(v) {
-                                changeFocus(bar, v);
-                            }
-                        }
-                        function mouseoverBar(e) {
-                            let bar = e.currentTarget;
-                            if (bar.tween) {
-                                bar.tween.stop();
-                                currentValue = bar.tween.getCurrentValue();
-                            }
-                            else
-                                currentValue = normal;
-                            bar.tween = TweenX(currentValue, highlight, 0, focusBar)
-                            function focusBar(v) {
-                                changeFocus(bar, v);
-                            }
-                        }
-                        function changeFocus(bar, v) {
-                            let color = rgbToCss(v.color.r, v.color.g, v.color.b);
-                            let textColor = rgbToCss(v.text.r, v.text.g, v.text.b);
-                            bar.setAttribute('fill', color);
-                            texts[bar.index].setAttribute('fill', textColor)
-                        }
-                    }
-                </textarea>
-            </div>
+            <div class='code' data-file="client_barChart_drawBars"></div>
             <div class='codeDescribe'>
                 <p>
                     The barChart.js use the functions in chartCore.js which is carry out the actual drawing actions. The 'drawBars' function response to all the possible input from user such as mouse over and out. 
@@ -650,49 +341,7 @@
             <div class='codeHead'>
                 <b class='title'>tweenX.js</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    //Easing Functions - inspired from http://gizma.com/easing/
-                    // only considering the t value for the range [0, 1] => [0, 1]
-                    
-                   EasingFunctions = {
-                       // no easing, no acceleration
-                       linear: function(t) { return t },
-                       // accelerating from zero velocity
-                       easeInQuad: function(t) { return t * t },
-                       // decelerating to zero velocity
-                       easeOutQuad: function(t) { return t * (2 - t) },
-                       // acceleration until halfway, then deceleration
-                       easeInOutQuad: function(t) { return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t },
-                       // accelerating from zero velocity 
-                       easeInCubic: function(t) { return t * t * t },
-                       // decelerating to zero velocity 
-                       easeOutCubic: function(t) { return (--t) * t * t + 1 },
-                       // acceleration until halfway, then deceleration 
-                       easeInOutCubic: function(t) { return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1 },
-                       // accelerating from zero velocity 
-                       easeInQuart: function(t) { return t * t * t * t },
-                       // decelerating to zero velocity 
-                       easeOutQuart: function(t) { return 1 - (--t) * t * t * t },
-                       // acceleration until halfway, then deceleration
-                       easeInOutQuart: function(t) { return t < .5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t },
-                       // accelerating from zero velocity
-                       easeInQuint: function(t) { return t * t * t * t * t },
-                       // decelerating to zero velocity
-                       easeOutQuint: function(t) { return 1 + (--t) * t * t * t * t },
-                       // acceleration until halfway, then deceleration 
-                       easeInOutQuint: function(t) { return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t }
-                   }
-                   ElasticEasings = {
-                       // elastic bounce effect at the beginning
-                       easeInElastic: function(t) { return (.04 - .04 / t) * Math.sin(25 * t) + 1 },
-                       // elastic bounce effect at the end
-                       easeOutElastic: function(t) { return .04 * t / (--t) * Math.sin(25 * t) },
-                       // elastic bounce effect at the beginning and end
-                       easeInOutElastic: function(t) { return (t -= .5) < 0 ? (.02 + .01 / t) * Math.sin(50 * t) : (.02 - .01 / t) * Math.sin(50 * t) + 1 }
-                   }
-                </textarea>
-            </div>
+            <div class='code' data-file="client_tweenX_easingFuns"></div>
             <div class='codeDescribe'>
                 <p>
                     These fomulas output a series number base on the elapsed time. 
@@ -701,69 +350,7 @@
             <div class='codeHead'>
                 <b class='title'>tweenX.js</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    function TweenX(from, to, duration, updatefun, easefun, completefun) {
-                        let dist, value;
-                        dist = JSON.parse(JSON.stringify(to));
-                        value = JSON.parse(JSON.stringify(from));
-                        dist = iterate([from, to], dist, function([f, t]) {
-                            return t - f;
-                        })
-                    
-                        if (!easefun) easefun = EasingFunctions.linear;
-                        let start = null;
-                        let id;
-                    
-                        function animate(t) {
-                            if (!start) {
-                                start = t
-                                if (updatefun) updatefun(from);
-                                id = requestAnimationFrame(animate);
-                            } else {
-                                let elapse = t - start;
-                                let percent = elapse / duration;
-                                if (percent > 1) percent = 1;
-                                let ease = easefun(percent);
-                                value = iterate([from, dist], value, function([f, d]) {
-                                    return f + d * ease;
-                                })
-                                if (updatefun) updatefun(value);
-                                if (percent < 1) {
-                                    id = requestAnimationFrame(animate);
-                                } else {
-                                    value = to;
-                                    if (completefun) completefun();
-                                }
-                            }
-                    
-                        }
-                        id = requestAnimationFrame(animate);
-                        let m = new Tween();
-                        m.stop = function() {
-                            cancelAnimationFrame(id)
-                        }
-                        m.stopAtEnd = function() {
-                            cancelAnimationFrame(id)
-                            value = to;
-                            updatefun(to);
-                        }
-                        m.getCurrentValue = function() {
-                            return value;
-                        }
-                        return m;
-                    }
-                    class Tween {
-                        construction() {
-                            this.stop = null;
-                            this.stopAtEnd = null;
-                            this.getCurrentValue = null;
-                        }
-                    
-                    
-                    }
-                </textarea>
-            </div>
+            <div class='code' data-file="client_tweenX"></div>
             <div class='codeDescribe'>
                 <p>
                     The TweenX function convert those values to a number between from and to. The TweenX function  only change numbers in the structure. If we want change the style of an element,  we define update function as parameter.
@@ -775,14 +362,7 @@
             <div class='codeHead'>
                 <b class='title'>barChart.js</b>
             </div>
-            <div class='code'>
-                <textarea>
-                    TweenX(0, hei, 1000, changeBarHeight, ElasticEasings.easeInElastic);
-                    function changeBarHeight(v) {
-                        chart.setRectHeight(bar, v);
-                    }
-                </textarea>
-            </div>
+            <div class='code' data-file="client_tweenX_useage"></div>
             <h2><span>Conclusion</span> </h2>
             <p>
                 One of the big puzzles that faced by today's web developer is too many choices. Thousands of package and framework came and gone. We are afraid falling behind the new technology, but also suffering by the overwhelming of the frameworks. In this project, we attempt to do all the things nature. Although lots of efforts, although only very few functions achieved, we are happy to its finally finished. 
@@ -795,7 +375,7 @@
         let codes = document.querySelectorAll('.code');
         for (let i = 0; i < codes.length; i++) {
             let code = codes[i];
-            syntaxHighlight(code);
+            format(code);
         }
     </script>
 </body>

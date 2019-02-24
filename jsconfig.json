@@ -4,7 +4,8 @@
         "temp",
         "app.js",
         "lib",
-        "design"
+        "design",
+        "codeClip"
     ],
     "include":[
         "common",

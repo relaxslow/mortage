@@ -10,6 +10,7 @@ const CSVToJSON = require("csvtojson");
 const JSONToCSV = require("json2csv").parse;
 const QueryItem = require('./server/QueryItem.js');
 const QueryData = require('./server/QueryData.js')
+const FormatCode = require('./server/FormatCode.js')
 
 let server = http.createServer(handle);
 const port = process.env.PORT || 1337;
@@ -120,6 +121,14 @@ let routine = {
         }
 
 
+    },
+    "getFormattedCode": function getFormattedCode(req, res) {
+        let file = `./codeClip/${req.routeArr[2]}.js`;
+        getFileData(file, res, function (code) {
+            let formattedCode=FormatCode.parse(code.toString('utf8'));
+            res.setHeader('Content-type', 'text/plain');
+            res.end(formattedCode);
+        });
     }
 
 }
