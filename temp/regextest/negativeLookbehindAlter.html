@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <script>
+
+        let str = "`aaaaa${x}bbbb${y}dfdf`"
+        let regex = /(?<=`.*)\${[^{}]*}(?=.*`)/g;
+        let alter = /(\${)[^{}]*(})/g
+        let match;
+        //         let i = 0
+        //         while (match = alter.exec(str)) {
+
+        //             console.log(match);
+        //             i++
+        //             if (i >= 50) break;
+        //         }
+        //         match=str.match(alter);
+        //         str=str.replace(alter,function($0,$1,$2){
+        //             return "#ssssss#"
+        //         })
+        let singleQuote = [];
+        let varInStr = [];
+        for (let i = 0; i < str.length; i++) {
+            let s = str[i];
+            if (s === '`')
+                singleQuote.push(i);
+            if (s === '$')
+                varInStr.push(i);
+
+
+        }
+        console.log(str);
+    </script>
+</body>
+
+</html>

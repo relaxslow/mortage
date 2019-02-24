@@ -1,10 +1,10 @@
 var htmlparser = new DOMParser()
 function syntaxHighlight(code) {
-
+    
     let regex_newLine = /\r?\n/;
     let regex_empty = /^$|^\s*$/gm;
     let regex_spaceAtBegin = /^\s+/;
-    let regex_keywords = /\bconst\b|\blet\b|\bconsole\b|\bfunction\b/g;
+    let regex_keywords = /\bconst\b|\blet\b|\bconsole\b|\bfunction\b|\bclass\b/g;
     let regex_operator = /[\+\-\*\/=\!]|\|\||&&/g
     let regex_strs = /'[^']*'|`[^`]*`|"[^"]*"/g
     let regex_nonStr = /\btrue\b|\bfalse\b|\bnull\b|\bundefined\b|\b\d+\b/g
@@ -13,7 +13,7 @@ function syntaxHighlight(code) {
     let regex_varR = /}/g;
     let regex_funcall = /(?<!function.*)(?!function|for|if)\b\w+(?=\s*\()/g
     let regex_funDef = /(?<=function\s+)\w+(?=\s*\()/g
-    let regex_funDefParam = /(?<=function(\s+)*\w*(\s+)*\()[^(),]*(?=\))|(?<=function(\s+)*\w*(\s+)*\(\[)[^()]*(?=\]\))/g
+    let regex_funDefParam = /(?<=function(\s+)?(\w+(\s+)?)?\(.*,?)(?<!{.*|\/.*)\w+(?=,?.*\))|\bthis\b/g
     let regex_condition = /\bif\b|\belse\b|\bfor\b|\breturn\b|\bcontinue\b|\bbreak\b/g
 
     let regex_yellow = /\/.*\/gm?/g
@@ -47,14 +47,19 @@ function syntaxHighlight(code) {
         let indents = [];
         let minLength;
         for (let i = 0; i < instructions.length; i++) {
-            let instruction = instructions[i]
-            let space = instruction.match(regex_spaceAtBegin);
+            let instruction = instructions[i];
+
             let spaceLength = -1;
-            if (space != null) {
-                spaceLength = space[0].length;
-                if (minLength == null || minLength > spaceLength) minLength = spaceLength;
-                instructions[i] = instruction.replace(regex_spaceAtBegin, '');
+            let isEmpty = instruction.match(regex_empty);
+            if (!isEmpty) {
+                let space = instruction.match(regex_spaceAtBegin);
+                if (space != null) {
+                    spaceLength = space[0].length;
+                    if (minLength == null || minLength > spaceLength) minLength = spaceLength;
+                    instructions[i] = instruction.replace(regex_spaceAtBegin, '');
+                }
             }
+
             indents.push(spaceLength);
 
         }
@@ -88,7 +93,7 @@ function syntaxHighlight(code) {
         if (comment !== '')
             comment = markComment(comment);
 
-        let allProperty,allStr, allRegex, allfuncall, allfundef, allfundefParam, allkey, allOperator, allNonStr, allcondition;
+        let allProperty, allStr, allRegex, allfuncall, allfundef, allfundefParam, allkey, allOperator, allNonStr, allcondition;
         [allRegex, normal] = markRegex(normal);
         [allStr, normal] = markString(normal);
         [allfundefParam, normal] = markfunDefParam(normal);

@@ -80,6 +80,7 @@
 }
 .code .funDefParam{
     color: rgb(255, 181, 70);
+    font-style: italic;
 }
 .code .comment {
     color: rgb(155, 148, 147);

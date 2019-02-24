@@ -106,6 +106,26 @@
     <div class='main'>
 
         <div class='page'>
+            <!-- <div class='codeHead'>
+                <b class='title'>index.html</b>
+            </div>
+            <div class='code'>
+                <textarea>
+                    function resizeIframe(iframe) {
+                        // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
+                        let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
+                        if (iframeContentHei < window.innerHeight - headHeight) {
+                            iframe.style.height = window.innerHeight - headHeight + "px";
+                        } else {
+                            iframe.style.height = (iframe.contentWindow.document.body.scrollHeight) + "px";
+            
+                        }
+                    }
+                    window.resizeContent = function () {
+                        resizeIframe(contentFrame);
+                    }
+                </textarea>
+            </div> -->
             <h2><span>Introduction</span> </h2>
             <p>
                 This project is one of the project of UONA curriculum. The course is named <span>DATA523</span> (Big Data Fundamental).The course revealing the essence of big data technology , how it put to use in practice and what we should keep in mind when use it. Big data went to our lives and benefit almost everywhere. As a program developper, I want to combine my programming skill with big data. 
@@ -409,6 +429,9 @@
                   Searching function search the database(samplefile.csv) and return the result. It also add up the record to get total loan count and amount
                 </p>
             </div>
+            <p>
+                On client side, we will discuss component,navigation,visualization,animation
+            </p>
             <h3>Component</h3>
             <p>
                 Since we haven't use any framework or packages in our front-end. So we should package some function ourself to reduce the complexity of the code. We call them component because it could be reused anywhere. In this project we write the following components
@@ -428,7 +451,7 @@
                 </p>
                 <li>code.js</li>
                 <p>
-                    This functions turns each of the code in this page into a formatted, syntaxhighlight form. We choose a theme named Monokai ST3 which comes from the sublime textEditor. It's the most beautiful and scientific theme I've ever met. The <b>syntaxHighlight</b> function  use Regular Expression heavily to search and replace the desired word and wrap them with a proper sytle class.  
+                    This functions turns each of the code in this page into a formatted, syntaxhighlight form. We choose a theme named Monokai ST3 which comes from the sublime textEditor. It's the most beautiful and scientific theme I've ever met. The <b>syntaxHighlight</b> function  use Regular Expression heavily to search and replace the desired word and wrap them with a proper sytle class.  Unfortunately, some browser like edge does not support features like positive look behind. So there are errors, if you open this page in edge. I'm currently looking for some non-REGEX solutions.
                 </p>
                 <div class='codeHead'>
                     <b class='title'>code.js</b>
@@ -442,7 +465,7 @@
                         let regex_yellow=/\/.*\/g?m?/g
                         let regex_funcall = /(?<!function.*)(?!function|for|if)\b\w+(?=\s*\()/g
                         let regex_funDef = /(?<=function\s+)\w+(?=\s*\()/g
-                        let regex_funDefParam = /(?<=function(\s+)*\w*(\s+)*\()[^(),]*(?=\))|(?<=function(\s+)*\w*(\s+)*\(\[)[^()]*(?=\]\))/g
+                        let regex_funDefParam = /(?<=function(\s+)?(\w+(\s+)?)?\(.*,?)(?<!{.*|\/.*)\w+(?=,?.*\))/g
                         let regex_condition = /\bif\b|\belse\b|\bfor\b|\breturn\b|\bcontinue\b|\bbreak\b/g
                         let regex_yellow = /\/.*\/gm?/g
                         let regex_blue = /(?!\\b)\\.|\[\^\(\)\]|\[\^\\\[\\\]\]|\[[^\[\]]*\]|\[\^.*\](?=.*\/g?m?)/g
@@ -743,11 +766,11 @@
             </div>
             <div class='codeDescribe'>
                 <p>
-                    The tweenX function convert those values to a number between from and to.
+                    The TweenX function convert those values to a number between from and to. The TweenX function  only change numbers in the structure. If we want change the style of an element,  we define update function as parameter.
                 </p>
             </div>
             <p>
-                With this convinient function, we can easily do the trick like the following
+                With this convinient function, we can easily do the trick like the following:
             </p>
             <div class='codeHead'>
                 <b class='title'>barChart.js</b>
