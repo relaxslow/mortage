@@ -54,6 +54,4 @@ class Tween {
         this.stopAtEnd = null;
         this.getCurrentValue = null;
     }
-
-
 }

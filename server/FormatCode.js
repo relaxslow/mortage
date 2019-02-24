@@ -42,7 +42,7 @@ function organize(instructions) {
     }
     let firstLine = instructions[0]; if (firstLine === '') return null;
     let indents = [];
-    let minLength;
+    let minLength=0;
     for (let i = 0; i < instructions.length; i++) {
         let instruction = instructions[i];
 
@@ -54,6 +54,9 @@ function organize(instructions) {
                 spaceLength = space[0].length;
                 if (minLength == null || minLength > spaceLength) minLength = spaceLength;
                 instructions[i] = instruction.replace(regex_spaceAtBegin, '');
+            }
+            else {
+                spaceLength=0;
             }
         }
 
