@@ -1,5 +1,5 @@
 
-function format(code) {
+function format(code,fun) {
     let fileName = code.dataset.file;
     if (!fileName) return;
     let req = new XMLHttpRequest();
@@ -8,13 +8,13 @@ function format(code) {
     req.send();
     function codeRecieved() {
         code.innerHTML = req.response;
-        parent.window.resizeContent();
+        fun();
     }
 
-    drag(code);
+    enableDrag(code);
 
 }
-function drag(code) {
+function enableDrag(code) {
     code.addEventListener('pointerdown', mousedownCode);
     code.addEventListener('pointerour', mouseLeaveCode);
     code.addEventListener('pointerup', mouseUpCode);

@@ -375,7 +375,13 @@
         let codes = document.querySelectorAll('.code');
         for (let i = 0; i < codes.length; i++) {
             let code = codes[i];
-            format(code);
+            format(code, finish);
+        }
+        let num = 0;
+        function finish() {
+            num++;
+            if (num >= codes.length)
+                parent.window.resizeContent();
         }
     </script>
 </body>
