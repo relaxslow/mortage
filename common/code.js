@@ -7,37 +7,19 @@ function format(code, fun) {
     req.onload = codeRecieved;
     req.send();
     function codeRecieved() {
-       
-        // Options for the observer (which mutations to observe)
-        let config = { attributes: true, childList: true, subtree: true };
-
-        // Callback function to execute when mutations are observed
-        let  callback = function (mutationsList, observer) {
-            for (var mutation of mutationsList) {
-                if (mutation.type == 'childList') {
-                     fun();
-//                     console.log('A child node has been added or removed.');
-                    observer.disconnect();
-                }
-                else if (mutation.type == 'attributes') {
-//                     console.log('The ' + mutation.attributeName + ' attribute was modified.');
-                }
-            }
-        };
-
-        // Create an observer instance linked to the callback function
-        let  observer = new MutationObserver(callback);
-        observer.observe(code, config);
-
+        code.addEventListener('click', finishLoadCode)
         code.innerHTML = req.response;
-       
+        code.click();//wait full rendered
 
 
     }
 
+    function finishLoadCode() {
+        fun();
+    }
     enableDrag(code);
-
 }
+
 function enableDrag(code) {
     code.addEventListener('pointerdown', mousedownCode);
     code.addEventListener('pointerour', mouseLeaveCode);
