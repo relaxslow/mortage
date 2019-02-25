@@ -14,10 +14,11 @@
 
         .content {
             width: 100%;
-            height: calc(100vh - 50px);
-            position: absolute;
-            top: 50px;
-            overflow: hidden;
+            /* height: calc(100vh - 50px); */
+            /* position: absolute; */
+            /* top: 50px; */
+            /* overflow: hidden; */
+            padding: 103px 30%;
         }
 
         .analysis {
@@ -71,15 +72,16 @@
         ]
         function clickMainMenu(index) {
             contentFrame.src = folder + contentName[index] + ".html"
-            contentFrame.onload = resizeContent;
+            contentFrame.onload = resizeContentWhenClickMenu;
         }
 
         let contentFrame = document.querySelector(".content");
         contentFrame.onload = resizeContent;
         let headHeight = mainMenu.getHei();
         function resizeIframe(iframe) {
-            // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
-            let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
+            let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
+            // iframe.contentWindow.document.body.height=scrollHeight+"px";
+            // let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
             if (iframeContentHei < window.innerHeight - headHeight) {
                 iframe.style.height = window.innerHeight - headHeight + "px";
             } else {
@@ -91,12 +93,13 @@
 
         window.resizeContent = resizeContent
         function resizeContent() {
-            requestAnimationFrame(function () {
-                resizeIframe(contentFrame);
+            resizeIframe(contentFrame);
 
-            })
         }
+        function resizeContentWhenClickMenu() {
+            resizeIframe(contentFrame);
 
+        }
 //---------------------------------------------------
 
     </script>
