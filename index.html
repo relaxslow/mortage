@@ -45,7 +45,6 @@
         .analysis:focus {
             outline: none;
         }
-     
     </style>
     <link rel="stylesheet" href="/common/Menu.css">
     <script src="/common/Menu.js"></script>
@@ -72,19 +71,11 @@
         ]
         function clickMainMenu(index) {
             contentFrame.src = folder + contentName[index] + ".html"
-            contentFrame.onload = function () {
-                requestAnimationFrame(function(){
-                resizeIframe(contentFrame)
-
-                })
-
-            }
+            contentFrame.onload =resizeContent;
         }
 
         let contentFrame = document.querySelector(".content");
-        contentFrame.onload = function () {
-            resizeIframe(contentFrame);
-        }
+        contentFrame.onload = resizeContent;
         let headHeight = mainMenu.getHei();
         function resizeIframe(iframe) {
             // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
@@ -92,13 +83,14 @@
             if (iframeContentHei < window.innerHeight - headHeight) {
                 iframe.style.height = window.innerHeight - headHeight + "px";
             } else {
-                iframe.style.height = (iframe.contentWindow.document.body.scrollHeight) + "px";
+                iframe.style.height = iframeContentHei + "px";
 
             }
         }
 
 
-        window.resizeContent = function () {
+        window.resizeContent = resizeContent
+        function resizeContent() {
             resizeIframe(contentFrame);
         }
 
