@@ -1,5 +1,5 @@
 .Menu {
-    background-color: blueviolet;
+    background-color: #3F51B5;
     width: 100%;
     height: 50px;
     display: flex;
@@ -16,7 +16,7 @@
   padding-right: 10px;
   font-family: courier new;
   transition: 0.3s linear;
-  background-color: blueviolet;
+  background-color: #3F51B5;
   border: none;
   cursor: pointer;
 }

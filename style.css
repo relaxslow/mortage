@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "Pacifico-Regular";
+    src: url('/fonts/Pacifico-Regular.ttf');
+}
 .all{
     width: 100%;
     display: flex;
@@ -11,8 +15,15 @@
 .foot {
     width: 100%;
     height: 100px;
-    background-color: blueviolet;
+    background-color: #3F51B5;
     margin-top: 50px;
+    padding: 10px 200px;
+}
+.foot p{
+    font-size: 0.8em;
+    font-family: "Pacifico-Regular";
+    width: 372px;
+    color: #bc8774;
 }
 
 .main {
