@@ -8,7 +8,10 @@ function format(code,fun) {
     req.send();
     function codeRecieved() {
         code.innerHTML = req.response;
-        fun();
+        requestAnimationFrame(function(){
+            fun();
+        })
+        
     }
 
     enableDrag(code);
