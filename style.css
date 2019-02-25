@@ -1,0 +1,25 @@
+.all{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.head {
+    width: 100%;
+    height: 100px;
+}
+
+.foot {
+    width: 100%;
+    height: 100px;
+    background-color: blueviolet;
+    margin-top: 50px;
+}
+
+.main {
+
+    display: flex;
+}
+.blank {
+    width: 200px;
+}
+

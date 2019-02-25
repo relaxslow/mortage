@@ -19,23 +19,7 @@
             box-sizing: border-box;
             overflow: hidden;
         }
-
-        .main {
-            /* padding: 30px 200px; */
-            /* position: relative; */
-            /* display: flex; */
-            /* overflow: hidden; */
-        }
-
-        .page {
-            /* display: flex; */
-            /* flex-direction: column; */
-            padding: 77px;
-            background-color: #ffebc6;
-            /* position: relative; */
-            width: 600px;
-            /* overflow: hidden; */
-        }
+       
 
         h2 {
             font-family: "YanoneKaffeesatz-Bold";
@@ -105,281 +89,273 @@
             margin-left: 50px;
             margin-right: 50px;
         }
+
+        .page {
+            padding: 77px;
+            background-color: #ffebc6;
+            /* position: relative; */
+            width: 600px;
+        }
     </style>
+    <link rel="stylesheet" href="/style.css">
     <script src="/common/code.js"></script>
     <link rel="stylesheet" href="/common/code.css">
 </head>
 
 <body>
+    <div class='all'>
+        <div class='head'></div>
+        <div class='main'>
+            <div class="blank"></div>
+            <div class='page'>
+                <h2><span>Introduction</span> </h2>
+                <p>
+                        This project is one of the project of UONA curriculum. The course is named <span>DATA523</span> (Big Data Fundamental).The course revealing the essence of big data technology , how it put to use in practice and what we should keep in mind when use it. Big data went to our lives and benefit almost everywhere. As a program developper, I want to combine my programming skill with big data. 
+                    </p>
+                <p>
+                        One major application of bigData is to provide a service which let people download and watch it. No matter what website like amazon or facebook, they are simplar in service. The difference is that they provide different content. Amazon provide commodities while facebook provide pictures and videos. All the services has some custom functions like searching and filtering which let the user view the content they are interested.
+                    </p>
+                <p>
+                        In this project, we are going to build a small test webpage and implement the above functions. The content we provide is related to mortgage industry. We'd like to build a real website to download public mortgage data and conduct analysis in respect to the data. We will view the data from two different angles: chronological and geological. We are trying to perform a downloading tool along with the analytical charts and tables to show how the market performed in the past.
+                    </p>
+                <h3>Topdown Approach</h3>
+                <p>
+                        topdown approach refer to a methodology of programming. It divide the whole task into small part and implement them seperately. Its goal is to avoid code refactoring as much as possible. But each theory has its premise. Topdown approach assume the developer has clear understanding of the functions and its implementations. In practice, especially for the novice like me who have not enough knowledge of the overall structure. In this situation, bottom up seems a good approach. No matter topdown or bottomup, the key is to <span>control the complexity of the code</span> , not only for maintenance but also for reuse of the code. 
+                    </p>
+                <h3>Iterative Development</h3>
+                <p>
+                        Iterative development construct the code like Lego. The whole program is made of many building blocks. Each block has some abstract of function. We package those blocks to form some bigger structures and then use that to form larger functions and eventually reach our goals. Each block should be carefully tested but that would not need to be done at once. They can be completed gradually along with the growth of our program. The blocks may not be recognized at first, because we usually write functions from topdown approach based on a real problem until we found some function repeated for many times , then we seperate those code as functions. So refactoring happened throughout the entire process. We tidy up the code,abstract common method and package them into high level functions. finally we make it concise and optimized. This process is helpful to learning and let us see the evolution of the code. That's one feature of iterative development.     
+                    </p>
+                <h3>Javascript</h3>
+                <p>
+                        It happened that this is the good place where Javascript could play well with. Javascript has varies patterns that can be used in combination. The language has good  mechanism  which can help developer  change the patterns  as they need. The cost of changes are minimized when code are evolved from a simple function to a complete reuseable class. We must thank to Javascript's flexibility that it won't restrict us like other languages. Although they claimed  security and easy debug features I still thought Javascript is the best language I met in the world and I believe those problems are not longer problem as time goes by.
+                    </p>
+                <h2><span>Overview</span> </h2>
+                <p>
+                        So let get back to this project. In this project we need implement the following functions.
+                    </p>
+                <ul>
+                    <li> A Download button let user download data as .csv file</li>
+                    <li> Three dropdown list with multi-select functions, allow user query  State, Quarter, Dimension or any of their combination </li>
+                    <li> Two charts domestrate the Loan Count and Loan Amount seperately</li>
+                </ul>
+                <h3>Server programming</h3>
+                <p>
+                        We use node.js as the backbone of our back-end because it use Javascript as its language. This simplify the whole development a lot more because we don't need to learn 2 seperate language for server and client. In this project, we need to implement the following functions.
+                        
+                    </p>
+                <ul>
+                    <li>File server </li>
+                    <p>
+                            A basic file server that simplely return the files that client requested. This is the basic service that every server should provide. All the resource on the pages get from server via this service.
+                        </p>
+                    <li>Searching</li>
+                    <p>
+                            All the data are located on the server file named samplefile.csv. This is a typical spreadsheet. We parse that file and get names for the menu and list records  when user push preview button. In this project, due to the reason of research and test, we don't use any of the database system. For example, mongoDB or SQL. Instead, we want fake a database system just using a simple package: csvtojson.
+                        </p>
+                    <li>Query</li>
+                    <p>
+                            we want implement the basic query operation from client based on the selection of pull down menu. For example, compute total loan amount and count of the selection 
+                        </p>
 
-    <div class='main'>
+                </ul>
+                <h3>Client programming</h3>
+                <p>
+                        On the client side, there are lot of technical issues need to be solved. Because we want to consolidate our basic knowledge of web , we don't use any of the package, just pure Javascript/Html/Css. All the codes are writen  by our own hands. We want to carry out our faith that <span>less is more</span> which means minimizing the building block we learned , keeping our core light weighted and putting emphasis on the practical issues.    
+                    </p>
+                <ul>
+                    <li>Component </li>
+                    <p>
+                             the Html do has lot of handy Tags that could maximal minimize our work . In our project all we want are some pulldown menus and buttons. Our pull down menu should support operations such as  multi-select and reset. Those are not provided by the default Tag. So we must rewrite it from bottom. 
+                        </p>
+                    <li>Navigation</li>
+                    <p>
+                            Our project has 3 pages: Introduce, Download and Analysis. They could be loaded by clicking the corresponding buttons on the headbar and should be eliminated in the memory when user switch to another page. One page one module is good idea. Years before, we should write our own functions handle this include removing all the css and functions loaded by a page and running new functions and css of the new page. Now we have iframe, a versatile tag could solve the above issues. We would discuss later in Detail section. 
+                        </p>
+                    <li>Visualization</li>
+                    <p>
+                            There are lots of packages can do this job. For example,amchart.js,chart.js...etc. In this project, we want implement it via pure Javascript. On one hand, I want to research how much effort it needed.On the other hand, Most of all, it is my personal preference: Minimal use of packages.
+                        </p>
+                    <li>Animation</li>
+                    <p>
+                            The program looks lifeless.That's the place where interactive feedback and animations comes to play. In this project, we want to dig deeper to reveal machanism of Javascript animations and build a small animation engine upon them. 
+                        </p>
+                </ul>
 
-        <div class='page'>
-            <!-- <div class='codeHead'>
-                <b class='title'>index.html</b>
-            </div>
-            <div class='code'>
-                <textarea>
-                    function resizeIframe(iframe) {
-                        // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
-                        let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
-                        if (iframeContentHei < window.innerHeight - headHeight) {
-                            iframe.style.height = window.innerHeight - headHeight + "px";
-                        } else {
-                            iframe.style.height = (iframe.contentWindow.document.body.scrollHeight) + "px";
-            
-                        }
-                    }
-                    window.resizeContent = function () {
-                        resizeIframe(contentFrame);
-                    }
-                </textarea>
-            </div> -->
-            <h2><span>Introduction</span> </h2>
-            <p>
-                This project is one of the project of UONA curriculum. The course is named <span>DATA523</span> (Big Data Fundamental).The course revealing the essence of big data technology , how it put to use in practice and what we should keep in mind when use it. Big data went to our lives and benefit almost everywhere. As a program developper, I want to combine my programming skill with big data. 
-            </p>
-            <p>
-                One major application of bigData is to provide a service which let people download and watch it. No matter what website like amazon or facebook, they are simplar in service. The difference is that they provide different content. Amazon provide commodities while facebook provide pictures and videos. All the services has some custom functions like searching and filtering which let the user view the content they are interested.
-            </p>
-            <p>
-                In this project, we are going to build a small test webpage and implement the above functions. The content we provide is related to mortgage industry. We'd like to build a real website to download public mortgage data and conduct analysis in respect to the data. We will view the data from two different angles: chronological and geological. We are trying to perform a downloading tool along with the analytical charts and tables to show how the market performed in the past.
-            </p>
-            <h3>Topdown Approach</h3>
-            <p>
-                topdown approach refer to a methodology of programming. It divide the whole task into small part and implement them seperately. Its goal is to avoid code refactoring as much as possible. But each theory has its premise. Topdown approach assume the developer has clear understanding of the functions and its implementations. In practice, especially for the novice like me who have not enough knowledge of the overall structure. In this situation, bottom up seems a good approach. No matter topdown or bottomup, the key is to <span>control the complexity of the code</span> , not only for maintenance but also for reuse of the code. 
-            </p>
-            <h3>Iterative Development</h3>
-            <p>
-                Iterative development construct the code like Lego. The whole program is made of many building blocks. Each block has some abstract of function. We package those blocks to form some bigger structures and then use that to form larger functions and eventually reach our goals. Each block should be carefully tested but that would not need to be done at once. They can be completed gradually along with the growth of our program. The blocks may not be recognized at first, because we usually write functions from topdown approach based on a real problem until we found some function repeated for many times , then we seperate those code as functions. So refactoring happened throughout the entire process. We tidy up the code,abstract common method and package them into high level functions. finally we make it concise and optimized. This process is helpful to learning and let us see the evolution of the code. That's one feature of iterative development.     
-            </p>
-            <h3>Javascript</h3>
-            <p>
-                It happened that this is the good place where Javascript could play well with. Javascript has varies patterns that can be used in combination. The language has good  mechanism  which can help developer  change the patterns  as they need. The cost of changes are minimized when code are evolved from a simple function to a complete reuseable class. We must thank to Javascript's flexibility that it won't restrict us like other languages. Although they claimed  security and easy debug features I still thought Javascript is the best language I met in the world and I believe those problems are not longer problem as time goes by.
-            </p>
-            <h2><span>Overview</span> </h2>
-            <p>
-                So let get back to this project. In this project we need implement the following functions.
-            </p>
-            <ul>
-                <li> A Download button let user download data as .csv file</li>
-                <li> Three dropdown list with multi-select functions, allow user query  State, Quarter, Dimension or any of their combination </li>
-                <li> Two charts domestrate the Loan Count and Loan Amount seperately</li>
-            </ul>
-            <h3>Server programming</h3>
-            <p>
-                We use node.js as the backbone of our back-end because it use Javascript as its language. This simplify the whole development a lot more because we don't need to learn 2 seperate language for server and client. In this project, we need to implement the following functions.
-                
-            </p>
-            <ul>
-                <li>File server </li>
+                <h2><span>Detail</span> </h2>
                 <p>
-                    A basic file server that simplely return the files that client requested. This is the basic service that every server should provide. All the resource on the pages get from server via this service.
-                </p>
-                <li>Searching</li>
-                <p>
-                    All the data are located on the server file named samplefile.csv. This is a typical spreadsheet. We parse that file and get names for the menu and list records  when user push preview button. In this project, due to the reason of research and test, we don't use any of the database system. For example, mongoDB or SQL. Instead, we want fake a database system just using a simple package: csvtojson.
-                </p>
-                <li>Query</li>
-                <p>
-                    we want implement the basic query operation from client based on the selection of pull down menu. For example, compute total loan amount and count of the selection 
-                </p>
-
-            </ul>
-            <h3>Client programming</h3>
-            <p>
-                On the client side, there are lot of technical issues need to be solved. Because we want to consolidate our basic knowledge of web , we don't use any of the package, just pure Javascript/Html/Css. All the codes are writen  by our own hands. We want to carry out our faith that <span>less is more</span> which means minimizing the building block we learned , keeping our core light weighted and putting emphasis on the practical issues.    
-            </p>
-            <ul>
-                <li>Component </li>
-                <p>
-                     the Html do has lot of handy Tags that could maximal minimize our work . In our project all we want are some pulldown menus and buttons. Our pull down menu should support operations such as  multi-select and reset. Those are not provided by the default Tag. So we must rewrite it from bottom. 
-                </p>
-                <li>Navigation</li>
-                <p>
-                    Our project has 3 pages: Introduce, Download and Analysis. They could be loaded by clicking the corresponding buttons on the headbar and should be eliminated in the memory when user switch to another page. One page one module is good idea. Years before, we should write our own functions handle this include removing all the css and functions loaded by a page and running new functions and css of the new page. Now we have iframe, a versatile tag could solve the above issues. We would discuss later in Detail section. 
-                </p>
-                <li>Visualization</li>
-                <p>
-                    There are lots of packages can do this job. For example,amchart.js,chart.js...etc. In this project, we want implement it via pure Javascript. On one hand, I want to research how much effort it needed.On the other hand, Most of all, it is my personal preference: Minimal use of packages.
-                </p>
-                <li>Animation</li>
-                <p>
-                    The program looks lifeless.That's the place where interactive feedback and animations comes to play. In this project, we want to dig deeper to reveal machanism of Javascript animations and build a small animation engine upon them. 
-                </p>
-            </ul>
-
-            <h2><span>Detail</span> </h2>
-            <p>
-                In this section, we elaborate all the technical point in this project one by one. Let's begin from server side
-            </p>
-            <h3>File server</h3>
-            <div class='codeHead'>
-                <b class='title'>app.js</b>
-            </div>
-            <div class="code" data-file="server_app_basichandleFile"> </div>
-            <p>
-                This is a simplest file server. It inspect the string that send from client and check if it is a file. The principle is simple : if the message end with a suffix(.csv ) then we can assume it is a file. There is an object named mimeType which hold the commonly used file format and add as headers when the file is send back. 
-            </p>
-            <h3>Searching</h3>
-            <p>
-                There are 2 functions to implement. One is retrieve menu items for our dropdown list.
-            </p>
-            <div class='codeHead'>
-                <b class='title'>getPullDownMenu.js</b>
-            </div>
-            <div class='code' data-file="getPullDown_initOption"></div>
-            <div class='codeDescribe'>
-                <p>
-                    send request to backend and create dropdown menus based on recieved data    
-                </p>
-            </div>
-
-            <div class='codeHead'>
-                <b class='title'>app.js</b>
-            </div>
-            <div class='code' data-file="server_app_queryItemModule_useage"></div>
-            <div class='codeDescribe'>
-                <p>
-                    In the app.js(server), we defined a function to deal with the request. The job is done by our <span>QueryItem</span> module. The module load up at server start and read the "samplefile.csv" immediately. Then, it parse the file using our external package "csvtojson". When the client request the menu items data , it send the searched data back to client.
-                </p>
-            </div>
-
-            <div class='codeHead'>
-                <b class='title'>QueryItem.js</b>
-            </div>
-            <div class='code' data-file="server_queryItemModule_initData"></div>
-            <div class='codeDescribe'>
-                <p>
-                    CSVToJSON is an asynchronized function. So we must do extra work. We put all the request fun to an array . When the task is done. We call <span>runAllWaitTasks</span>() to actually send the data back; 
-                </p>
-            </div>
-            <h3>Query</h3>
-            <div class='codeHead'>
-                <b class='title'>QueryData.js</b>
-            </div>
-            <div class='code' data-file="server_queryDataModule_search"></div>
-            <div class='codeDescribe'>
-                <p>
-                  Searching function search the database(samplefile.csv) and return the result. It also add up the record to get total loan count and amount
-                </p>
-            </div>
-            <p>
-                On client side, we will discuss component,navigation,visualization,animation
-            </p>
-            <h3>Component</h3>
-            <p>
-                Since we haven't use any framework or packages in our front-end. So we should package some function ourself to reduce the complexity of the code. We call them component because it could be reused anywhere. In this project we write the following components
-            </p>
-            <ul>
-                <li>pullDownMenu.js</li>
-                <p>
-                    Use to select query options,support multi-selection and reset
-                </p>
-                <li>chartCore.js</li>
-                <p>
-                    Use to draw chart in our analysis page. It essentially provide methods to draw charts base on the origin of the chart itself(html usually draw things from the top-left point of the element).There are two other high level component are developped to actually implement the chart drawing operation. They are <span>barChart.js</span>  and <span>lineChart.js</span>  
-                </p>
-                <li>tweenX.js</li>
-                <p>
-                    Support the animations throughout the project. There are many tween engines in the marcket such as tween.js or tweenMax.js(GSAP). They are very big and they force to input an object with fixed pattern({x:10,y:20..e.g.}). This lead to a little verbose to call the functions. In our tweenX.js, we support any structure of input object. You can construct the input as you wish, like this : {elment1:[{a:10,b:20},{a:30,b:40}],element2:[{a:50,b:60},{a:70,b:80}]}. Further more we support a stopAtEnd function. So there are no need to set the structure manually.   
-                </p>
-                <li>code.js</li>
-                <p>
-                    This functions turns each of the code in this page into a formatted, syntaxhighlight form. We choose a theme named Monokai ST3 which comes from the sublime textEditor. It's the most beautiful and scientific theme I've ever met. The <b>syntaxHighlight</b> function  use Regular Expression heavily to search and replace the desired word and wrap them with a proper sytle class.  Unfortunately, some browser like edge does not support features like positive look behind. So there are errors, if you open this page in edge. I'm currently looking for some non-REGEX solutions.
-                </p>
+                        In this section, we elaborate all the technical point in this project one by one. Let's begin from server side
+                    </p>
+                <h3>File server</h3>
                 <div class='codeHead'>
-                    <b class='title'>code.js</b>
+                    <b class='title'>app.js</b>
                 </div>
-                <div class='code' data-file="client_formatcode_partOfRegex"></div>
+                <div class="code" data-file="server_app_basichandleFile"> </div>
+                <p>
+                        This is a simplest file server. It inspect the string that send from client and check if it is a file. The principle is simple : if the message end with a suffix(.csv ) then we can assume it is a file. There is an object named mimeType which hold the commonly used file format and add as headers when the file is send back. 
+                    </p>
+                <h3>Searching</h3>
+                <p>
+                        There are 2 functions to implement. One is retrieve menu items for our dropdown list.
+                    </p>
+                <div class='codeHead'>
+                    <b class='title'>getPullDownMenu.js</b>
+                </div>
+                <div class='code' data-file="getPullDown_initOption"></div>
                 <div class='codeDescribe'>
                     <p>
-                    Here is some of the Regular Expression used in the code.js
-                    </p>
+                            send request to backend and create dropdown menus based on recieved data    
+                        </p>
                 </div>
 
-            </ul>
-            <h3>Navigation</h3>
-            <p>
-                Navigation seems simple at first. But if you want your page could be loaded dynamically then lot of work should be done. First, there should be functions control the life cycle of the elements of the page. That is when user click the button, old page should be deleted include all the Dom elements and its Css styles. Then, new page loaded ,and the nonrefresh area remain. Second, we should handle asynchronize  process of deleting and loading, keep the functions run in desired order.  There are many ways to achieve these purpose. One is hard coded everything. It need a comprehensive understanding of the underlying mechanism. Besides, we should develop a modular system . we should define how to read and write html, css, and javascript files. We should be careful not to cause memory leak in our code. That huge amount of work only result successfully change pages as usual. So we recommend another way: iframe. Iframe is a Tag in html. After test, it has memory management functions as well. When you change the source of the iframe, it purge old pages and load new one. The drawback is it may repeat containing same library. Compare to the benefit it provide, this could be trivial and ignored. And, in this project we don't use any of the external library. The function writen by me is smaller with little memory occupation.  
-            </p>
-            <div class='codeHead'>
-                <b class='title'>index.html</b>
-            </div>
-            <div class='code' data-file="client_index_switchSubpage"></div>
-            <div class='codeDescribe'>
-                <p>
-                    This is our page-switch function. Simple as it is!
-                </p>
-            </div>
-            <div class='codeHead'>
-                <b class='title'>index.html</b>
-            </div>
-            <div class='code' data-file="client_index_resizeIframe"></div>
-            <div class='codeDescribe'>
-                <p>
-                    One of the side effects of using iframe as modular system is It can't change the its size based on its content(that's the basic function of a Div). So we write our own resize function to deal with. We also define it as <span> window </span> property, so that we could find it inside the iframe page
-                </p>
-            </div>
-            <h3>Visualization</h3>
-            <p>
-                To finish our visualization task, I write a series function. I put them in chartChore.js. The main purpose of those functions is to draw things from the visual origin of the chart. As you probably known, Html draw things from the top-left corner of the window. It's difficult to calculate the coordinate from that point. Charts like bar chart or line chart has axis with its positive X point to right and positive y point to the up.  If we use the axis origin to draw, things became easy. So  transforming between coordinate system  is necessary.       
-            </p>
-            <div class='codeHead'>
-                <b class='title'>chartCore.js</b>
-            </div>
-            <div class='code' data-file="client_chartCore_partOfDrawFun"></div>
-            <div class='codeDescribe'>
-                <p>
-                    These are 2 function picked from the chartCore.js. As you can see on the first several line, the transformation is simple.
-                </p>
-            </div>
-            <div class='codeHead'>
-                <b class='title'>barChart.js</b>
-            </div>
-            <div class='code' data-file="client_barChart_drawBars"></div>
-            <div class='codeDescribe'>
-                <p>
-                    The barChart.js use the functions in chartCore.js which is carry out the actual drawing actions. The 'drawBars' function response to all the possible input from user such as mouse over and out. 
-                </p>
-            </div>
-            <h3>Animation</h3>
-            <p>
-                This is the interesting part of whole project. We hope our chart could show up with animations. Further more it should bounce like you see in the cartoon film. All those effect actually controlled by mathematics. After quick search I found the following code. 
-            </p>
-            <div class='codeHead'>
-                <b class='title'>tweenX.js</b>
-            </div>
-            <div class='code' data-file="client_tweenX_easingFuns"></div>
-            <div class='codeDescribe'>
-                <p>
-                    These fomulas output a series number base on the elapsed time. 
-                </p>
-            </div>
-            <div class='codeHead'>
-                <b class='title'>tweenX.js</b>
-            </div>
-            <div class='code' data-file="client_tweenX"></div>
-            <div class='codeDescribe'>
-                <p>
-                    The TweenX function convert those values to a number between from and to. The TweenX function  only change numbers in the structure. If we want change the style of an element,  we define update function as parameter.
-                </p>
-            </div>
-            <p>
-                With this convinient function, we can easily do the trick like the following:
-            </p>
-            <div class='codeHead'>
-                <b class='title'>barChart.js</b>
-            </div>
-            <div class='code' data-file="client_tweenX_useage"></div>
-            <h2><span>Conclusion</span> </h2>
-            <p>
-                One of the big puzzles that faced by today's web developer is too many choices. Thousands of package and framework came and gone. We are afraid falling behind the new technology, but also suffering by the overwhelming of the frameworks. In this project, we attempt to do all the things nature. Although lots of efforts, although only very few functions achieved, we are happy to its finally finished. 
-            </p>
+                <div class='codeHead'>
+                    <b class='title'>app.js</b>
+                </div>
+                <div class='code' data-file="server_app_queryItemModule_useage"></div>
+                <div class='codeDescribe'>
+                    <p>
+                            In the app.js(server), we defined a function to deal with the request. The job is done by our <span>QueryItem</span> module. The module load up at server start and read the "samplefile.csv" immediately. Then, it parse the file using our external package "csvtojson". When the client request the menu items data , it send the searched data back to client.
+                        </p>
+                </div>
 
+                <div class='codeHead'>
+                    <b class='title'>QueryItem.js</b>
+                </div>
+                <div class='code' data-file="server_queryItemModule_initData"></div>
+                <div class='codeDescribe'>
+                    <p>
+                            CSVToJSON is an asynchronized function. So we must do extra work. We put all the request fun to an array . When the task is done. We call <span>runAllWaitTasks</span>() to actually send the data back; 
+                        </p>
+                </div>
+                <h3>Query</h3>
+                <div class='codeHead'>
+                    <b class='title'>QueryData.js</b>
+                </div>
+                <div class='code' data-file="server_queryDataModule_search"></div>
+                <div class='codeDescribe'>
+                    <p>
+                          Searching function search the database(samplefile.csv) and return the result. It also add up the record to get total loan count and amount
+                        </p>
+                </div>
+                <p>
+                        On client side, we will discuss component,navigation,visualization,animation
+                    </p>
+                <h3>Component</h3>
+                <p>
+                        Since we haven't use any framework or packages in our front-end. So we should package some function ourself to reduce the complexity of the code. We call them component because it could be reused anywhere. In this project we write the following components
+                    </p>
+                <ul>
+                    <li>pullDownMenu.js</li>
+                    <p>
+                            Use to select query options,support multi-selection and reset
+                        </p>
+                    <li>chartCore.js</li>
+                    <p>
+                            Use to draw chart in our analysis page. It essentially provide methods to draw charts base on the origin of the chart itself(html usually draw things from the top-left point of the element).There are two other high level component are developped to actually implement the chart drawing operation. They are <span>barChart.js</span>  and <span>lineChart.js</span>  
+                        </p>
+                    <li>tweenX.js</li>
+                    <p>
+                            Support the animations throughout the project. There are many tween engines in the marcket such as tween.js or tweenMax.js(GSAP). They are very big and they force to input an object with fixed pattern({x:10,y:20..e.g.}). This lead to a little verbose to call the functions. In our tweenX.js, we support any structure of input object. You can construct the input as you wish, like this : {elment1:[{a:10,b:20},{a:30,b:40}],element2:[{a:50,b:60},{a:70,b:80}]}. Further more we support a stopAtEnd function. So there are no need to set the structure manually.   
+                        </p>
+                    <li>code.js</li>
+                    <p>
+                            This functions turns each of the code in this page into a formatted, syntaxhighlight form. We choose a theme named Monokai ST3 which comes from the sublime textEditor. It's the most beautiful and scientific theme I've ever met. The <b>syntaxHighlight</b> function  use Regular Expression heavily to search and replace the desired word and wrap them with a proper sytle class.  Unfortunately, some browser like edge does not support features like positive look behind. So there are errors, if you open this page in edge. I'm currently looking for some non-REGEX solutions.
+                        </p>
+                    <div class='codeHead'>
+                        <b class='title'>code.js</b>
+                    </div>
+                    <div class='code' data-file="client_formatcode_partOfRegex"></div>
+                    <div class='codeDescribe'>
+                        <p>
+                            Here is some of the Regular Expression used in the code.js
+                            </p>
+                    </div>
+
+                </ul>
+                <h3>Navigation</h3>
+                <p>
+                        Navigation seems simple at first. But if you want your page could be loaded dynamically then lot of work should be done. First, there should be functions control the life cycle of the elements of the page. That is when user click the button, old page should be deleted include all the Dom elements and its Css styles. Then, new page loaded ,and the nonrefresh area remain. Second, we should handle asynchronize  process of deleting and loading, keep the functions run in desired order.  There are many ways to achieve these purpose. One is hard coded everything. It need a comprehensive understanding of the underlying mechanism. Besides, we should develop a modular system . we should define how to read and write html, css, and javascript files. We should be careful not to cause memory leak in our code. That huge amount of work only result successfully change pages as usual. So we recommend another way: iframe. Iframe is a Tag in html. After test, it has memory management functions as well. When you change the source of the iframe, it purge old pages and load new one. The drawback is it may repeat containing same library. Compare to the benefit it provide, this could be trivial and ignored. And, in this project we don't use any of the external library. The function writen by me is smaller with little memory occupation.  
+                    </p>
+                <div class='codeHead'>
+                    <b class='title'>index.html</b>
+                </div>
+                <div class='code' data-file="client_index_switchSubpage"></div>
+                <div class='codeDescribe'>
+                    <p>
+                            This is our page-switch function. Simple as it is!
+                        </p>
+                </div>
+                <div class='codeHead'>
+                    <b class='title'>index.html</b>
+                </div>
+                <div class='code' data-file="client_index_resizeIframe"></div>
+                <div class='codeDescribe'>
+                    <p>
+                            One of the side effects of using iframe as modular system is It can't change the its size based on its content(that's the basic function of a Div). So we write our own resize function to deal with. We also define it as <span> window </span> property, so that we could find it inside the iframe page
+                        </p>
+                </div>
+                <h3>Visualization</h3>
+                <p>
+                        To finish our visualization task, I write a series function. I put them in chartChore.js. The main purpose of those functions is to draw things from the visual origin of the chart. As you probably known, Html draw things from the top-left corner of the window. It's difficult to calculate the coordinate from that point. Charts like bar chart or line chart has axis with its positive X point to right and positive y point to the up.  If we use the axis origin to draw, things became easy. So  transforming between coordinate system  is necessary.       
+                    </p>
+                <div class='codeHead'>
+                    <b class='title'>chartCore.js</b>
+                </div>
+                <div class='code' data-file="client_chartCore_partOfDrawFun"></div>
+                <div class='codeDescribe'>
+                    <p>
+                            These are 2 function picked from the chartCore.js. As you can see on the first several line, the transformation is simple.
+                        </p>
+                </div>
+                <div class='codeHead'>
+                    <b class='title'>barChart.js</b>
+                </div>
+                <div class='code' data-file="client_barChart_drawBars"></div>
+                <div class='codeDescribe'>
+                    <p>
+                            The barChart.js use the functions in chartCore.js which is carry out the actual drawing actions. The 'drawBars' function response to all the possible input from user such as mouse over and out. 
+                        </p>
+                </div>
+                <h3>Animation</h3>
+                <p>
+                        This is the interesting part of whole project. We hope our chart could show up with animations. Further more it should bounce like you see in the cartoon film. All those effect actually controlled by mathematics. After quick search I found the following code. 
+                    </p>
+                <div class='codeHead'>
+                    <b class='title'>tweenX.js</b>
+                </div>
+                <div class='code' data-file="client_tweenX_easingFuns"></div>
+                <div class='codeDescribe'>
+                    <p>
+                            These fomulas output a series number base on the elapsed time. 
+                        </p>
+                </div>
+                <div class='codeHead'>
+                    <b class='title'>tweenX.js</b>
+                </div>
+                <div class='code' data-file="client_tweenX"></div>
+                <div class='codeDescribe'>
+                    <p>
+                            The TweenX function convert those values to a number between from and to. The TweenX function  only change numbers in the structure. If we want change the style of an element,  we define update function as parameter.
+                        </p>
+                </div>
+                <p>
+                        With this convinient function, we can easily do the trick like the following:
+                    </p>
+                <div class='codeHead'>
+                    <b class='title'>barChart.js</b>
+                </div>
+                <div class='code' data-file="client_tweenX_useage"></div>
+                <h2><span>Conclusion</span> </h2>
+                <p>
+                        One of the big puzzles that faced by today's web developer is too many choices. Thousands of package and framework came and gone. We are afraid falling behind the new technology, but also suffering by the overwhelming of the frameworks. In this project, we attempt to do all the things nature. Although lots of efforts, although only very few functions achieved, we are happy to its finally finished. 
+                    </p>
+
+            </div>
+            <div class="blank"></div>
         </div>
-
+        <div class='foot'></div>
     </div>
+
     <script>
         let codes = document.querySelectorAll('.code');
         for (let i = 0; i < codes.length; i++) {
@@ -389,10 +365,10 @@
         let num = 0;
         function finish() {
             num++;
-            if (num >= codes.length){
+            if (num >= codes.length) {
                 parent.window.resizeContent();
                 console.log("run resize in introduction")
-                    
+
             }
         }
     </script>

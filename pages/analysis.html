@@ -11,9 +11,6 @@
             overflow-x: hidden;
         }
 
-        .main {
-            padding: 30px 200px;
-        }
 
         .page {
             padding: 77px;
@@ -79,7 +76,7 @@
             line-height: 25px;
         }
     </style>
-
+    <link rel="stylesheet" href="/style.css">
     <script src="/common/chartCore.js"></script>
     <script src="/common/barChart.js"></script>
     <link rel="stylesheet" href="/common/barChart.css">
@@ -91,14 +88,21 @@
 </head>
 
 <body>
-    <div class="main">
-        <div class="page">
-            <h2><span>Analysis</span> </h2>
-            <div class="chart"> </div>
-            <div class="lineChart"></div>
-        </div>
+    <div class='all'>
+        <div class='head'></div>
+        <div class="main">
+            <div class='blank'></div>
+            <div class="page">
+                <h2><span>Analysis</span> </h2>
+                <div class="chart"> </div>
+                <div class="lineChart"></div>
+            </div>
+            <div class='blank'></div>
 
+        </div>
+        <div class='foot'></div>
     </div>
+
 
     <script>
         function askForData() {

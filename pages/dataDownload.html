@@ -18,9 +18,7 @@
             overflow: hidden;
         }
 
-        .main {
-            padding: 20px 200px 20px 200px;
-        }
+       
 
         .page {
             padding: 77px;
@@ -75,10 +73,12 @@
             width: 100px;
             height: 100px;
         }
+
         @font-face {
             font-family: "YanoneKaffeesatz-Bold";
             src: url("/fonts/YanoneKaffeesatz-Bold.ttf");
         }
+
         h2 {
             font-family: "YanoneKaffeesatz-Bold";
             font-size: 2em;
@@ -99,6 +99,7 @@
             line-height: 25px;
         }
     </style>
+    <link rel="stylesheet" href="/style.css">
     <script src="/common/pullDownMenu.js"></script>
     <link rel="stylesheet" href="/common/pullDownMenu.css">
     <link rel="stylesheet" href="/common/table.css">
@@ -106,87 +107,94 @@
 </head>
 
 <body>
-    <div class='main'>
-        <div class='page'>
-            <h2><span>Date Download</span> </h2>
-            <div class="outframe">
-                <p class="pulldownName">State</p>
-                <div class="states" style="display: flex;flex-direction: column;">
+    <div class='all'>
+        <div class='head'></div>
+        <div class='main'>
+            <div class='blank'></div>
+            <div class='page'>
+                <h2><span>Date Download</span> </h2>
+                <div class="outframe">
+                    <p class="pulldownName">State</p>
+                    <div class="states" style="display: flex;flex-direction: column;">
 
-                    <div class="pullDown">
-                        <button class="current border">
-                            <span>select...</span>
-                            <div class="arrows">
-                                <svg class="down" viewBox="0 0 10 10">
-                                    <path d=" M 0 0 L 10 0 L 5 10 L 0 0 Z " fill="rgb(0,0,0)" />
-                                </svg>
-                            </div>
-                        </button>
-                        <div class="list">
-                            <button class="reset">reset</button>
-                            <div class="options">
+                        <div class="pullDown">
+                            <button class="current border">
+                                <span>select...</span>
+                                <div class="arrows">
+                                    <svg class="down" viewBox="0 0 10 10">
+                                        <path d=" M 0 0 L 10 0 L 5 10 L 0 0 Z " fill="rgb(0,0,0)" />
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="list">
+                                <button class="reset">reset</button>
+                                <div class="options">
 
+                                </div>
                             </div>
                         </div>
+                        <div class="result">select</div>
                     </div>
-                    <div class="result">select</div>
+
                 </div>
+                <div class="outframe">
+                    <p class="pulldownName">Filing quarter</p>
+                    <div class="filings" style="display: flex;flex-direction: column;">
+                        <div class="pullDown">
+                            <button class="current border">
+                                <span>select...</span>
+                                <div class="arrows">
+                                    <svg class="down" viewBox="0 0 10 10">
+                                        <path d=" M 0 0 L 10 0 L 5 10 L 0 0 Z " fill="rgb(0,0,0)" />
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="list">
+                                <button class="reset">reset</button>
+                                <div class="options">
 
-            </div>
-            <div class="outframe">
-                <p class="pulldownName">Filing quarter</p>
-                <div class="filings" style="display: flex;flex-direction: column;">
-                    <div class="pullDown">
-                        <button class="current border">
-                            <span>select...</span>
-                            <div class="arrows">
-                                <svg class="down" viewBox="0 0 10 10">
-                                    <path d=" M 0 0 L 10 0 L 5 10 L 0 0 Z " fill="rgb(0,0,0)" />
-                                </svg>
-                            </div>
-                        </button>
-                        <div class="list">
-                            <button class="reset">reset</button>
-                            <div class="options">
-
+                                </div>
                             </div>
                         </div>
+                        <div class="result">select</div>
                     </div>
-                    <div class="result">select</div>
                 </div>
-            </div>
-            <div class="collection"></div>
-            <div class="outframe">
-                <p class="pulldownName">Dimensional column</p>
-                <div class="dimensions" style="display: flex;flex-direction: column;">
-                    <div class="pullDown">
-                        <button class="current border">
-                            <span>select...</span>
-                            <div class="arrows">
-                                <svg class="down" viewBox="0 0 10 10">
-                                    <path d=" M 0 0 L 10 0 L 5 10 L 0 0 Z " fill="rgb(0,0,0)" />
-                                </svg>
-                            </div>
-                        </button>
-                        <div class="list">
-                            <button class="reset">reset</button>
-                            <div class="options">
+                <div class="collection"></div>
+                <div class="outframe">
+                    <p class="pulldownName">Dimensional column</p>
+                    <div class="dimensions" style="display: flex;flex-direction: column;">
+                        <div class="pullDown">
+                            <button class="current border">
+                                <span>select...</span>
+                                <div class="arrows">
+                                    <svg class="down" viewBox="0 0 10 10">
+                                        <path d=" M 0 0 L 10 0 L 5 10 L 0 0 Z " fill="rgb(0,0,0)" />
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="list">
+                                <button class="reset">reset</button>
+                                <div class="options">
 
+                                </div>
                             </div>
                         </div>
+                        <div class="result">select</div>
                     </div>
-                    <div class="result">select</div>
                 </div>
+                <div class="query">
+                    <button class="download queryButton">download</button>
+                    <button class="listAll queryButton">preview</button>
+                </div>
+                <div class="queryResult"></div>
             </div>
-            <div class="query">
-                <button class="download queryButton">download</button>
-                <button class="listAll queryButton">preview</button>
-            </div>
-            <div class="queryResult"></div>
+            <div class='blank'></div>
+
         </div>
+        <div class='foot'></div>
+        <div class="ruler"></div>
 
     </div>
-    <div class="ruler"></div>
 
 
     <script src="/pages/dataDownload.js"></script>

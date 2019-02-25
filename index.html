@@ -10,6 +10,7 @@
             padding: 0;
             background-color: #ffcd71;
             box-sizing: border-box;
+            /* overflow-x: hidden; */
         }
 
         .content {
@@ -18,7 +19,7 @@
             /* position: absolute; */
             /* top: 50px; */
             /* overflow: hidden; */
-            padding: 103px 30%;
+            /* padding: 103px 30%; */
         }
 
         .analysis {
@@ -82,7 +83,7 @@
             // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
             let windowHei= window.innerHeight - headHeight;
             // iframe.contentWindow.document.body.height=scrollHeight+"px";
-            let iframeContentHei = iframe.contentWindow.document.querySelector('.main').getBoundingClientRect().height;
+            let iframeContentHei = iframe.contentWindow.document.querySelector('.all').getBoundingClientRect().height;
             if (iframeContentHei <windowHei) {
                 iframe.style.height = windowHei + "px";
             } else {
