@@ -94,7 +94,10 @@
 
         window.resizeContent = resizeContent
         function resizeContent() {
-            resizeIframe(contentFrame);
+            setTimeout(() => {
+                resizeIframe(contentFrame);
+                
+            }, 500);
 
         }
         function resizeContentWhenClickMenu() {
