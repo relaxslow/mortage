@@ -71,7 +71,7 @@
         ]
         function clickMainMenu(index) {
             contentFrame.src = folder + contentName[index] + ".html"
-            contentFrame.onload =resizeContent;
+            contentFrame.onload = resizeContent;
         }
 
         let contentFrame = document.querySelector(".content");
@@ -91,7 +91,10 @@
 
         window.resizeContent = resizeContent
         function resizeContent() {
-            resizeIframe(contentFrame);
+            requestAnimationFrame(function () {
+                resizeIframe(contentFrame);
+
+            })
         }
 
 //---------------------------------------------------
