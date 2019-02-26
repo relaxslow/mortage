@@ -73,16 +73,17 @@ function BarChart(name, data) {
             b: 0x73
         },
     }
+    //ffcd71
     let highlight = {
         color: {
             r: 0xff,
-            g: 0xff,
-            b: 0xff,
+            g: 0xcd,
+            b: 0x71,
         },
         text: {
             r: 0xff,
-            g: 0xff,
-            b: 0xff
+            g: 0xcd,
+            b: 0x71
         }
     }
     let texttween = {

@@ -89,7 +89,7 @@ function LineChart(name, data) {
     function drawPointCircles(points) {
 
         let r = 3
-        let color = '#ffffff';
+        let color = '#ffcd71';
         let lineColor = '#f06';
         let lineW = 2;
         for (let i = 0; i < points.length; i++) {
@@ -122,7 +122,7 @@ function LineChart(name, data) {
 
     let normal = {
         r: 3,
-        text: {//#765373
+        text: {//#765373//ffcd71
             r: 0x76,
             g: 0x53,
             b: 0x73
@@ -132,8 +132,8 @@ function LineChart(name, data) {
         r: 8,
         text: {
             r: 0xff,
-            g: 0xff,
-            b: 0xff
+            g: 0xcd,
+            b: 0x71
         }
     }
 
