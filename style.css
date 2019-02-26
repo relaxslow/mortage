@@ -34,3 +34,6 @@
     width: 200px;
 }
 
+.shadow {
+    text-shadow: 0px 0.5px 0.1px #888;
+}  

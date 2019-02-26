@@ -238,7 +238,7 @@ function LineChart(name, data) {
     // axis.drawVerticalLines();
     axis.drawVerticalLinesAligned(XNames, 20);
     // axis.drawXTextAligned();
-    let texts = axis.drawXTextRotatedAligned(XNames, 10, 60);
+    let texts = axis.drawXTextRotatedAligned(XNames, 10, 60,'shadow');
     axis.drawHorizonLines(5);
     axis.drawYAxisTexts(ceiling, 5);
     let linepoints = drawLineAligned(axis.getXCords());

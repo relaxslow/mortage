@@ -161,7 +161,7 @@ function BarChart(name, data) {
     init();
     axis.drawTitle(data[2]);
     axis.drawOutline();
-    let texts = axis.drawXTextRotated(XNames, 10, 60);//name,size,angle
+    let texts = axis.drawXTextRotated(XNames, 10, 60,'shadow');//name,size,angle
     axis.drawHorizonLines(4);
     axis.drawYAxisTexts(ceiling, 4);
     drawBars();
