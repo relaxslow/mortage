@@ -7,17 +7,13 @@ function format(code, fun) {
     req.onload = codeRecieved;
     req.send();
     function codeRecieved() {
-        // code.addEventListener('click', finishLoadCode)
         code.innerHTML = req.response;
-        // code.click();//wait full rendered
-        fun();
+        // fun();
 
 
     }
 
-    // function finishLoadCode() {
-    //     fun();
-    // }
+
     enableDrag(code);
 }
 

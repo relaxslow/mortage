@@ -137,7 +137,7 @@
                 <ul>
                     <li> A Download button let user download data as .csv file</li>
                     <li> Three dropdown list with multi-select functions, allow user query  State, Quarter, Dimension or any of their combination </li>
-                    <li> Two charts domestrate the Loan Count and Loan Amount seperately</li>
+                    <li> Two charts domestrate the trends of  Loan Count and Loan Amount in the database seperately </li>
                 </ul>
                 <h3>Server programming</h3>
                 <p>
@@ -147,11 +147,11 @@
                 <ul>
                     <li>File server </li>
                     <p>
-                            A basic file server that simplely return the files that client requested. This is the basic service that every server should provide. All the resource on the pages get from server via this service.
+                            A basic file server that simplely return the files that client requested. This is the basic service that each server build in by default. All the resource on the pages get from server via this service.
                         </p>
                     <li>Searching</li>
                     <p>
-                            All the data are located on the server file named samplefile.csv. This is a typical spreadsheet. We parse that file and get names for the menu and list records  when user push preview button. In this project, due to the reason of research and test, we don't use any of the database system. For example, mongoDB or SQL. Instead, we want fake a database system just using a simple package: csvtojson.
+                            All the data are located in a file named samplefile.csv. This is a typical spreadsheet. We parse that file and get names for the menu and list records  when user push preview button. In this project, due to the reason of research and test, we don't use any of the database system. For example, mongoDB or SQL. Instead, we want fake a database system just using a simple package: csvtojson.
                         </p>
                     <li>Query</li>
                     <p>
@@ -161,12 +161,12 @@
                 </ul>
                 <h3>Client programming</h3>
                 <p>
-                        On the client side, there are lot of technical issues need to be solved. Because we want to consolidate our basic knowledge of web , we don't use any of the package, just pure Javascript/Html/Css. All the codes are writen  by our own hands. We want to carry out our faith that <span>less is more</span> which means minimizing the building block we learned , keeping our core light weighted and putting emphasis on the practical issues.    
+                        On the client side, there are lot of technical issues need to be solved. Because we want to consolidate our basic knowledge of web , we don't use any of the package, just pure Javascript/Html/Css. All the codes are writen  by our own hands. We want to carry out our faith : <span>less is more</span>. That means minimizing the building block we learned , keeping our core light weighted and putting emphasis on the practical issues.    
                     </p>
                 <ul>
                     <li>Component </li>
                     <p>
-                             the Html do has lot of handy Tags that could maximal minimize our work . In our project all we want are some pulldown menus and buttons. Our pull down menu should support operations such as  multi-select and reset. Those are not provided by the default Tag. So we must rewrite it from bottom. 
+                             The Html do has lot of handy Tags that could maximal minimize our work . In our project all we want are some pulldown menus and buttons. Our pull down menu should support operations such as  multi-select and reset. Those are not provided by the default Tag. So we must rewrite it from bottom. 
                         </p>
                     <li>Navigation</li>
                     <p>
@@ -357,20 +357,27 @@
     </div>
 
     <script>
+         window.addEventListener('resize',windowResized)
+        function windowResized()
+        {
+            console.log("window.resize")
+             parent.window.resizeContent();
+
+        }
         let codes = document.querySelectorAll('.code');
         for (let i = 0; i < codes.length; i++) {
             let code = codes[i];
-            format(code, finish);
+            format(code);
         }
-        let num = 0;
-        function finish() {
-            num++;
-            if (num >= codes.length) {
-                parent.window.resizeContent();
+        // let num = 0;
+        // function finish() {
+        //     num++;
+        //     if (num >= codes.length) {
+        //         parent.window.resizeContent();
 
 
-            }
-        }
+        //     }
+        // }
     </script>
 </body>
 
