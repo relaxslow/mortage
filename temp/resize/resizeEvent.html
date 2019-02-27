@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <div class=test></div>
+    <script>
+
+        let test = document.querySelector('.test');
+        function addResizeListener(elem, fun) {
+            let id;
+            let style = getComputedStyle(elem);
+            let wid = style.width;
+            let hei = style.height;
+            id = requestAnimationFrame(test)
+            function test() {
+                let newStyle = getComputedStyle(elem);
+                if (wid !== newStyle.width ||
+                    hei !== newStyle.height) {
+                    fun();
+                    wid = newStyle.width;
+                    hei = newStyle.height;
+                }
+                id = requestAnimationFrame(test);
+            }
+        }
+        addResizeListener(test,function () {
+            console.log("I changed!!")
+        });
+
+
+        test.innerHTML = '<span>hahaha</span>,<span>I changed</span>';
+        test.innerHTML += '<br><br><br>';
+        test.innerHTML += '<span>changed again</span>'
+        // document.addEventListener('resize', resizeEvent);
+        // function resizeEvent(evt) {
+        //     console.log("sizechanged")
+        // }
+
+
+    </script>
+</body>
+
+</html>

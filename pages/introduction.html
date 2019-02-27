@@ -357,13 +357,35 @@
     </div>
 
     <script>
-         window.addEventListener('resize',windowResized)
-        function windowResized()
-        {
-            console.log("window.resize")
-             parent.window.resizeContent();
+        //  window.addEventListener('resize',windowResized)
+        // function windowResized()
+        // {
+        //     console.log("window.resize")
+        //      parent.window.resizeContent();
 
+        // }
+        function addResizeListener(elem, fun) {
+            let id;
+            let style = getComputedStyle(elem);
+            let wid = style.width;
+            let hei = style.height;
+            id = requestAnimationFrame(test);
+            function test() {
+                let newStyle = getComputedStyle(elem);
+                if (wid !== newStyle.width ||
+                    hei !== newStyle.height) {
+                    fun();
+                    wid = newStyle.width;
+                    hei = newStyle.height;
+                }
+                id = requestAnimationFrame(test);
+            }
         }
+        let all=document.querySelector('.all');
+        addResizeListener(all,function(){
+            console.log("changed")
+            parent.window.resizeContent();
+        })
         let codes = document.querySelectorAll('.code');
         for (let i = 0; i < codes.length; i++) {
             let code = codes[i];
