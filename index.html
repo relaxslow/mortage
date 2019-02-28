@@ -75,17 +75,16 @@
             "analysis"
         ]
         function clickMainMenu(index) {
-            contentFrame.src = folder + contentName[index] + ".html"
-            contentFrame.onload = resizeContentWhenClickMenu;
+            contentFrame.src = folder + contentName[index] + ".html";
+            contentFrame.onload = resizeContent;
         }
-
+      
         let contentFrame = document.querySelector(".content");
         contentFrame.onload = resizeContent;
         let headHeight = mainMenu.getHei();
         function resizeIframe(iframe) {
             // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
             let windowHei = window.innerHeight - headHeight;
-            // iframe.contentWindow.document.body.height=scrollHeight+"px";
             let iframeContentHei = iframe.contentWindow.document.querySelector('.all').getBoundingClientRect().height;
             if (iframeContentHei < windowHei) {
                 iframe.style.height = windowHei + "px";
@@ -95,19 +94,13 @@
             }
         }
 
-       
+
         window.resizeContent = resizeContent
-        function resizeContent() {
-            // setTimeout(() => {
-                resizeIframe(contentFrame);
-
-            // }, 500);
-
-        }
-        function resizeContentWhenClickMenu() {
+     
+        function resizeContent(evt) {
             resizeIframe(contentFrame);
-
         }
+
 //---------------------------------------------------
 
     </script>

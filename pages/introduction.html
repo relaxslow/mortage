@@ -357,13 +357,6 @@
     </div>
 
     <script>
-        //  window.addEventListener('resize',windowResized)
-        // function windowResized()
-        // {
-        //     console.log("window.resize")
-        //      parent.window.resizeContent();
-
-        // }
         function addResizeListener(elem, fun) {
             let id;
             let style = getComputedStyle(elem);
@@ -381,9 +374,8 @@
                 id = requestAnimationFrame(test);
             }
         }
-        let all=document.querySelector('.all');
-        addResizeListener(all,function(){
-            console.log("changed")
+        let all = document.querySelector('.all');
+        addResizeListener(all, function () {
             parent.window.resizeContent();
         })
         let codes = document.querySelectorAll('.code');
