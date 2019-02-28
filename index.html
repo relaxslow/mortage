@@ -10,45 +10,24 @@
             padding: 0;
             background-color: #ebe3d5;
             box-sizing: border-box;
-            /* overflow-x: hidden; */
-            /* background-color: #d3cfcd; */
-            /* background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,.5) 50%);
-            background-size: 10px 50px; */
         }
 
         .content {
             width: 100%;
-            /* height: calc(100vh - 50px); */
-            /* position: absolute; */
-            /* top: 50px; */
-            /* overflow: hidden; */
-            /* padding: 103px 30%; */
         }
 
-        .analysis {
-            text-decoration: none;
-            color: #ffffff;
-            line-height: 50px;
-            display: block;
-            float: left;
-            padding-left: 10px;
-            padding-right: 10px;
-            font-family: courier new;
-            transition: 0.3s linear;
-            background-color: blueviolet;
-            border: none;
-            top: 0px;
-            left: 239px;
-            height: 50px;
-            position: fixed;
-            z-index: 200;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
+
+        .foot {
+            width: 100%;
+            height: 100px;
+            background-color: #3F51B5;
         }
 
-        .analysis:focus {
-            outline: none;
+        .foot p {
+            font-size: 0.8em;
+            font-family: "Pacifico-Regular";
+            width: 372px;
+            color: #bc8774;
         }
     </style>
     <link rel="stylesheet" href="/common/Menu.css">
@@ -66,6 +45,8 @@
     </div>
 
     <iframe class="content" src="/pages/introduction.html" frameborder="0"></iframe>
+    <div class='foot'></div>
+
     <script>
         let mainMenu = getMenu(".headBar", clickMainMenu);
         let folder = "/pages/"
@@ -78,13 +59,18 @@
             contentFrame.src = folder + contentName[index] + ".html";
             contentFrame.onload = resizeContent;
         }
-      
+
         let contentFrame = document.querySelector(".content");
         contentFrame.onload = resizeContent;
-        let headHeight = mainMenu.getHei();
+        window.resizeContent = resizeContent;
+
+        function resizeContent(evt) {
+            resizeIframe(contentFrame);
+        }
+        let footHei=100;
         function resizeIframe(iframe) {
             // let iframeContentHei = iframe.contentWindow.document.body.scrollHeight;
-            let windowHei = window.innerHeight - headHeight;
+            let windowHei = window.innerHeight-footHei;
             let iframeContentHei = iframe.contentWindow.document.querySelector('.all').getBoundingClientRect().height;
             if (iframeContentHei < windowHei) {
                 iframe.style.height = windowHei + "px";
@@ -92,13 +78,7 @@
                 iframe.style.height = iframeContentHei + "px";
 
             }
-        }
-
-
-        window.resizeContent = resizeContent
-     
-        function resizeContent(evt) {
-            resizeIframe(contentFrame);
+          
         }
 
 //---------------------------------------------------
