@@ -154,7 +154,7 @@ function TelescopicBox(box, shrinkWid, shrinkHei, expandWid, expandHei) {
             animation = animations[animationStatus];
             duration = elapse * animation.duration;
         } else {
-            animationStatus = 'boxshrink';
+            animationStatus = 'boxShrink';
             animation = animations[animationStatus];
             currentValue = animation.param[0];
             duration = animation.duration;

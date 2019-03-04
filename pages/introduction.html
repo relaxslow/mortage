@@ -395,7 +395,7 @@
         telescopicBox.parentNode.removeChild(telescopicBox);
         parent.window.document.body.appendChild(telescopicBox);
         let tableOfContentCss = addCss(parent.window, '/common/tableOfConent.css');
-        tableOfContentCss.addtask(function () {
+        tableOfContentCss.addtask(function () {//must wait css load. get correct wid and hei
             let shrinkWid = 50;
             let shrinkHei = 50;
             let rect = tableOfContent.getBoundingClientRect();
