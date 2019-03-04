@@ -21,53 +21,44 @@
         }
 
 
-        h2 {
+        .page h2 {
             font-family: "YanoneKaffeesatz-Bold";
             font-size: 2em;
             border-bottom: solid 1px #8c8c8c;
-            /* border-top: solid 2px white; */
-            /* background-color: #5d6474; */
             color: #bd0000;
             position: relative;
-            /* padding-left: 20px; */
             height: 50px;
             margin-top: 0;
             position: relative;
-            /* margin: 0; */
         }
 
-        h2 span {
+        .page h2 span {
             position: absolute;
             bottom: 0;
             line-height: 25px;
         }
 
-        h3 {
+        .page h3 {
             color: #006a9e;
             font-family: "YanoneKaffeesatz-Bold";
-            /* border-top: solid 1px; */
-            /* border-bottom: solid 1px; */
-            /* background-color: #5d6474; */
-            /* padding-left: 10px; */
-            /* margin: 0; */
+
         }
 
-        p {
+        .page p {
             font-family: "Roboto-Regular";
             font-size: 0.8em;
             line-height: 20px;
             color: #3f0000;
-            /* margin: 0; */
         }
 
-        p span {
+        .page p span {
             color: #9a3e92;
             font-family: "Roboto-Regular";
             font-size: 1.2em;
             font-weight: 600;
         }
 
-        li {
+        .page li {
             font-family: 'Roboto-Regular';
             font-weight: 600;
             font-size: 13px;
@@ -79,33 +70,66 @@
 
         }
 
-        ul {
+        .page ul {
             border-radius: 10px;
             padding: 20px;
             margin: 0;
         }
 
-        ul p {
+        .page ul p {
             margin-left: 50px;
             margin-right: 50px;
         }
 
         .page {
             width: 600px;
+            padding: 20px 100px;
         }
     </style>
     <link rel="stylesheet" href="/style.css">
     <script src="/common/code.js"></script>
     <link rel="stylesheet" href="/common/code.css">
+    <script src="/common/resize.js"></script>
+    <script src="/common/dynamic.js"></script>
+    <script src='/common/tweenX.js'></script>
+    <script src='/common/telescopic.js'></script>
 </head>
 
 <body>
     <div class='all'>
+        <div class='telescopicBox frame'>
+            <div class='shrink'>
+                <svg viewBox="0 0 76.09 59.23">
+                    <rect width="76.09" height="14.3" fill="#fff" />
+                    <rect y="22.47" width="76.09" height="14.3" fill="#fff" />
+                    <rect y="44.94" width="76.09" height="14.3" fill="#fff" />
+                </svg>
+            </div>
+            <div class='expend tableOfContent'>
+                <h2 class='Introduction'>Introduction</h2>
+                <p class='TopDownApproach'>Topdown Apporach</p>
+                <p class='IterativeDevelopment'>Iterative Development</p>
+                <p class='Javascript'>Javascript</p>
+                <h2 class='Overview'>Overview</h2>
+                <p class='Server'>Server</p>
+                <p class='Client'>client</p>
+                <h2 class='Detail'>Detail</h2>
+                <p class='Fileserver'>Fileserver</p>
+                <p class='Searching'>Searching</p>
+                <p class='Query'>Query</p>
+                <p class='Component'>Component</p>
+                <p class='Navigation'>Navigation</p>
+                <p class='Visualization'>Visualization</p>
+                <p class='Animation'>Animation</p>
+                <h2 class='Conclusion'>Conclusion</h2>
+            </div>
+        </div>
+
         <div class='head'></div>
         <div class='main'>
             <div class="blank"></div>
             <div class='page'>
-                <h2><span>Introduction</span> </h2>
+                <h2 class='Introduction'><span>Introduction</span> </h2>
                 <p>
                         This project is one of the project of UONA curriculum. The course is named <span>DATA523</span> (Big Data Fundamental).The course revealing the essence of big data technology , how it put to use in practice and what we should keep in mind when use it. Big data went to our lives and benefit almost everywhere. As a program developper, I want to combine my programming skill with big data. 
                     </p>
@@ -115,19 +139,19 @@
                 <p>
                         In this project, we are going to build a small test webpage and implement the above functions. The content we provide is related to mortgage industry. We'd like to build a real website to download public mortgage data and conduct analysis in respect to the data. We will view the data from two different angles: chronological and geological. We are trying to perform a downloading tool along with the analytical charts and tables to show how the market performed in the past.
                     </p>
-                <h3>Topdown Approach</h3>
+                <h3 class='TopDownApproach'>Topdown Approach</h3>
                 <p>
                         topdown approach refer to a methodology of programming. It divide the whole task into small part and implement them seperately. Its goal is to avoid code refactoring as much as possible. But each theory has its premise. Topdown approach assume the developer has clear understanding of the functions and its implementations. In practice, especially for the novice like me who have not enough knowledge of the overall structure. In this situation, bottom up seems a good approach. No matter topdown or bottomup, the key is to <span>control the complexity of the code</span> , not only for maintenance but also for reuse of the code. 
                     </p>
-                <h3>Iterative Development</h3>
+                <h3 class='IterativeDevelopment'>Iterative Development</h3>
                 <p>
                         Iterative development construct the code like Lego. The whole program is made of many building blocks. Each block has some abstract of function. We package those blocks to form some bigger structures and then use that to form larger functions and eventually reach our goals. Each block should be carefully tested but that would not need to be done at once. They can be completed gradually along with the growth of our program. The blocks may not be recognized at first, because we usually write functions from topdown approach based on a real problem until we found some function repeated for many times , then we seperate those code as functions. So refactoring happened throughout the entire process. We tidy up the code,abstract common method and package them into high level functions. finally we make it concise and optimized. This process is helpful to learning and let us see the evolution of the code. That's one feature of iterative development.     
                     </p>
-                <h3>Javascript</h3>
+                <h3 class='Javascript'>Javascript</h3>
                 <p>
                         It happened that this is the good place where Javascript could play well with. Javascript has varies patterns that can be used in combination. The language has good  mechanism  which can help developer  change the patterns  as they need. The cost of changes are minimized when code are evolved from a simple function to a complete reuseable class. We must thank to Javascript's flexibility that it won't restrict us like other languages. Although they claimed  security and easy debug features I still thought Javascript is the best language I met in the world and I believe those problems are not longer problem as time goes by.
                     </p>
-                <h2><span>Overview</span> </h2>
+                <h2 class='Overview'><span>Overview</span> </h2>
                 <p>
                         So let get back to this project. In this project we need implement the following functions.
                     </p>
@@ -136,7 +160,7 @@
                     <li> Three dropdown list with multi-select functions, allow user query  State, Quarter, Dimension or any of their combination </li>
                     <li> Two charts domestrate the trends of  Loan Count and Loan Amount in the database seperately </li>
                 </ul>
-                <h3>Server programming</h3>
+                <h3 class='Server'>Server programming</h3>
                 <p>
                         We use node.js as the backbone of our back-end because it use Javascript as its language. This simplify the whole development a lot more because we don't need to learn 2 seperate language for server and client. In this project, we need to implement the following functions.
                         
@@ -156,7 +180,7 @@
                         </p>
 
                 </ul>
-                <h3>Client programming</h3>
+                <h3 class='Client'>Client programming</h3>
                 <p>
                         On the client side, there are lot of technical issues need to be solved. Because we want to consolidate our basic knowledge of web , we don't use any of the package, just pure Javascript/Html/Css. All the codes are writen  by our own hands. We want to carry out our faith : <span>less is more</span>. That means minimizing the building block we learned , keeping our core light weighted and putting emphasis on the practical issues.    
                     </p>
@@ -179,11 +203,11 @@
                         </p>
                 </ul>
 
-                <h2><span>Detail</span> </h2>
+                <h2 class='Detail'><span>Detail</span> </h2>
                 <p>
                         In this section, we elaborate all the technical point in this project one by one. Let's begin from server side
                     </p>
-                <h3>File server</h3>
+                <h3 class='Fileserver'>File server</h3>
                 <div class='codeHead'>
                     <b class='title'>app.js</b>
                 </div>
@@ -191,7 +215,7 @@
                 <p>
                         This is a simplest file server. It inspect the string that send from client and check if it is a file. The principle is simple : if the message end with a suffix(.csv ) then we can assume it is a file. There is an object named mimeType which hold the commonly used file format and add as headers when the file is send back. 
                     </p>
-                <h3>Searching</h3>
+                <h3 class='Searching'>Searching</h3>
                 <p>
                         There are 2 functions to implement. One is retrieve menu items for our dropdown list.
                     </p>
@@ -224,7 +248,7 @@
                             CSVToJSON is an asynchronized function. So we must do extra work. We put all the request fun to an array . When the task is done. We call <span>runAllWaitTasks</span>() to actually send the data back; 
                         </p>
                 </div>
-                <h3>Query</h3>
+                <h3 class='Query'>Query</h3>
                 <div class='codeHead'>
                     <b class='title'>QueryData.js</b>
                 </div>
@@ -237,7 +261,7 @@
                 <p>
                         On client side, we will discuss component,navigation,visualization,animation
                     </p>
-                <h3>Component</h3>
+                <h3 class='Component'>Component</h3>
                 <p>
                         Since we haven't use any framework or packages in our front-end. So we should package some function ourself to reduce the complexity of the code. We call them component because it could be reused anywhere. In this project we write the following components
                     </p>
@@ -269,7 +293,7 @@
                     </div>
 
                 </ul>
-                <h3>Navigation</h3>
+                <h3 class='Navigation'>Navigation</h3>
                 <p>
                         Navigation seems simple at first. But if you want your page could be loaded dynamically then lot of work should be done. First, there should be functions control the life cycle of the elements of the page. That is when user click the button, old page should be deleted include all the Dom elements and its Css styles. Then, new page loaded ,and the nonrefresh area remain. Second, we should handle asynchronize  process of deleting and loading, keep the functions run in desired order.  There are many ways to achieve these purpose. One is hard coded everything. It need a comprehensive understanding of the underlying mechanism. Besides, we should develop a modular system . we should define how to read and write html, css, and javascript files. We should be careful not to cause memory leak in our code. That huge amount of work only result successfully change pages as usual. So we recommend another way: iframe. Iframe is a Tag in html. After test, it has memory management functions as well. When you change the source of the iframe, it purge old pages and load new one. The drawback is it may repeat containing same library. Compare to the benefit it provide, this could be trivial and ignored. And, in this project we don't use any of the external library. The function writen by me is smaller with little memory occupation.  
                     </p>
@@ -291,7 +315,7 @@
                             One of the side effects of using iframe as modular system is It can't change the its size based on its content(that's the basic function of a Div). So we write our own resize function to deal with. We also define it as <span> window </span> property, so that we could find it inside the iframe page
                         </p>
                 </div>
-                <h3>Visualization</h3>
+                <h3 class='Visualization'>Visualization</h3>
                 <p>
                         To finish our visualization task, I write a series function. I put them in chartChore.js. The main purpose of those functions is to draw things from the visual origin of the chart. As you probably known, Html draw things from the top-left corner of the window. It's difficult to calculate the coordinate from that point. Charts like bar chart or line chart has axis with its positive X point to right and positive y point to the up.  If we use the axis origin to draw, things became easy. So  transforming between coordinate system  is necessary.       
                     </p>
@@ -313,7 +337,7 @@
                             The barChart.js use the functions in chartCore.js which is carry out the actual drawing actions. The 'drawBars' function response to all the possible input from user such as mouse over and out. 
                         </p>
                 </div>
-                <h3>Animation</h3>
+                <h3 class='Animation'>Animation</h3>
                 <p>
                         This is the interesting part of whole project. We hope our chart could show up with animations. Further more it should bounce like you see in the cartoon film. All those effect actually controlled by mathematics. After quick search I found the following code. 
                     </p>
@@ -342,7 +366,7 @@
                     <b class='title'>barChart.js</b>
                 </div>
                 <div class='code' data-file="client_tweenX_useage"></div>
-                <h2><span>Conclusion</span> </h2>
+                <h2 class='Conclusion'><span>Conclusion</span> </h2>
                 <p>
                         One of the big puzzles that faced by today's web developer is too many choices. Thousands of package and framework came and gone. We are afraid falling behind the new technology, but also suffering by the overwhelming of the frameworks. In this project, we attempt to do all the things nature. Although lots of efforts, although only very few functions achieved, we are happy to its finally finished. 
                     </p>
@@ -353,41 +377,64 @@
     </div>
 
     <script>
-        function addResizeListener(elem, fun) {
-            let id;
-            let style = getComputedStyle(elem);
-            let wid = style.width;
-            let hei = style.height;
-            id = requestAnimationFrame(test);
-            function test() {
-                let newStyle = getComputedStyle(elem);
-                if (wid !== newStyle.width ||
-                    hei !== newStyle.height) {
-                    fun();
-                    wid = newStyle.width;
-                    hei = newStyle.height;
-                }
-                id = requestAnimationFrame(test);
-            }
-        }
-        let all = document.querySelector('.all');
-        addResizeListener(all, function () {
-            parent.window.resizeContent();
-        })
+
+
+        //format code
         let codes = document.querySelectorAll('.code');
         for (let i = 0; i < codes.length; i++) {
             let code = codes[i];
             format(code);
         }
-        // let num = 0;
-        // function finish() {
-        //     num++;
-        //     if (num >= codes.length) {
-        //         parent.window.resizeContent();
+        //handle resize
+        let all = document.querySelector('.all');
+        addResizeListener(all, function () {
+            parent.window.resizeContent();
+        })
+        //table of content
+        let telescopicBox = document.querySelector('.telescopicBox');
+        telescopicBox.parentNode.removeChild(telescopicBox);
+        parent.window.document.body.appendChild(telescopicBox);
+        let tableOfContentCss = addCss(parent.window, '/common/tableOfConent.css');
+        tableOfContentCss.addtask(function () {
+            let shrinkWid = 50;
+            let shrinkHei = 50;
+            let rect = tableOfContent.getBoundingClientRect();
+            let expandWid = rect.width;
+            let expandHei = rect.height;
+            new TelescopicBox(telescopicBox, shrinkWid, shrinkHei, expandWid, expandHei);
+        })
+        let tableOfContent = telescopicBox.querySelector('.tableOfContent');
+
+        window.addEventListener('unload', pageUnload);
+        function pageUnload() {
+            tableOfContentCss.parentNode.removeChild(tableOfContentCss);
+            parent.window.document.body.removeChild(telescopicBox);
+
+        }
 
 
-        //     }
-        // }
+        for (let i = 0; i < tableOfContent.childNodes.length; i++) {
+            let item = tableOfContent.childNodes[i];
+            item.addEventListener('click', clickTableOfContent);//response to click
+        }
+        let page = document.querySelector('.page');
+        function clickTableOfContent(evt) {
+            let item = evt.currentTarget;
+            let scrollToElement = page.querySelector(`.${item.className}`)
+            parent.window.scroll({
+                top: scrollToElement.offsetTop - 100,
+                behavior: 'smooth'
+            })
+        }
+
+
+
+
+
+
+
+
+
     </script>
 </body>
 

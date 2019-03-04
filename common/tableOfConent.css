@@ -1,0 +1,53 @@
+.tableOfContent {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    color: #866767;
+    border-radius: 10px;
+    white-space: nowrap;
+    /* pointer-events: none; */
+}
+
+.tableOfContent h2 {
+    margin: 0;
+    font-family: cursive;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #e98e3e;
+}
+.tableOfContent h2:hover{
+    color: black;
+}
+.tableOfContent p {
+    margin: 0;
+    font-family: monospace;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+}
+.tableOfContent p:hover{
+    color:black;
+}
+.frame{
+    position: fixed;
+    left: 10px;
+    top: 65px;
+    background: #e98e3e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.shrink{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.shrink svg{
+    width: 70%;
+    pointer-events: none;
+}
